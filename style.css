@@ -29,8 +29,27 @@ a{color:inherit;text-decoration:none}
 /* ---- menü kartları ---- */
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px}
 .card{background:var(--card);border:1px solid var(--line);border-radius:10px;overflow:hidden;
-  position:relative;transition:transform .12s ease,box-shadow .12s ease;display:block}
-.card:hover{transform:translateY(-3px);box-shadow:0 10px 26px rgba(20,40,35,.12)}
+  position:relative;display:block;
+  transition:transform .2s cubic-bezier(.2,.7,.2,1),box-shadow .2s ease,border-color .2s ease;
+  will-change:transform}
+.card:hover,.card:focus-visible{
+  transform:translateY(-10px) scale(1.03); z-index:5; outline:none;
+  box-shadow:0 22px 50px rgba(20,40,35,.24)}
+.card:hover .bar,.card:focus-visible .bar{width:10px}
+.card:hover h2,.card:focus-visible h2{transition:color .2s ease}
+/* tipe göre renkli çerçeve + başlık rengi */
+.card.t-konut:hover,.card.t-konut:focus-visible{box-shadow:0 0 0 4px var(--konut),0 22px 50px rgba(20,40,35,.24)}
+.card.t-ofis:hover,.card.t-ofis:focus-visible{box-shadow:0 0 0 4px var(--ofis),0 22px 50px rgba(20,40,35,.24)}
+.card.t-ticari:hover,.card.t-ticari:focus-visible{box-shadow:0 0 0 4px var(--ticari),0 22px 50px rgba(20,40,35,.24)}
+.card.t-arsa:hover,.card.t-arsa:focus-visible{box-shadow:0 0 0 4px var(--arsa),0 22px 50px rgba(20,40,35,.24)}
+.card.t-sanayi:hover,.card.t-sanayi:focus-visible{box-shadow:0 0 0 4px var(--sanayi),0 22px 50px rgba(20,40,35,.24)}
+.card.t-konut:hover h2,.card.t-konut:focus-visible h2{color:var(--konut)}
+.card.t-ofis:hover h2,.card.t-ofis:focus-visible h2{color:var(--ofis)}
+.card.t-ticari:hover h2,.card.t-ticari:focus-visible h2{color:var(--ticari)}
+.card.t-arsa:hover h2,.card.t-arsa:focus-visible h2{color:var(--arsa)}
+.card.t-sanayi:hover h2,.card.t-sanayi:focus-visible h2{color:var(--sanayi)}
+@media(prefers-reduced-motion:reduce){.card{transition:box-shadow .15s ease}
+  .card:hover,.card:focus-visible{transform:none}}
 .card .bar{position:absolute;left:0;top:0;bottom:0;width:5px}
 .card-in{padding:15px 17px 15px 22px}
 .card.sold{background:#F2F2EF;border-style:dashed}
