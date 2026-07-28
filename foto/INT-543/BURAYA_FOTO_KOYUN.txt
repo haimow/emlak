@@ -1,0 +1,4 @@
+Torbalı · K. Karabekir (INT-543)
+Bu klasöre fotoğrafları şu adla koyun: 543-1.jpg, 543-2.jpg, ...
+(tam kod da olur: INT-543-1.jpg). jpg / jpeg / png / webp desteklenir.
+Sıra numarasına göre dizilir.

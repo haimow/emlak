@@ -1,0 +1,75 @@
+<!DOCTYPE html><html lang="tr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Kemalpaşa · Y. Kızılca</title><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Fraunces:opsz,wght@9..144,500;9..144,600&display=swap" rel="stylesheet"><link rel="stylesheet" href="style.css"></head><body>
+    <div class="wrap">
+      <a class="back" href="index.html">← Portföy menüsüne dön</a>
+      <div class="dhead">
+        <div>
+          <span class="eyebrow" style="color:#2F6F63">KONUT</span>
+          <h1>Kemalpaşa · Y. Kızılca</h1>
+          <div class="sub">Havuzlu dubleks · site içi</div>
+          <div class="kv">180 Ada / 1 Parsel &nbsp;·&nbsp; UYP-17117260654</div>
+        </div>
+        <div class="dprice">
+          <div class="p">11.760.000 ₺</div>
+          <div class="u">muhammen bedel</div>
+          <div class="bf">69.176 ₺/m² &nbsp;·&nbsp; 10.08.2026 14:11 · 13 gün</div>
+        </div>
+      </div>
+
+      <div id="gal" class="gallery"></div>
+      <div id="ph" class="ph" style="display:none">
+        <div class="big">📷</div>
+        <div>Bu mülkün fotoğrafları henüz eklenmedi.</div>
+        <div style="margin-top:10px">Dosyaları <code>foto/UYP-17117260654/</code> klasörüne
+        <code>17117260654-1.jpg</code>, <code>17117260654-2.jpg</code> … şeklinde bırakın; sayfa otomatik gösterir.</div>
+      </div>
+
+      <div class="sec"><h3>Öne Çıkan Özellikler</h3><div class="desc">140 m² kapalı + 30 m² teras. Bahçesinde özel yüzme havuzu, güvenlik kontrollü site girişi. PVC camekânla kapatılmış teras, granit tezgâh, klima ile ısıtma. İlçe merkezine 5,5 km.</div></div>
+      <div class="sec"><h3>Künye</h3><div class="dl"><div class="item"><u>Tip</u><b>Konut (Dubleks Mesken)</b></div><div class="item"><u>Şehir / İlçe</u><b>İzmir / Kemalpaşa</b></div><div class="item"><u>Mahalle / Mevkii</u><b>Yukarı Kızılca Merkez</b></div><div class="item"><u>Ada / Parsel</u><b>180 Ada / 1 Parsel</b></div><div class="item"><u>Blok / Kat / B.B.</u><b>No: 60 (zemin + 1, Arkent Sitesi)</b></div><div class="item"><u>Kapalı Alan</u><b>170 m²</b></div><div class="item"><u>Arsa / Parsel Alanı</u><b>—</b></div><div class="item"><u>Oda</u><b>3+1</b></div><div class="item"><u>Bina Yaşı</u><b>28</b></div><div class="item"><u>Birim Fiyat</u><b>69.176 ₺/m²</b></div><div class="item"><u>İmar Durumu</u><b>Konut fonksiyonlu gelişim alanı (121 dubleks konutlu site)</b></div><div class="item"><u>Tapu Durumu</u><b>Kat mülkiyetli</b></div><div class="item"><u>İhale / Satış Tarihi</u><b>10.08.2026 14:11</b></div><div class="item"><u>İlan / Kayıt No</u><b>UYAP Kayıt No: 17117260654</b></div><div class="item"><u>Kaynak</u><b>UYAP e-satış</b></div><div class="item"><u>Durum</u><b>Aktif</b></div></div></div>
+      <div class="sec"><h3>Takyidat / Şerh</h3><div class="desc">İlanda belirtilmemiş — şartnameden teyit edilmeli</div></div>
+
+      <div class="sec"><h3>Konum</h3>
+        <div class="mapwrap"><iframe loading="lazy" src="https://www.google.com/maps?q=Arkent%20Sitesi%20S%C3%BCvari%20Sokak%20Yukar%C4%B1%20K%C4%B1z%C4%B1lca%20Kemalpa%C5%9Fa%20%C4%B0zmir&output=embed"></iframe></div>
+        <a class="mapbtn" target="_blank" href="https://www.google.com/maps/search/?api=1&query=Arkent%20Sitesi%20S%C3%BCvari%20Sokak%20Yukar%C4%B1%20K%C4%B1z%C4%B1lca%20Kemalpa%C5%9Fa%20%C4%B0zmir">
+          📍 Google Haritalar'da Aç</a>
+        <div class="addr">Adres bazlı konum: Arkent Sitesi Süvari Sokak Yukarı Kızılca Kemalpaşa İzmir</div>
+      </div>
+
+      <div class="foot">Kaynak: UYAP e-satış · İlan/Kayıt no: UYAP Kayıt No: 17117260654. Banka/icra mülkleri "mevcut durumuyla"
+      satılır; teklif öncesi şartname, tapu kaydı ve kıymet takdir raporu incelenmelidir.</div>
+    </div>
+    <div id="lb" class="lightbox"><img alt=""></div>
+    <script>
+    (function(){
+      var folder="foto/UYP-17117260654/",
+          bases=["17117260654", "UYP-17117260654"],
+          seps=["-","_"], exts=["jpg","jpeg","png","webp","JPG","JPEG","PNG"],
+          g=document.getElementById("gal"), ph=document.getElementById("ph"),
+          lb=document.getElementById("lb");
+      function tryLoad(url){return new Promise(function(res){
+        var im=new Image(); im.onload=function(){res(im.src)}; im.onerror=function(){res(null)}; im.src=url;
+      });}
+      async function findAt(i){
+        var nums=[String(i),("0"+i).slice(-2)];
+        for(var b=0;b<bases.length;b++)for(var s=0;s<seps.length;s++)
+          for(var n=0;n<nums.length;n++)for(var e=0;e<exts.length;e++){
+            var src=await tryLoad(folder+bases[b]+seps[s]+nums[n]+"."+exts[e]);
+            if(src) return src;
+          }
+        return null;
+      }
+      (async function(){
+        var found=0, miss=0;
+        for(var i=1;i<=40 && miss<4;i++){
+          var src=await findAt(i);
+          if(src){
+            found++; miss=0; ph.style.display="none";
+            var im=document.createElement("img"); im.src=src; im.loading="lazy";
+            im.onclick=(function(s){return function(){lb.querySelector("img").src=s; lb.style.display="flex";};})(src);
+            g.appendChild(im);
+          } else miss++;
+        }
+        if(found===0) ph.style.display="block";
+      })();
+      lb.onclick=function(){lb.style.display="none"};
+    })();
+    </script></body></html>

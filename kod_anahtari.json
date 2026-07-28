@@ -1,0 +1,107 @@
+[
+  {
+    "portfoy_kodu": "İhale-5",
+    "referans_kodu": "UYP-17059741296",
+    "klasor": "UYP-17059741296",
+    "kaynak": "UYAP e-satış",
+    "ilce_mahalle": "Çeşme / Musalla – Bahçearası Mevkii"
+  },
+  {
+    "portfoy_kodu": "İhale-4",
+    "referans_kodu": "UYP-16911800779",
+    "klasor": "UYP-16911800779",
+    "kaynak": "UYAP e-satış",
+    "ilce_mahalle": "Çeşme / Çiftlik – Giritli Mevkii"
+  },
+  {
+    "portfoy_kodu": "İhale-3",
+    "referans_kodu": "UYP-16907627753",
+    "klasor": "UYP-16907627753",
+    "kaynak": "UYAP e-satış",
+    "ilce_mahalle": "Urla / Denizli – Çeşmealtı Mevkii"
+  },
+  {
+    "portfoy_kodu": "İhale-2",
+    "referans_kodu": "UYP-17117260654",
+    "klasor": "UYP-17117260654",
+    "kaynak": "UYAP e-satış",
+    "ilce_mahalle": "Kemalpaşa / Yukarı Kızılca Merkez"
+  },
+  {
+    "portfoy_kodu": "İhale-1",
+    "referans_kodu": "UYP-16926362076",
+    "klasor": "UYP-16926362076",
+    "kaynak": "UYAP e-satış",
+    "ilce_mahalle": "Konak / Mersinli"
+  },
+  {
+    "portfoy_kodu": "İhale-6",
+    "referans_kodu": "UYP-16764477097",
+    "klasor": "UYP-16764477097",
+    "kaynak": "UYAP e-satış",
+    "ilce_mahalle": "Bornova / Kazımdirik"
+  },
+  {
+    "portfoy_kodu": "İhale-7",
+    "referans_kodu": "UYP-16908901595",
+    "klasor": "UYP-16908901595",
+    "kaynak": "UYAP e-satış",
+    "ilce_mahalle": "Kemalpaşa / Ansızca"
+  },
+  {
+    "portfoy_kodu": "Direkt Satış-1",
+    "referans_kodu": "INT-101191525",
+    "klasor": "INT-101191525",
+    "kaynak": "intengo.com",
+    "ilce_mahalle": "Akhisar / Zeytinliova"
+  },
+  {
+    "portfoy_kodu": "Direkt Satış-2",
+    "referans_kodu": "INT-543",
+    "klasor": "INT-543",
+    "kaynak": "intengo.com",
+    "ilce_mahalle": "Torbalı / Kazım Karabekir"
+  },
+  {
+    "portfoy_kodu": "SB-1303482329",
+    "referans_kodu": "SB-1303482329",
+    "klasor": "SB-1303482329",
+    "kaynak": "sahibinden.com · VakıfBank",
+    "ilce_mahalle": "Çeşme / Musalla"
+  },
+  {
+    "portfoy_kodu": "SB-1305997535",
+    "referans_kodu": "SB-1305997535",
+    "klasor": "SB-1305997535",
+    "kaynak": "sahibinden.com · Halkbank",
+    "ilce_mahalle": "Bornova / Yeşilova"
+  },
+  {
+    "portfoy_kodu": "SB-1325575848",
+    "referans_kodu": "SB-1325575848",
+    "klasor": "SB-1325575848",
+    "kaynak": "sahibinden.com · Halkbank",
+    "ilce_mahalle": "Güzelbahçe / Kahramandere"
+  },
+  {
+    "portfoy_kodu": "SB-1291770828",
+    "referans_kodu": "SB-1291770828",
+    "klasor": "SB-1291770828",
+    "kaynak": "sahibinden.com · Halkbank",
+    "ilce_mahalle": "Torbalı / İnönü"
+  },
+  {
+    "portfoy_kodu": "SB-1326877278",
+    "referans_kodu": "SB-1326877278",
+    "klasor": "SB-1326877278",
+    "kaynak": "sahibinden.com · VakıfBank",
+    "ilce_mahalle": "Konak / Alsancak"
+  },
+  {
+    "portfoy_kodu": "SB-1308472953",
+    "referans_kodu": "SB-1308472953",
+    "klasor": "SB-1308472953",
+    "kaynak": "sahibinden.com · VakıfBank",
+    "ilce_mahalle": "Menderes / Ata"
+  }
+]

@@ -1,0 +1,4 @@
+Konak · Mersinli (UYP-16926362076)
+Bu klasöre fotoğrafları şu adla koyun: 16926362076-1.jpg, 16926362076-2.jpg, ...
+(tam kod da olur: UYP-16926362076-1.jpg). jpg / jpeg / png / webp desteklenir.
+Sıra numarasına göre dizilir.

@@ -1,0 +1,4 @@
+Akhisar · Zeytinliova (INT-101191525)
+Bu klasöre fotoğrafları şu adla koyun: 101191525-1.jpg, 101191525-2.jpg, ...
+(tam kod da olur: INT-101191525-1.jpg). jpg / jpeg / png / webp desteklenir.
+Sıra numarasına göre dizilir.
