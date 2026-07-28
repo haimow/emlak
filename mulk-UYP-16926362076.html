@@ -40,9 +40,9 @@
     <div id="lb" class="lightbox"><img alt=""></div>
     <script>
     (function(){
-      var folder="foto/UYP-16926362076/",
+      var locs=["foto/UYP-16926362076/","foto/"],
           bases=["16926362076", "UYP-16926362076"],
-          seps=["-","_"], exts=["jpg","jpeg","png","webp","JPG","JPEG","PNG"],
+          seps=["-","_"], exts=["jpg","jpeg","png","webp","JPG","JPEG","PNG","WEBP"],
           g=document.getElementById("gal"), ph=document.getElementById("ph"),
           lb=document.getElementById("lb");
       function tryLoad(url){return new Promise(function(res){
@@ -50,9 +50,9 @@
       });}
       async function findAt(i){
         var nums=[String(i),("0"+i).slice(-2)];
-        for(var b=0;b<bases.length;b++)for(var s=0;s<seps.length;s++)
+        for(var L=0;L<locs.length;L++)for(var b=0;b<bases.length;b++)for(var s=0;s<seps.length;s++)
           for(var n=0;n<nums.length;n++)for(var e=0;e<exts.length;e++){
-            var src=await tryLoad(folder+bases[b]+seps[s]+nums[n]+"."+exts[e]);
+            var src=await tryLoad(locs[L]+bases[b]+seps[s]+nums[n]+"."+exts[e]);
             if(src) return src;
           }
         return null;
