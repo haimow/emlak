@@ -12,11 +12,13 @@ a{color:inherit;text-decoration:none}
 .wrap{max-width:1220px;margin:0 auto;padding:26px 22px 40px}
 .serif{font-family:"Fraunces","Georgia",serif}
 /* ---- üst sekme navigasyonu ---- */
-.topnav{display:flex;gap:6px;margin-bottom:18px}
-.topnav a{padding:9px 20px;border-radius:9px;font-size:14px;letter-spacing:.02em;
-  color:var(--muted);border:1px solid var(--line);transition:all .15s ease}
-.topnav a.active{background:var(--ink);color:#fff;border-color:transparent}
-.topnav a:not(.active):hover{background:#EFF2ED;color:var(--ink)}
+.topnav{display:flex;gap:8px;margin-bottom:20px}
+.topnav a{padding:10px 24px;border-radius:11px;font-size:14px;font-weight:500;letter-spacing:.01em;
+  color:#5A6B64;background:#EEF2EC;transition:all .18s ease}
+.topnav a:not(.active):hover{background:#E4EAE2;color:var(--ink)}
+.topnav a.active{color:#fff;
+  background:linear-gradient(135deg,#3C8175 0%,#3E6E96 100%);
+  box-shadow:0 4px 13px rgba(52,116,110,.26)}
 /* ---- araç segment renkleri ---- */
 .bar-otomobil{background:var(--otomobil)} .bar-suv{background:var(--suv)}
 .eyebrow-otomobil{color:var(--otomobil)} .eyebrow-suv{color:#6E4F2C}
