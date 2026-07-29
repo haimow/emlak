@@ -75,11 +75,18 @@ a{color:inherit;text-decoration:none}
   border-radius:999px;padding:8px 14px;cursor:pointer;transition:border-color .15s ease}
 .fdrop:hover{border-color:#B7C2BB}
 .fdrop:focus{outline:none;border-color:var(--konut)}
+.fprice{display:inline-flex;align-items:center;gap:7px;font-size:13px;color:var(--muted);
+  border:1.5px solid var(--line);border-radius:999px;padding:5px 14px}
+.fnum{font-family:inherit;font-size:13px;color:var(--ink);width:64px;border:none;background:transparent;
+  text-align:center}
+.fnum:focus{outline:none}
+.fnum::-webkit-outer-spin-button,.fnum::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.fprice .dash{color:#B7C2BB}
 /* kaynak ibaresi (UYP / INT / SB) */
 .src{display:inline-block;font-family:"SFMono-Regular",Menlo,monospace;font-size:8.5px;letter-spacing:.08em;
   color:#9AA49E;border:1px solid #E2E7DE;border-radius:4px;padding:1px 4px;vertical-align:middle;margin-left:4px}
-/* intengo ihalesi rozeti */
-.chip.intengo{background:#EEE9F6;color:#5B4B8A;border:1px solid #D8CEE9}
+/* INT ihale rozeti */
+.chip.intihale{background:#EEE9F6;color:#5B4B8A;border:1px solid #D8CEE9}
 .empty{display:none;text-align:center;color:#93A099;padding:40px 0;font-size:15px}
 @media(max-width:640px){.fhint{margin-left:0;width:100%;order:99}}
 
