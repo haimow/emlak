@@ -29,6 +29,10 @@ a{color:inherit;text-decoration:none}
 .fbtn.f-otomobil.active{background:var(--otomobil)} .fbtn.f-suv.active{background:var(--suv)}
 .samplenote{background:#FFF7E6;border:1px solid #F0DFB0;border-radius:9px;padding:12px 16px;
   font-size:13px;color:#8A6D1E;margin-bottom:20px}
+.kdvline{font-size:11px;color:#9AA49E;margin-top:5px;letter-spacing:.02em}
+.dprice .kdv{font-size:12px;color:#5A6B64;margin-top:5px}
+.taxnote{font-size:13px;line-height:1.65;color:#5A6B64;background:#F4F6F2;border:1px solid #E2E7DE;
+  border-radius:8px;padding:14px 16px;max-width:840px}
 
 /* ---- menü başlık ---- */
 .mast{display:flex;justify-content:space-between;align-items:flex-end;
