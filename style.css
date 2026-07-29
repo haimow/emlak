@@ -33,6 +33,11 @@ a{color:inherit;text-decoration:none}
 .dprice .kdv{font-size:12px;color:#5A6B64;margin-top:5px}
 .taxnote{font-size:13px;line-height:1.65;color:#5A6B64;background:#F4F6F2;border:1px solid #E2E7DE;
   border-radius:8px;padding:14px 16px;max-width:840px}
+.plabel{font-size:10px;color:#9AA49E;letter-spacing:.14em;text-transform:uppercase;margin-top:3px}
+.satisline{font-size:13px;color:#2F6F63;margin-top:5px;font-weight:500}
+.satisline b{font-weight:700}
+.dprice .satisline{font-size:15px;margin-top:8px}
+.dprice .plabel{margin-top:0}
 
 /* ---- menü başlık ---- */
 .mast{display:flex;justify-content:space-between;align-items:flex-end;
