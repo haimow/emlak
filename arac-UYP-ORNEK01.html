@@ -1,0 +1,60 @@
+<!DOCTYPE html><html lang="tr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>BMW 320i · 2019</title><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Fraunces:opsz,wght@9..144,500;9..144,600&display=swap" rel="stylesheet"><link rel="stylesheet" href="style.css"></head><body>
+    <div class="wrap">
+      <div class="topnav"><a href="index.html">Gayrimenkul</a><a href="araclar.html" class="active">Araçlar</a></div>
+      <a class="back" href="araclar.html">← Araç listesine dön</a>
+      <div class="samplenote">Bu bir <b>örnek kayıttır</b>. Gerçek araç ilanınızla değiştirilecektir.</div>
+      <div class="dhead">
+        <div>
+          <span class="eyebrow" style="color:#2C6E8F">OTOMOBİL</span>
+          <h1>BMW 320i · 2019</h1>
+          <div class="sub">Örnek kayıt · 78.500 km · benzin</div>
+          <div class="kv">BMW 320i Luxury Line · UYP-ORNEK01</div>
+        </div>
+        <div class="dprice">
+          <div class="p">1.850.000 ₺</div>
+          <div class="u">muhammen bedel</div>
+          <div class="bf"><span class="cd-wrap" data-deadline="2026-08-07T10:30:00+03:00">07.08.2026 10:30 · <b class="cd">9 gün</b></span></div>
+        </div>
+      </div>
+      <div id="gal" class="gallery"></div>
+      <div id="ph" class="ph" style="display:none">
+        <div class="big">📷</div><div>Bu aracın fotoğrafları henüz eklenmedi.</div>
+        <div style="margin-top:10px">Dosyaları <code>foto/UYP-ORNEK01/</code> klasörüne
+        <code>UYP-ORNEK01-1.jpg</code>, <code>UYP-ORNEK01-2.jpg</code> … şeklinde bırakın.</div>
+      </div>
+      <div class="sec"><h3>Öne Çıkan Özellikler</h3><div class="desc">ÖRNEK KAYIT — gerçek ilanla değiştirilecek. İzmir Adliyesi e-satış aracı; deri döşeme, navigasyon, geri görüş kamerası. Tramer ve km sorgusu ihale şartnamesinde belirtilir. Keşif fotoğrafları foto klasörüne eklenecek.</div></div>
+      <div class="sec"><h3>Künye</h3><div class="dl"><div class="item"><u>Segment</u><b>OTOMOBİL</b></div><div class="item"><u>Marka</u><b>BMW</b></div><div class="item"><u>Model</u><b>320i Luxury Line</b></div><div class="item"><u>Yıl</u><b>2019</b></div><div class="item"><u>KM</u><b>78.500</b></div><div class="item"><u>Yakıt</u><b>Benzin</b></div><div class="item"><u>Vites</u><b>Otomatik</b></div><div class="item"><u>Motor</u><b>1.6</b></div><div class="item"><u>Renk</u><b>Siyah</b></div><div class="item"><u>Muayene</u><b>07.2027'ye kadar geçerli</b></div><div class="item"><u>İlan / Kayıt No</u><b>UYAP Kayıt No: (örnek)</b></div><div class="item"><u>Kaynak</u><b>UYAP e-satış</b></div><div class="item"><u>Durum</u><b>Aktif</b></div></div></div>
+      <div class="sec"><h3>Hasar / Durum</h3><div class="desc">Ağır hasar kaydı yok; kaput ve sağ ön çamurluk boyalı (örnek bilgi)</div></div>
+      <div class="sec"><h3>Takyidat / Şerh — Dikkat</h3>
+        <div class="risk"><b>Satın alma kararını etkileyen kısıt</b>Araç üzerinde haciz ve rehin şerhleri bulunabilir; ihale ile satışta bunlar terkin edilir — yine de şartnamedeki takyidat listesi işlem öncesi kontrol edilmelidir.</div></div>
+      <div class="sec"><h3>Görüntüleme / Konum</h3>
+        <a class="mapbtn" target="_blank" href="https://www.google.com/maps/search/?api=1&query=%C4%B0zmir%20Yediemin%20Otopark%C4%B1%20%28ke%C5%9Fif%20adresi%20%C5%9Fartnamede%29">📍 Google Haritalar'da Aç</a>
+        <div class="addr">İzmir Yediemin Otoparkı (keşif adresi şartnamede)</div>
+      </div>
+      <div class="foot">Kaynak: UYAP e-satış · UYAP Kayıt No: (örnek). Araçlar "mevcut durumuyla" satılır; km/tramer/hasar
+      ve hacizli-rehinli durumu teklif öncesi şartname ve trafik kaydından teyit edilmelidir.</div>
+    </div>
+    <div id="lb" class="lightbox"><img alt=""></div>
+    <script>
+    (function(){
+      var locs=["foto/UYP-ORNEK01/","foto/"], bases=["UYP-ORNEK01", "UYP-ORNEK01"],
+          seps=["-","_"], exts=["jpg","jpeg","png","webp","JPG","JPEG","PNG","WEBP"],
+          g=document.getElementById("gal"), ph=document.getElementById("ph"), lb=document.getElementById("lb");
+      function load(u){return new Promise(function(r){var im=new Image();im.onload=function(){r(im.src)};im.onerror=function(){r(null)};im.src=u;});}
+      function urlOf(p,x){var num=p.pad?("0"+x).slice(-2):String(x);return p.loc+p.base+p.sep+num+"."+p.ext;}
+      function addImg(src){var im=document.createElement("img");im.src=src;im.loading="lazy";im.decoding="async";
+        im.onclick=(function(s){return function(){lb.querySelector("img").src=s;lb.style.display="flex";};})(src);g.appendChild(im);}
+      async function discover(){for(var L=0;L<locs.length;L++)for(var b=0;b<bases.length;b++)for(var s=0;s<seps.length;s++)
+        for(var pd=0;pd<2;pd++)for(var e=0;e<exts.length;e++){var p={loc:locs[L],base:bases[b],sep:seps[s],pad:pd===1,ext:exts[e]};
+          var src=await load(urlOf(p,1));if(src)return {p:p,first:src};}return null;}
+      (async function(){var d=await discover();if(!d){ph.style.display="block";return;}ph.style.display="none";
+        var found={1:d.first},start=2,B=20,stop=false;
+        while(!stop&&start<=200){var idx=[],k;for(k=0;k<B;k++)idx.push(start+k);
+          var res=await Promise.all(idx.map(function(x){return load(urlOf(d.p,x));}));
+          for(k=0;k<res.length;k++)if(res[k])found[idx[k]]=res[k];
+          for(k=0;k<res.length;k++)if(!res[k]){stop=true;break;}if(!stop)start+=B;}
+        var i=1;while(found[i]){addImg(found[i]);i++;}})();
+      lb.onclick=function(){lb.style.display="none"};
+    })();
+    </script>
+    <script src="countdown.js"></script></body></html>

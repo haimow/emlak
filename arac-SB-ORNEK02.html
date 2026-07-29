@@ -1,0 +1,60 @@
+<!DOCTYPE html><html lang="tr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>VW Tiguan · 2021</title><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Fraunces:opsz,wght@9..144,500;9..144,600&display=swap" rel="stylesheet"><link rel="stylesheet" href="style.css"></head><body>
+    <div class="wrap">
+      <div class="topnav"><a href="index.html">Gayrimenkul</a><a href="araclar.html" class="active">Araçlar</a></div>
+      <a class="back" href="araclar.html">← Araç listesine dön</a>
+      <div class="samplenote">Bu bir <b>örnek kayıttır</b>. Gerçek araç ilanınızla değiştirilecektir.</div>
+      <div class="dhead">
+        <div>
+          <span class="eyebrow" style="color:#7A5B36">SUV / ARAZİ</span>
+          <h1>VW Tiguan · 2021</h1>
+          <div class="sub">Örnek kayıt · 42.000 km · SUV</div>
+          <div class="kv">Volkswagen Tiguan 1.5 TSI Elegance · SB-ORNEK02</div>
+        </div>
+        <div class="dprice">
+          <div class="p">2.150.000 ₺</div>
+          <div class="u">ilan fiyatı</div>
+          <div class="bf">Direkt satış — sürekli satışta</div>
+        </div>
+      </div>
+      <div id="gal" class="gallery"></div>
+      <div id="ph" class="ph" style="display:none">
+        <div class="big">📷</div><div>Bu aracın fotoğrafları henüz eklenmedi.</div>
+        <div style="margin-top:10px">Dosyaları <code>foto/SB-ORNEK02/</code> klasörüne
+        <code>SB-ORNEK02-1.jpg</code>, <code>SB-ORNEK02-2.jpg</code> … şeklinde bırakın.</div>
+      </div>
+      <div class="sec"><h3>Öne Çıkan Özellikler</h3><div class="desc">ÖRNEK KAYIT — gerçek ilanla değiştirilecek. Banka bünyesindeki araç, direkt satış yöntemiyle. Tek elden, yetkili servis bakımlı; panoramik cam tavan, adaptif hız sabitleyici. Görüntüleme ve teklif için ilgili banka/bayi ile iletişim.</div></div>
+      <div class="sec"><h3>Künye</h3><div class="dl"><div class="item"><u>Segment</u><b>SUV / ARAZİ</b></div><div class="item"><u>Marka</u><b>Volkswagen</b></div><div class="item"><u>Model</u><b>Tiguan 1.5 TSI Elegance</b></div><div class="item"><u>Yıl</u><b>2021</b></div><div class="item"><u>KM</u><b>42.000</b></div><div class="item"><u>Yakıt</u><b>Benzin</b></div><div class="item"><u>Vites</u><b>Otomatik (DSG)</b></div><div class="item"><u>Motor</u><b>1.5</b></div><div class="item"><u>Renk</u><b>Beyaz</b></div><div class="item"><u>Muayene</u><b>2026 sonu</b></div><div class="item"><u>İlan / Kayıt No</u><b>sahibinden İlan (örnek)</b></div><div class="item"><u>Kaynak</u><b>sahibinden.com · Banka</b></div><div class="item"><u>Durum</u><b>Sürekli satışta</b></div></div></div>
+      <div class="sec"><h3>Hasar / Durum</h3><div class="desc">Hasar kaydı yok, orijinal (örnek bilgi)</div></div>
+      <div class="sec"><h3>Takyidat / Şerh — Dikkat</h3>
+        <div class="risk"><b>Satın alma kararını etkileyen kısıt</b>Banka aracı 'mevcut durumuyla' satılır; rehin/şerh ve trafik kaydı durumu tapu-trafik kaydından ayrıca teyit edilmelidir.</div></div>
+      <div class="sec"><h3>Görüntüleme / Konum</h3>
+        <a class="mapbtn" target="_blank" href="https://www.google.com/maps/search/?api=1&query=%C4%B0zmir%20%28g%C3%B6r%C3%BCnt%C3%BCleme%20i%C3%A7in%20bayi%20ile%20ileti%C5%9Fim%29">📍 Google Haritalar'da Aç</a>
+        <div class="addr">İzmir (görüntüleme için bayi ile iletişim)</div>
+      </div>
+      <div class="foot">Kaynak: sahibinden.com · Banka · sahibinden İlan (örnek). Araçlar "mevcut durumuyla" satılır; km/tramer/hasar
+      ve hacizli-rehinli durumu teklif öncesi şartname ve trafik kaydından teyit edilmelidir.</div>
+    </div>
+    <div id="lb" class="lightbox"><img alt=""></div>
+    <script>
+    (function(){
+      var locs=["foto/SB-ORNEK02/","foto/"], bases=["SB-ORNEK02", "SB-ORNEK02"],
+          seps=["-","_"], exts=["jpg","jpeg","png","webp","JPG","JPEG","PNG","WEBP"],
+          g=document.getElementById("gal"), ph=document.getElementById("ph"), lb=document.getElementById("lb");
+      function load(u){return new Promise(function(r){var im=new Image();im.onload=function(){r(im.src)};im.onerror=function(){r(null)};im.src=u;});}
+      function urlOf(p,x){var num=p.pad?("0"+x).slice(-2):String(x);return p.loc+p.base+p.sep+num+"."+p.ext;}
+      function addImg(src){var im=document.createElement("img");im.src=src;im.loading="lazy";im.decoding="async";
+        im.onclick=(function(s){return function(){lb.querySelector("img").src=s;lb.style.display="flex";};})(src);g.appendChild(im);}
+      async function discover(){for(var L=0;L<locs.length;L++)for(var b=0;b<bases.length;b++)for(var s=0;s<seps.length;s++)
+        for(var pd=0;pd<2;pd++)for(var e=0;e<exts.length;e++){var p={loc:locs[L],base:bases[b],sep:seps[s],pad:pd===1,ext:exts[e]};
+          var src=await load(urlOf(p,1));if(src)return {p:p,first:src};}return null;}
+      (async function(){var d=await discover();if(!d){ph.style.display="block";return;}ph.style.display="none";
+        var found={1:d.first},start=2,B=20,stop=false;
+        while(!stop&&start<=200){var idx=[],k;for(k=0;k<B;k++)idx.push(start+k);
+          var res=await Promise.all(idx.map(function(x){return load(urlOf(d.p,x));}));
+          for(k=0;k<res.length;k++)if(res[k])found[idx[k]]=res[k];
+          for(k=0;k<res.length;k++)if(!res[k]){stop=true;break;}if(!stop)start+=B;}
+        var i=1;while(found[i]){addImg(found[i]);i++;}})();
+      lb.onclick=function(){lb.style.display="none"};
+    })();
+    </script>
+    <script src="countdown.js"></script></body></html>
