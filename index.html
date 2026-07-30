@@ -8,14 +8,15 @@
           <h1>İhaleli ve Direkt Satış <b>Gayrimenkuller</b></h1>
         </div>
         <div class="stats">
-      <div class="stat"><u>Portföy</u><s>1085,9<em> mn ₺</em></s></div>
-      <div class="stat"><u>Mülk</u><s>19<em> aktif</em></s></div>
+      <div class="stat"><u>Portföy</u><s>1079,2<em> mn ₺</em></s></div>
+      <div class="stat"><u>Mülk</u><s>18<em> aktif</em></s></div>
       <div class="stat"><u>Araç</u><s>6<em> aktif</em></s></div>
-      <div class="stat"><u>En Yakın</u><s><b id="nearest">-3</b><em> gün</em></s></div>
+      <div class="stat"><u>En Yakın</u><s><b id="nearest">bugün</b><em id="nearest-suffix"></em></s></div>
     </div>
       </div>
-      <div class="filters"><button class="fbtn f-all active" data-filter="all">Tümü (22)</button><button class="fbtn f-konut" data-filter="konut"><i style="background:#2F6F63"></i>Konut (12)</button><button class="fbtn f-ofis" data-filter="ofis"><i style="background:#3E6E96"></i>Ofis (2)</button><button class="fbtn f-ticari" data-filter="ticari"><i style="background:#8A4B57"></i>Ticari (3)</button><button class="fbtn f-arsa" data-filter="arsa"><i style="background:#B8862B"></i>Arsa (1)</button><button class="fbtn f-sanayi" data-filter="sanayi"><i style="background:#5C5A6E"></i>Sanayi (4)</button></div>
+      <div class="filters"><button class="fbtn f-all active" data-filter="all">Tümü (21)</button><button class="fbtn f-konut" data-filter="konut"><i style="background:#2F6F63"></i>Konut (11)</button><button class="fbtn f-ofis" data-filter="ofis"><i style="background:#3E6E96"></i>Ofis (2)</button><button class="fbtn f-ticari" data-filter="ticari"><i style="background:#8A4B57"></i>Ticari (3)</button><button class="fbtn f-arsa" data-filter="arsa"><i style="background:#B8862B"></i>Arsa (1)</button><button class="fbtn f-sanayi" data-filter="sanayi"><i style="background:#5C5A6E"></i>Sanayi (4)</button></div>
       <div class="fdrops"><select class="fdrop" data-key="city"><option value="all">Tüm şehirler</option><option value="Aydın">Aydın</option><option value="İzmir">İzmir</option><option value="Manisa">Manisa</option></select><select class="fdrop" data-key="method"><option value="all">Satış Tipi</option><option value="direkt">Direkt Satış</option><option value="ihale">İhale</option></select><select class="fsort"><option value="default">Sıralama</option><option value="price-desc">Fiyat: Azalan</option><option value="price-asc">Fiyat: Artan</option></select></div>
+      <div class="searchbox"><input type="text" id="ilanSearch" autocomplete="off" spellcheck="false" placeholder="İlan/kayıt no ara…"></div>
       <div class="cdkey"><span class="lbl">Kalan süre</span>
         <span class="k"><i style="background:#A4462F"></i>bugün / 1 gün</span>
         <span class="k"><i style="background:#C15B22"></i>2–3 gün</span>
@@ -26,6 +27,7 @@
       <div class="grid">
     <a class="card t-konut " data-tip="konut"
        data-city="İzmir" data-method="ihale" data-price="36097990"
+       data-search="17122609830 uyp-17122609830 urla · gülbahçe dubleks + arsa"
        href="mulk-UYP-17122609830.html">
       <span class="bar" style="background:#2F6F63"></span>
       <div class="card-in">
@@ -53,6 +55,7 @@
     </a>
     <a class="card t-arsa " data-tip="arsa"
        data-city="İzmir" data-method="ihale" data-price="12000000"
+       data-search="17059741296 uyp-17059741296 çeşme · musalla"
        href="mulk-UYP-17059741296.html">
       <span class="bar" style="background:#B8862B"></span>
       <div class="card-in">
@@ -80,6 +83,7 @@
     </a>
     <a class="card t-konut " data-tip="konut"
        data-city="İzmir" data-method="ihale" data-price="23000000"
+       data-search="16911800779 uyp-16911800779 çeşme · çiftlik"
        href="mulk-UYP-16911800779.html">
       <span class="bar" style="background:#2F6F63"></span>
       <div class="card-in">
@@ -107,6 +111,7 @@
     </a>
     <a class="card t-konut " data-tip="konut"
        data-city="İzmir" data-method="ihale" data-price="14107250"
+       data-search="16806409882 uyp-16806409882 urla · zeytinalanı dubleks"
        href="mulk-UYP-16806409882.html">
       <span class="bar" style="background:#2F6F63"></span>
       <div class="card-in">
@@ -134,6 +139,7 @@
     </a>
     <a class="card t-konut " data-tip="konut"
        data-city="İzmir" data-method="ihale" data-price="25027445"
+       data-search="16907627753 uyp-16907627753 urla · çeşmealtı"
        href="mulk-UYP-16907627753.html">
       <span class="bar" style="background:#2F6F63"></span>
       <div class="card-in">
@@ -161,6 +167,7 @@
     </a>
     <a class="card t-ticari " data-tip="ticari"
        data-city="Aydın" data-method="ihale" data-price="70392000"
+       data-search="17177113180 uyp-17177113180 germencik · akaryakıt"
        href="mulk-UYP-17177113180.html">
       <span class="bar" style="background:#8A4B57"></span>
       <div class="card-in">
@@ -188,6 +195,7 @@
     </a>
     <a class="card t-konut " data-tip="konut"
        data-city="İzmir" data-method="ihale" data-price="11760000"
+       data-search="17117260654 uyp-17117260654 kemalpaşa · y. kızılca"
        href="mulk-UYP-17117260654.html">
       <span class="bar" style="background:#2F6F63"></span>
       <div class="card-in">
@@ -215,6 +223,7 @@
     </a>
     <a class="card t-konut " data-tip="konut"
        data-city="İzmir" data-method="ihale" data-price="30000000"
+       data-search="16926362076 uyp-16926362076 konak · mersinli"
        href="mulk-UYP-16926362076.html">
       <span class="bar" style="background:#2F6F63"></span>
       <div class="card-in">
@@ -242,6 +251,7 @@
     </a>
     <a class="card t-konut " data-tip="konut"
        data-city="İzmir" data-method="ihale" data-price="172058000"
+       data-search="17178814107 uyp-17178814107 narlıdere · sahilevleri"
        href="mulk-UYP-17178814107.html">
       <span class="bar" style="background:#2F6F63"></span>
       <div class="card-in">
@@ -269,6 +279,7 @@
     </a>
     <a class="card t-konut " data-tip="konut"
        data-city="İzmir" data-method="ihale" data-price="26000000"
+       data-search="17139423660 uyp-17139423660 güzelbahçe · çamlı"
        href="mulk-UYP-17139423660.html">
       <span class="bar" style="background:#2F6F63"></span>
       <div class="card-in">
@@ -296,6 +307,7 @@
     </a>
     <a class="card t-ofis " data-tip="ofis"
        data-city="İzmir" data-method="ihale" data-price="7700000"
+       data-search="17313517040 uyp-17313517040 bayraklı · folkart towers"
        href="mulk-UYP-17313517040.html">
       <span class="bar" style="background:#3E6E96"></span>
       <div class="card-in">
@@ -323,6 +335,7 @@
     </a>
     <a class="card t-sanayi " data-tip="sanayi"
        data-city="İzmir" data-method="direkt" data-price="265000000"
+       data-search="1308472953 sb-1308472953 menderes · ata"
        href="mulk-SB-1308472953.html">
       <span class="bar" style="background:#5C5A6E"></span>
       <div class="card-in">
@@ -350,6 +363,7 @@
     </a>
     <a class="card t-sanayi " data-tip="sanayi"
        data-city="Manisa" data-method="ihale" data-price="120500000"
+       data-search="101191525 int-101191525 akhisar · zeytinliova"
        href="mulk-INT-101191525.html">
       <span class="bar" style="background:#5C5A6E"></span>
       <div class="card-in">
@@ -377,6 +391,7 @@
     </a>
     <a class="card t-sanayi " data-tip="sanayi"
        data-city="İzmir" data-method="ihale" data-price="98837500"
+       data-search="543 int-543 torbalı · k. karabekir"
        href="mulk-INT-543.html">
       <span class="bar" style="background:#5C5A6E"></span>
       <div class="card-in">
@@ -404,6 +419,7 @@
     </a>
     <a class="card t-ticari " data-tip="ticari"
        data-city="İzmir" data-method="direkt" data-price="60000000"
+       data-search="1326877278 sb-1326877278 konak · alsancak"
        href="mulk-SB-1326877278.html">
       <span class="bar" style="background:#8A4B57"></span>
       <div class="card-in">
@@ -431,6 +447,7 @@
     </a>
     <a class="card t-konut " data-tip="konut"
        data-city="İzmir" data-method="direkt" data-price="35000000"
+       data-search="1325575848 sb-1325575848 güzelbahçe · kahramandere"
        href="mulk-SB-1325575848.html">
       <span class="bar" style="background:#2F6F63"></span>
       <div class="card-in">
@@ -458,6 +475,7 @@
     </a>
     <a class="card t-ticari " data-tip="ticari"
        data-city="İzmir" data-method="direkt" data-price="29000000"
+       data-search="1291770828 sb-1291770828 torbalı · i̇nönü"
        href="mulk-SB-1291770828.html">
       <span class="bar" style="background:#8A4B57"></span>
       <div class="card-in">
@@ -485,6 +503,7 @@
     </a>
     <a class="card t-konut " data-tip="konut"
        data-city="İzmir" data-method="direkt" data-price="20875000"
+       data-search="1305997535 sb-1305997535 bornova · yeşilova"
        href="mulk-SB-1305997535.html">
       <span class="bar" style="background:#2F6F63"></span>
       <div class="card-in">
@@ -510,35 +529,9 @@
         
       </div>
     </a>
-    <a class="card t-konut " data-tip="konut"
-       data-city="İzmir" data-method="direkt" data-price="6750000"
-       href="mulk-SB-1303482329.html">
-      <span class="bar" style="background:#2F6F63"></span>
-      <div class="card-in">
-        <div class="row">
-          <span><span class="eyebrow" style="color:#2F6F63">KONUT</span> <span class="src">SB</span></span>
-          <span class="parsel">371 Ada / 4 Parsel</span>
-        </div>
-        <h2>Çeşme · Musalla</h2>
-        <div class="alt">2+1 · Çeşme merkez</div>
-        <div class="metrics">
-          <div class="metric"><u>Alan</u><b>46 m²</b></div>
-          <div class="metric"><u>Birim</u><b>146.739 ₺/m²</b></div>
-          <div class="metric"><u>Oda</u><b>2+1</b></div>
-        </div>
-        <div class="priceline">
-          <span class="price">6.750.000 ₺</span>
-          <span class="chip direct">DİREKT SATIŞ</span>
-        </div>
-        
-        
-        
-        
-        
-      </div>
-    </a>
     <a class="card t-ofis sold" data-tip="ofis"
        data-city="İzmir" data-method="ihale" data-price="4200000"
+       data-search="16764477097 uyp-16764477097 bornova · kazımdirik"
        href="mulk-UYP-16764477097.html">
       <span class="bar" style="background:#3E6E96"></span>
       <div class="card-in">
@@ -566,6 +559,7 @@
     </a>
     <a class="card t-sanayi sold" data-tip="sanayi"
        data-city="İzmir" data-method="ihale" data-price="185065000"
+       data-search="16908901595 uyp-16908901595 kemalpaşa · osb"
        href="mulk-UYP-16908901595.html">
       <span class="bar" style="background:#5C5A6E"></span>
       <div class="card-in">
@@ -593,6 +587,7 @@
     </a>
     <a class="card t-konut sold" data-tip="konut"
        data-city="İzmir" data-method="ihale" data-price="49215000"
+       data-search="17000561261 uyp-17000561261 bornova · kavaklıdere arazi"
        href="mulk-UYP-17000561261.html">
       <span class="bar" style="background:#2F6F63"></span>
       <div class="card-in">

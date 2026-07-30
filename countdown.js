@@ -72,8 +72,13 @@
         rows[r].classList.toggle('wk-on', on);
       }
     }
-    var n=document.getElementById('nearest');
-    if(n){ n.textContent=(min===null?'—':(min<=0?'bugün':min)); if(minCol) n.style.color=minCol; }
+    var n=document.getElementById('nearest'), nsuf=document.getElementById('nearest-suffix');
+    if(n){
+      if(min===null){ n.textContent='—'; if(nsuf) nsuf.textContent=''; }
+      else if(min<=0){ n.textContent='bugün'; if(nsuf) nsuf.textContent=''; }
+      else { n.textContent=min; if(nsuf) nsuf.textContent=' gün'; }
+      if(minCol) n.style.color=minCol;
+    }
   }
   if(document.readyState!=='loading') run();
   else document.addEventListener('DOMContentLoaded',run);

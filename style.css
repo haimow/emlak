@@ -94,6 +94,13 @@ a{color:inherit;text-decoration:none}
   border-radius:999px;padding:8px 14px;cursor:pointer;transition:border-color .15s ease}
 .fdrop:hover,.fsort:hover{border-color:#B7C2BB}
 .fdrop:focus,.fsort:focus{outline:none;border-color:var(--konut)}
+/* ilan/kayıt no arama kutusu — küçük, filtre barının altında */
+.searchbox{margin:0 0 18px}
+.searchbox input{font-family:inherit;font-size:12.5px;color:var(--ink);background:#fff;
+  border:1.5px solid var(--line);border-radius:999px;padding:7px 14px;width:220px;max-width:100%;
+  transition:border-color .15s ease}
+.searchbox input::placeholder{color:#AEB6AF}
+.searchbox input:focus{outline:none;border-color:var(--konut)}
 /* kaynak ibaresi (UYP / INT / SB) */
 .src{display:inline-block;font-family:"SFMono-Regular",Menlo,monospace;font-size:8.5px;letter-spacing:.08em;
   color:#9AA49E;border:1px solid #E2E7DE;border-radius:4px;padding:1px 4px;vertical-align:middle;margin-left:4px}
