@@ -1,125 +1,153 @@
 [
   {
-    "portfoy_kodu": "İhale-5",
+    "ilan_no": "17059741296",
     "referans_kodu": "UYP-17059741296",
     "klasor": "UYP-17059741296",
     "kaynak": "UYAP e-satış",
     "ilce_mahalle": "Çeşme / Musalla – Bahçearası Mevkii"
   },
   {
-    "portfoy_kodu": "İhale-4",
+    "ilan_no": "16911800779",
     "referans_kodu": "UYP-16911800779",
     "klasor": "UYP-16911800779",
     "kaynak": "UYAP e-satış",
     "ilce_mahalle": "Çeşme / Çiftlik – Giritli Mevkii"
   },
   {
-    "portfoy_kodu": "İhale-3",
+    "ilan_no": "16907627753",
     "referans_kodu": "UYP-16907627753",
     "klasor": "UYP-16907627753",
     "kaynak": "UYAP e-satış",
     "ilce_mahalle": "Urla / Denizli – Çeşmealtı Mevkii"
   },
   {
-    "portfoy_kodu": "İhale-2",
+    "ilan_no": "17117260654",
     "referans_kodu": "UYP-17117260654",
     "klasor": "UYP-17117260654",
     "kaynak": "UYAP e-satış",
     "ilce_mahalle": "Kemalpaşa / Yukarı Kızılca Merkez"
   },
   {
-    "portfoy_kodu": "İhale-1",
+    "ilan_no": "16926362076",
     "referans_kodu": "UYP-16926362076",
     "klasor": "UYP-16926362076",
     "kaynak": "UYAP e-satış",
     "ilce_mahalle": "Konak / Mersinli"
   },
   {
-    "portfoy_kodu": "İhale-6",
+    "ilan_no": "16764477097",
     "referans_kodu": "UYP-16764477097",
     "klasor": "UYP-16764477097",
     "kaynak": "UYAP e-satış",
     "ilce_mahalle": "Bornova / Kazımdirik"
   },
   {
-    "portfoy_kodu": "İhale-7",
+    "ilan_no": "16908901595",
     "referans_kodu": "UYP-16908901595",
     "klasor": "UYP-16908901595",
     "kaynak": "UYAP e-satış",
     "ilce_mahalle": "Kemalpaşa / Ansızca"
   },
   {
-    "portfoy_kodu": "İhale-8",
-    "referans_kodu": "UYP-17066060379",
-    "klasor": "UYP-17066060379",
-    "kaynak": "UYAP e-satış",
-    "ilce_mahalle": "Saruhanlı / Çamlıyurt"
-  },
-  {
-    "portfoy_kodu": "İhale-9",
+    "ilan_no": "17177113180",
     "referans_kodu": "UYP-17177113180",
     "klasor": "UYP-17177113180",
     "kaynak": "UYAP e-satış",
     "ilce_mahalle": "Germencik / Tekin – Aliçavuşboğazı Mevkii"
   },
   {
-    "portfoy_kodu": "İhale-10",
+    "ilan_no": "17313517040",
     "referans_kodu": "UYP-17313517040",
     "klasor": "UYP-17313517040",
     "kaynak": "UYAP e-satış",
     "ilce_mahalle": "Bayraklı / Salhane – Folkart Towers"
   },
   {
-    "portfoy_kodu": "Direkt Satış-1",
+    "ilan_no": "17178814107",
+    "referans_kodu": "UYP-17178814107",
+    "klasor": "UYP-17178814107",
+    "kaynak": "UYAP e-satış",
+    "ilce_mahalle": "Narlıdere / Sahilevleri"
+  },
+  {
+    "ilan_no": "17139423660",
+    "referans_kodu": "UYP-17139423660",
+    "klasor": "UYP-17139423660",
+    "kaynak": "UYAP e-satış",
+    "ilce_mahalle": "Güzelbahçe / Çamlı"
+  },
+  {
+    "ilan_no": "16806409882",
+    "referans_kodu": "UYP-16806409882",
+    "klasor": "UYP-16806409882",
+    "kaynak": "UYAP e-satış",
+    "ilce_mahalle": "Urla / Zeytinalanı"
+  },
+  {
+    "ilan_no": "17122609830",
+    "referans_kodu": "UYP-17122609830",
+    "klasor": "UYP-17122609830",
+    "kaynak": "UYAP e-satış",
+    "ilce_mahalle": "Urla / Gülbahçe"
+  },
+  {
+    "ilan_no": "17000561261",
+    "referans_kodu": "UYP-17000561261",
+    "klasor": "UYP-17000561261",
+    "kaynak": "İcra/İflas Dairesi e-satış",
+    "ilce_mahalle": "Bornova / Kavaklıdere"
+  },
+  {
+    "ilan_no": "101191525",
     "referans_kodu": "INT-101191525",
     "klasor": "INT-101191525",
     "kaynak": "INT İhale Platformu",
     "ilce_mahalle": "Akhisar / Zeytinliova"
   },
   {
-    "portfoy_kodu": "Direkt Satış-2",
+    "ilan_no": "543",
     "referans_kodu": "INT-543",
     "klasor": "INT-543",
     "kaynak": "INT İhale Platformu",
     "ilce_mahalle": "Torbalı / Kazım Karabekir"
   },
   {
-    "portfoy_kodu": "SB-1303482329",
+    "ilan_no": "1303482329",
     "referans_kodu": "SB-1303482329",
     "klasor": "SB-1303482329",
     "kaynak": "sahibinden.com · VakıfBank",
     "ilce_mahalle": "Çeşme / Musalla"
   },
   {
-    "portfoy_kodu": "SB-1305997535",
+    "ilan_no": "1305997535",
     "referans_kodu": "SB-1305997535",
     "klasor": "SB-1305997535",
     "kaynak": "sahibinden.com · Halkbank",
     "ilce_mahalle": "Bornova / Yeşilova"
   },
   {
-    "portfoy_kodu": "SB-1325575848",
+    "ilan_no": "1325575848",
     "referans_kodu": "SB-1325575848",
     "klasor": "SB-1325575848",
     "kaynak": "sahibinden.com · Halkbank",
     "ilce_mahalle": "Güzelbahçe / Kahramandere"
   },
   {
-    "portfoy_kodu": "SB-1291770828",
+    "ilan_no": "1291770828",
     "referans_kodu": "SB-1291770828",
     "klasor": "SB-1291770828",
     "kaynak": "sahibinden.com · Halkbank",
     "ilce_mahalle": "Torbalı / İnönü"
   },
   {
-    "portfoy_kodu": "SB-1326877278",
+    "ilan_no": "1326877278",
     "referans_kodu": "SB-1326877278",
     "klasor": "SB-1326877278",
     "kaynak": "sahibinden.com · VakıfBank",
     "ilce_mahalle": "Konak / Alsancak"
   },
   {
-    "portfoy_kodu": "SB-1308472953",
+    "ilan_no": "1308472953",
     "referans_kodu": "SB-1308472953",
     "klasor": "SB-1308472953",
     "kaynak": "sahibinden.com · VakıfBank",
