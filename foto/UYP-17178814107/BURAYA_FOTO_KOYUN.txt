@@ -1,0 +1,4 @@
+Bornova · Kazımdirik (UYP-16764477097)
+Bu klasöre fotoğrafları şu adla koyun: 16764477097-1.jpg, 16764477097-2.jpg, ...
+(tam kod da olur: UYP-16764477097-1.jpg). jpg / jpeg / png / webp desteklenir.
+Sıra numarasına göre dizilir.
