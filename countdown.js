@@ -41,7 +41,7 @@
       } else { // artırma sürüyor
         var de=dayDiff(a.end, today0), t2=tier(de<=0?0:de); cls='cd-live'; col=t2.col;
         var base2 = de<=0 ? ('bugün '+two(a.end.getHours())+':'+two(a.end.getMinutes())+' bitiyor') : (de+' gün');
-        label = a.second ? ('2. İhaleye Geçildi · '+base2) : (de>0 ? ('sürüyor · bitişe '+base2) : base2);
+        label = a.second ? ('2. İhaleye Geçildi · '+base2) : (de>0 ? ('1. İhale Sürüyor · '+base2) : base2);
       }
       for(var k=0;k<TIERS.length;k++) w.classList.remove(TIERS[k]);
       w.classList.add(cls);
