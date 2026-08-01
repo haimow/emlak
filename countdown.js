@@ -35,12 +35,13 @@
       if(ended){ cls='cd-past'; col='#96A099'; label='sona erdi'; }
       else if(now < a.start){
         var ds=dayDiff(a.start, today0), t=tier(ds); cls=t.cls; col=t.col;
-        label = ds<=0 ? ('bugün '+two(a.start.getHours())+':'+two(a.start.getMinutes()))
+        var base = ds<=0 ? ('bugün '+two(a.start.getHours())+':'+two(a.start.getMinutes()))
               : (ds===1 ? '1 gün (yarın)' : ds+' gün');
+        label = a.second ? ('2. İhale · '+base) : base;
       } else { // artırma sürüyor
         var de=dayDiff(a.end, today0), t2=tier(de<=0?0:de); cls='cd-live'; col=t2.col;
-        label = de<=0 ? ('bugün '+two(a.end.getHours())+':'+two(a.end.getMinutes())+' bitiyor')
-              : ('sürüyor · bitişe '+de+' gün');
+        var base2 = de<=0 ? ('bugün '+two(a.end.getHours())+':'+two(a.end.getMinutes())+' bitiyor') : (de+' gün');
+        label = a.second ? ('2. İhaleye Geçildi · '+base2) : (de>0 ? ('sürüyor · bitişe '+base2) : base2);
       }
       for(var k=0;k<TIERS.length;k++) w.classList.remove(TIERS[k]);
       w.classList.add(cls);
