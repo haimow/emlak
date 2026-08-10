@@ -698,7 +698,87 @@
       </div>
     </a></div>
       <div class="empty" id="empty">Seçilen filtrelere uyan mülk yok.</div>
-      <div class="foot">Muhammen bedeller ihale ilanlarından, ilan fiyatları banka listelerinden alınmıştır;
+      <style id="icra-st">
+.icra-sec{margin:2.5rem auto;max-width:1200px;padding:0 1.2rem}
+.icra-sec-h{display:flex;align-items:baseline;gap:1rem;margin-bottom:.75rem;border-top:2px solid var(--ink,#12211C);padding-top:1.25rem}
+.icra-sec-h h2{margin:0;font-size:1.15rem;font-weight:700;color:var(--ink,#12211C);letter-spacing:-.01em}
+.icra-meta{font-size:.8rem;color:#999}
+.icra-ctrls{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:.75rem}
+.icra-ctrls select,.icra-ctrls input{padding:.38rem .65rem;border:1.5px solid #d0cfc8;border-radius:7px;font-size:.85rem;background:var(--bg,#FAF9F5);color:var(--ink,#12211C);outline:none;cursor:pointer}
+.icra-ctrls input{flex:1;min-width:160px}
+.icra-wrap{overflow-x:auto;border:1.5px solid #e3e1d9;border-radius:9px;background:#fff}
+.itbl{width:100%;border-collapse:collapse;font-size:.82rem}
+.itbl th{background:var(--ink,#12211C);color:#fff;padding:.5rem .65rem;text-align:left;white-space:nowrap;font-weight:600;font-size:.8rem}
+.itbl td{padding:.42rem .65rem;border-bottom:1px solid #eee;vertical-align:middle}
+.itbl tr:last-child td{border-bottom:none}
+.itbl tr:hover td{background:#f6f5f1}
+.ibadge{display:inline-block;padding:2px 6px;border-radius:4px;font-size:.72rem;font-weight:700;color:#fff}
+.itbl a{color:#2F6F63;text-decoration:none;font-weight:600}
+.itbl a:hover{text-decoration:underline}
+@media(max-width:700px){.itbl td:nth-child(3),.itbl th:nth-child(3),.itbl td:nth-child(4),.itbl th:nth-child(4){display:none}}
+</style>
+<section class="icra-sec">
+  <div class="icra-sec-h">
+    <h2>İcra İlanları</h2>
+    <span id="icra-meta" class="icra-meta">yükleniyor…</span>
+  </div>
+  <div class="icra-ctrls">
+    <select id="icra-il"><option value="">Tüm şehirler</option><option>İZMİR</option><option>MUĞLA</option><option>MANİSA</option></select>
+    <select id="icra-tip"><option value="">Tüm tipler</option></select>
+    <input id="icra-q" type="search" placeholder="İl, ilçe, mahalle, ada/parsel…">
+    <select id="icra-sort"><option value="bd">Bedel ↓</option><option value="ba">Bedel ↑</option><option value="ih">İhale tarihi</option></select>
+  </div>
+  <div class="icra-wrap">
+    <table class="itbl">
+      <thead><tr><th>Tip</th><th>İl / İlçe</th><th>Ada / Parsel</th><th>Alan m²</th><th>Tahmini Bedel</th><th>KDV%</th><th>İhale Tarihi</th><th>İlan</th></tr></thead>
+      <tbody id="itbody"><tr><td colspan="8" style="text-align:center;padding:1rem;color:#bbb">Yükleniyor…</td></tr></tbody>
+    </table>
+  </div>
+</section>
+<script>
+(function(){
+var TC={'Daire':'#2F6F63','Konut':'#2F6F63','Villa':'#2F6F63','Bina':'#5C5A6E','Dükkan':'#8A4B57','Ofis':'#3E6E96','Tarla':'#B8862B','Arsa':'#B8862B','Sanayi':'#5C5A6E','Fabrika':'#5C5A6E','Tarım':'#B8862B','Depo':'#5C5A6E'};
+function tc(t){if(!t)return'#888';for(var k in TC)if(t.indexOf(k)>=0)return TC[k];return'#888';}
+function fb(v){var n=parseInt((v||'').toString().replace(/\D/g,''));if(isNaN(n))return'—';if(n>=1e9)return(n/1e9).toFixed(1)+' Mlr ₺';if(n>=1e6)return(n/1e6).toFixed(1)+' Mn ₺';return n.toLocaleString('tr-TR')+' ₺';}
+var ALL=[];
+function render(){
+  var il=document.getElementById('icra-il').value;
+  var tip=document.getElementById('icra-tip').value;
+  var q=(document.getElementById('icra-q').value||'').toLocaleLowerCase('tr-TR');
+  var srt=document.getElementById('icra-sort').value;
+  var lst=ALL.filter(function(x){
+    if(il&&x.il!==il)return false;
+    if(tip&&x.tip!==tip)return false;
+    if(q&&(x.il+x.ilce+x.mahalle+x.tip+x.baslik+x.ada+x.parsel).toLocaleLowerCase('tr-TR').indexOf(q)<0)return false;
+    return true;
+  }).slice().sort(function(a,b){
+    if(srt==='bd')return(parseInt(b.bedel)||0)-(parseInt(a.bedel)||0);
+    if(srt==='ba')return(parseInt(a.bedel)||0)-(parseInt(b.bedel)||0);
+    if(srt==='ih')return(a.ihale_tarihi||'').localeCompare(b.ihale_tarihi||'');
+    return 0;
+  });
+  document.getElementById('icra-meta').textContent=lst.length+'/'+ALL.length+' ilan';
+  var h='';
+  if(!lst.length){h='<tr><td colspan="8" style="text-align:center;padding:1.2rem;color:#bbb">Eşleşen ilan bulunamadı.</td></tr>';}
+  else lst.forEach(function(x){
+    var c=tc(x.tip);
+    h+='<tr><td><span class="ibadge" style="background:'+c+'">'+(x.tip||'—')+'</span></td><td>'+x.il+(x.ilce?'<br><small style="color:#999">'+x.ilce+(x.mahalle?' · '+x.mahalle:'')+'</small>':'')+'</td><td>'+(x.ada||'—')+' / '+(x.parsel||'—')+'</td><td>'+(x.alan||'—')+'</td><td style="white-space:nowrap;font-weight:600">'+fb(x.bedel)+'</td><td>'+(x.kdv||'0')+'%</td><td style="white-space:nowrap">'+(x.ihale_tarihi||'—')+'</td><td>'+(x.url?'<a href="'+x.url+'" target="_blank" rel="noopener">→ İlan</a>':'—')+'</td></tr>';
+  });
+  document.getElementById('itbody').innerHTML=h;
+}
+fetch('./data/icra-ilanlar.json').then(function(r){return r.json();}).then(function(d){
+  ALL=d.ilanlar||[];
+  var tips=[...new Set(ALL.map(function(x){return x.tip;}))].filter(Boolean).sort();
+  var ts=document.getElementById('icra-tip');
+  tips.forEach(function(t){var o=document.createElement('option');o.value=t;o.textContent=t;ts.appendChild(o);});
+  document.getElementById('icra-meta').textContent=ALL.length+' ilan · güncelleme: '+d.updated;
+  render();
+}).catch(function(){document.getElementById('icra-meta').textContent='Veriler yüklenemedi';});
+['icra-il','icra-tip','icra-sort'].forEach(function(id){document.getElementById(id).addEventListener('change',render);});
+document.getElementById('icra-q').addEventListener('input',render);
+}());
+</script>
+    <div class="foot">Muhammen bedeller ihale ilanlarından, ilan fiyatları banka listelerinden alınmıştır;
       KDV ve satış giderleri hariçtir. Teklif öncesi şartname, tapu kaydı ve kıymet takdir raporu incelenmelidir.</div>
     </div>
     <script src="filters.js"></script>
