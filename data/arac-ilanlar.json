@@ -1,0 +1,45 @@
+{
+  "updated": "2026-08-11",
+  "total": 3,
+  "araclar": [
+    {
+      "il": "İZMİR",
+      "ilce": "Merkez",
+      "marka": "Mercedes - Benz",
+      "model": "E",
+      "seri": "200",
+      "yil": "2023",
+      "bedel": 4750000,
+      "satis_tarihi": "21.08.2026",
+      "ilan_tarihi": "2026-06-25",
+      "url": "https://www.ilan.gov.tr/ilan/2147178/",
+      "baslik": "2023 model Mercedes Benz marka araç icradan satılıktır"
+    },
+    {
+      "il": "İZMİR",
+      "ilce": "Merkez",
+      "marka": "Mercedes - Benz",
+      "model": "",
+      "seri": "",
+      "yil": "2021",
+      "bedel": 3800000,
+      "satis_tarihi": "20.08.2026",
+      "ilan_tarihi": "2026-05-20",
+      "url": "https://www.ilan.gov.tr/ilan/2116294/",
+      "baslik": "2021 model Mercedes Benz marka araç icradan satılıktır"
+    },
+    {
+      "il": "İZMİR",
+      "ilce": "Merkez",
+      "marka": "BMW",
+      "model": "",
+      "seri": "",
+      "yil": "2022",
+      "bedel": 3700000,
+      "satis_tarihi": "26.08.2026",
+      "ilan_tarihi": "2026-05-20",
+      "url": "https://www.ilan.gov.tr/ilan/2115468/",
+      "baslik": "2022 model BMW marka araç icradan satılıktır"
+    }
+  ]
+}
