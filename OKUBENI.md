@@ -31,3 +31,26 @@ tıklayınca büyür. Fotoğraf eklemek/çıkarmak için kodda hiçbir değişik
 Menü ve künye verileri değişince (yeni mülk, fiyat, tarih) ben `index.html`,
 `mulk-*.html` ve `style.css` dosyalarını yenilerim; siz eski dosyaların üzerine
 koyup commit'lersiniz. `foto/` klasörüne dokunmam gerekmez.
+
+## İcra ilanları verisi (`data/icra-ilanlar.json`)
+Sitedeki "İcra İlanları" tablosu bu JSON dosyasından beslenir.
+
+**Alan adları:**
+| Alan | Açıklama |
+|---|---|
+| `il` | İl (İZMİR / MUĞLA / MANİSA) |
+| `ilce` | İlçe |
+| `mahalle` | Mahalle |
+| `ada` / `parsel` | Parsel bilgisi |
+| `tip` | Mülk tipi (Konut, Daire, Arsa, Tarla, Fabrika vb.) |
+| `bedel` | Tahmini bedel (sayı, ₺) |
+| `kdv` | KDV oranı (%) |
+| `alan` | Alan m² |
+| `ihale_tarihi` | İhale tarihi (GG.AA.YYYY) |
+| `url` | ilan.gov.tr ilanı |
+| `parselUrl` | TKGM parsel sorgu linki |
+| `baslik` | İlan başlığı |
+| `updated` | Son güncelleme zamanı (ISO 8601) |
+
+**Otomatik güncelleme:**
+İcra ilanları görev dosyası (`İcra İlanları.csv`) güncellendiğinde JSON da yeniden oluşturulur ve `git push` ile bu depoya gönderilir.
