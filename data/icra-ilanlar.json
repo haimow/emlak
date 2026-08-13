@@ -1,6 +1,6 @@
 {
-  "updated": "2026-08-12T22:55:28",
-  "toplamIlan": 187,
+  "updated": "2026-08-13T12:49:56",
+  "toplamIlan": 188,
   "ilanlar": [
     {
       "il": "MUĞLA",
@@ -2596,6 +2596,21 @@
       "url": "https://www.ilan.gov.tr/ilan/2181246/",
       "parselUrl": "https://parselsorgu.tkgm.gov.tr/#ara/idari/148737/8066/1/1785613136875",
       "baslik": "İzmir Bornova'da ofis icradan satılıktır (çoklu satış)"
+    },
+    {
+      "il": "MUĞLA",
+      "ilce": "Fethiye",
+      "mahalle": "Hisarönü",
+      "ada": "335",
+      "parsel": "6",
+      "bedel": 26512665.0,
+      "kdv": "20",
+      "tip": "Kargir Bina",
+      "alan": 750.05,
+      "ihale_tarihi": "05.11.2026",
+      "url": "https://www.ilan.gov.tr/ilan/2194262/",
+      "parselUrl": "",
+      "baslik": "Muğla Fethiye'de iki katlı kargir bina mahkemeden satılıktır"
     },
     {
       "il": "İZMİR",
