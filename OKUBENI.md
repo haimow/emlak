@@ -54,3 +54,22 @@ Sitedeki "İcra İlanları" tablosu bu JSON dosyasından beslenir.
 
 **Otomatik güncelleme:**
 İcra ilanları görev dosyası (`İcra İlanları.csv`) güncellendiğinde JSON da yeniden oluşturulur ve `git push` ile bu depoya gönderilir.
+
+## İcra araç ilanları güncelleme adımları
+`araclar.html` sayfasında iki araç bölümü vardır:
+1. **Üst kartlar** — UYP (uyap.gov.tr) kaynaklı, fotoğraflı, manuel eklenir.
+2. **Alt tablo (İcra İlanı)** — ilan.gov.tr kaynaklı araçlar, otomatik güncellenir.
+
+**Güncelleme yapılırken mutlaka uygulanacak kontrol:**
+
+> **Mükerrer araç kontrolü:** XLSX Araçlar sheet'ine yeni satır eklemeden önce,
+> o araç `araclar.html` üst kartlarında zaten var mı diye kontrol et.
+> Eşleşme kriteri: aynı yıl + aynı fiyat (veya aynı model + fiyat).
+> Mükerrer ise XLSX'e ekleme, alt tabloya da ekleme.
+
+**Alt tablo güncelleme adımları (her çalıştırmada):**
+1. `araclar.html` üst kartlarındaki tüm `data-price` ve araç model/yıl değerlerini çıkar.
+2. XLSX Araçlar sheet'indeki her satırı bu listeyle karşılaştır.
+3. Mükerrer olanları XLSX'ten ve alt tablodan kaldır.
+4. Kalan (yeni/benzersiz) araçları alt tabloya ekle; Kalan (gün) değerini o anki tarihe göre hesapla.
+5. Güncellenmiş `araclar.html`'i JSON ile birlikte `git push` et.
