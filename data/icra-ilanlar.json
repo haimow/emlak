@@ -1,6 +1,6 @@
 {
-  "updated": "2026-08-13T12:49:56",
-  "toplamIlan": 188,
+  "updated": "2026-08-14T11:45:56",
+  "toplamIlan": 190,
   "ilanlar": [
     {
       "il": "MUĞLA",
@@ -2614,6 +2614,21 @@
     },
     {
       "il": "İZMİR",
+      "ilce": "Menemen",
+      "mahalle": "KESİK",
+      "ada": "168",
+      "parsel": "1",
+      "bedel": 122818350.0,
+      "kdv": "20",
+      "tip": "Fabrika & Kompleks Tesis",
+      "alan": 6.114,
+      "ihale_tarihi": "10.11.2026",
+      "url": "https://www.ilan.gov.tr/ilan/2195612/",
+      "parselUrl": "",
+      "baslik": "İzmir Menemen'de fabrika binası icradan satılıktır"
+    },
+    {
+      "il": "İZMİR",
       "ilce": "Güzelbahçe",
       "mahalle": "KAHRAMANDERE MAH. / GÜZELBAHÇE",
       "ada": "1625",
@@ -2641,6 +2656,21 @@
       "url": "https://www.ilan.gov.tr/ilan/2192931/",
       "parselUrl": "",
       "baslik": "Muğla Milas'ta 4.358 m² arsa icradan satılıktır"
+    },
+    {
+      "il": "MUĞLA",
+      "ilce": "Bodrum",
+      "mahalle": "Gökçebel",
+      "ada": "593",
+      "parsel": "6",
+      "bedel": 14765300.0,
+      "kdv": "20",
+      "tip": "Büro & Ofis & İş Hanı Katı",
+      "alan": 74.0,
+      "ihale_tarihi": "23.11.2026",
+      "url": "https://www.ilan.gov.tr/ilan/2195209/",
+      "parselUrl": "",
+      "baslik": "Muğla Bodrum'da ofis icradan satılıktır"
     },
     {
       "il": "İZMİR",
