@@ -15,6 +15,14 @@
   font-size:14px;color:#1E5E30;margin-top:10px;font-weight:500}
 .bid-banner span{font-size:18px;font-weight:700}
 .teklif-info{font-size:13px;color:#5A8F68;margin-top:4px}
+
+.genel-aciklama-sec { margin-top: 20px; }
+.genel-aciklama-sec p.aciklama-note { font-size:14px; color:#5A6B5A; line-height:1.6; margin:0 0 12px; }
+.uyap-aciklama-link { display:inline-flex; align-items:center; gap:6px; padding:10px 18px;
+  border:1.5px solid var(--accent,#4A6741); border-radius:8px; color:var(--accent,#4A6741);
+  font-size:14px; font-weight:600; text-decoration:none; }
+.uyap-aciklama-link:hover { background:var(--accent,#4A6741); color:#fff; }
+
 </style>
 </head><body>
 <div class="wrap">
@@ -23,7 +31,7 @@
   <a class="back" href="index.html">← Gayrimenkul listesine dön</a>
   <div class="dhead">
     <div>
-      <span class="eyebrow" style="color:#B8862B">ARSA</span>
+      <span class="eyebrow" style="color:#7A6E1A">ARSA</span>
       <h1>Arsa · Çeşme</h1>
       <div class="sub">Çeşme Satış Memurluğu 2023/49</div>
       <div class="kv">UYP-17316488249 &nbsp;·&nbsp; 1. İhale</div>
@@ -69,6 +77,15 @@
     <div class="taxnote">KDV, damga vergisi ve teslim masrafları alıcıya aittir. Birikmiş vergiler satış bedelinden ödenir. Taşınmaz "mevcut durumuyla" satılır; teklif öncesi şartname ve tapu kaydı incelenmelidir.</div>
   </div>
 
+  
+  <div class="sec genel-aciklama-sec"><h3>Genel Açıklama</h3>
+    <p class="aciklama-note">Taşınmaza ait ayrıntılı açıklama, tapu bilgisi, imar durumu ve şartname bilgileri UYAP e-Satış portalında yer almaktadır.</p>
+    <a class="uyap-aciklama-link" href="https://esatis.uyap.gov.tr/pp/index.jsp#ihaleDetay/17316488249" target="_blank" rel="noopener">
+      📄 UYAP'ta Genel Açıklama ve Şartnameyi Gör →
+    </a>
+  </div>
+
+
   <a class="uyap-btn" href="https://esatis.uyap.gov.tr/pp/index.jsp#ihaleDetay/17316488249" target="_blank" rel="noopener">
     🏛 UYAP'ta Detay Gör ve Teklif Ver
   </a>
@@ -78,15 +95,15 @@
 
 <div id="lb" class="lightbox"><img alt=""></div>
 <script>
-(function(){{
+(function(){
   var lb=document.getElementById('lb');
-  document.querySelectorAll('.cdn-gallery img').forEach(function(img){{
-    img.addEventListener('click',function(){{
+  document.querySelectorAll('.cdn-gallery img').forEach(function(img){
+    img.addEventListener('click',function(){
       lb.querySelector('img').src=img.src; lb.style.display='flex';
-    }});
-  }});
-  if(lb) lb.addEventListener('click',function(){{lb.style.display='none';}});
-}})();
+    });
+  });
+  if(lb) lb.addEventListener('click',function(){lb.style.display='none';});
+})();
 </script>
 
 <script src="countdown.js"></script>

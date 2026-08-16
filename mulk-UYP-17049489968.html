@@ -1,5 +1,5 @@
 <!DOCTYPE html><html lang="tr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Dükkan · Merkez — 40.000.000 ₺</title>
+<title>Dükkan · Konak — 40.000.000 ₺</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Fraunces:opsz,wght@9..144,500;9..144,600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
@@ -15,6 +15,14 @@
   font-size:14px;color:#1E5E30;margin-top:10px;font-weight:500}
 .bid-banner span{font-size:18px;font-weight:700}
 .teklif-info{font-size:13px;color:#5A8F68;margin-top:4px}
+
+.genel-aciklama-sec { margin-top: 20px; }
+.genel-aciklama-sec p.aciklama-note { font-size:14px; color:#5A6B5A; line-height:1.6; margin:0 0 12px; }
+.uyap-aciklama-link { display:inline-flex; align-items:center; gap:6px; padding:10px 18px;
+  border:1.5px solid var(--accent,#4A6741); border-radius:8px; color:var(--accent,#4A6741);
+  font-size:14px; font-weight:600; text-decoration:none; }
+.uyap-aciklama-link:hover { background:var(--accent,#4A6741); color:#fff; }
+
 </style>
 </head><body>
 <div class="wrap">
@@ -23,8 +31,8 @@
   <a class="back" href="index.html">← Gayrimenkul listesine dön</a>
   <div class="dhead">
     <div>
-      <span class="eyebrow" style="color:#8A4B57">TİCARİ</span>
-      <h1>Dükkan · Merkez</h1>
+      <span class="eyebrow" style="color:#8A3C5A">DÜKKAN</span>
+      <h1>Dükkan · Konak</h1>
       <div class="sub">İzmir Gayrimenkul Satış İcra Dairesi 2026/11</div>
       <div class="kv">UYP-17049489968 &nbsp;·&nbsp; 1. İhale</div>
     </div>
@@ -37,20 +45,17 @@
           <span class="cd-date">17.08.2026 14:00</span> · <b class="cd">—</b>
         </span>
       </div>
-      <div class="bid-banner">
-          1. İhale'de 1 teklif verildi
-          <div class="teklif-info">Güncel en yüksek teklif için UYAP'a bakın</div>
-        </div>
+      <div class="bid-banner">Mevcut teklif sayısı: <span>1</span><div class="teklif-info">UYAP üzerinden güncel en yüksek teklifi görebilirsiniz.</div></div>
     </div>
   </div>
 
   <div class="cdn-gallery">
-  <img src="https://cdn.uyap.gov.tr/esatis/esatis/2026/86465291/8840367_adsfg.jpg" alt="Dükkan Merkez" loading="lazy">
+  <img src="https://cdn.uyap.gov.tr/esatis/esatis/2026/86465291/8840367_adsfg.jpg" alt="Dükkan Konak" loading="lazy">
 </div>
 
   <div class="sec"><h3>Künye</h3><div class="dl">
     <div class="item"><u>Tür</u><b>Dükkan</b></div>
-    <div class="item"><u>Şehir / İlçe</u><b>İzmi̇r / Merkez</b></div>
+    <div class="item"><u>Şehir / İlçe</u><b>İzmi̇r / Konak</b></div>
     <div class="item"><u>Muhammen Bedel</u><b>40.000.000 ₺</b></div>
     <div class="item"><u>İhale Başlangıcı</u><b>20.000.000 ₺</b></div>
     <div class="item"><u>1. Artırma Başlangıç</u><b>17.08.2026 14:00</b></div>
@@ -72,6 +77,15 @@
     <div class="taxnote">KDV, damga vergisi ve teslim masrafları alıcıya aittir. Birikmiş vergiler satış bedelinden ödenir. Taşınmaz "mevcut durumuyla" satılır; teklif öncesi şartname ve tapu kaydı incelenmelidir.</div>
   </div>
 
+  
+  <div class="sec genel-aciklama-sec"><h3>Genel Açıklama</h3>
+    <p class="aciklama-note">Taşınmaza ait ayrıntılı açıklama, tapu bilgisi, imar durumu ve şartname bilgileri UYAP e-Satış portalında yer almaktadır.</p>
+    <a class="uyap-aciklama-link" href="https://esatis.uyap.gov.tr/pp/index.jsp#ihaleDetay/17049489968" target="_blank" rel="noopener">
+      📄 UYAP'ta Genel Açıklama ve Şartnameyi Gör →
+    </a>
+  </div>
+
+
   <a class="uyap-btn" href="https://esatis.uyap.gov.tr/pp/index.jsp#ihaleDetay/17049489968" target="_blank" rel="noopener">
     🏛 UYAP'ta Detay Gör ve Teklif Ver
   </a>
@@ -81,15 +95,15 @@
 
 <div id="lb" class="lightbox"><img alt=""></div>
 <script>
-(function(){{
+(function(){
   var lb=document.getElementById('lb');
-  document.querySelectorAll('.cdn-gallery img').forEach(function(img){{
-    img.addEventListener('click',function(){{
+  document.querySelectorAll('.cdn-gallery img').forEach(function(img){
+    img.addEventListener('click',function(){
       lb.querySelector('img').src=img.src; lb.style.display='flex';
-    }});
-  }});
-  if(lb) lb.addEventListener('click',function(){{lb.style.display='none';}});
-}})();
+    });
+  });
+  if(lb) lb.addEventListener('click',function(){lb.style.display='none';});
+})();
 </script>
 
 <script src="countdown.js"></script>
