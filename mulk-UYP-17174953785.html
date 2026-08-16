@@ -11,17 +11,21 @@
 .uyap-btn:hover{background:#263830}
 .no-photo{border:2px dashed #CFD6CF;border-radius:11px;padding:28px 20px;text-align:center;
   color:#93A099;background:#F5F8F4;margin:24px 0}
-.bid-banner{background:#EEF7F0;border:1px solid #B0D9BA;border-radius:8px;padding:12px 16px;
-  font-size:14px;color:#1E5E30;margin-top:10px;font-weight:500}
-.bid-banner span{font-size:18px;font-weight:700}
-.teklif-info{font-size:13px;color:#5A8F68;margin-top:4px}
+.bid-banner{background:#EEF7F0;border:1px solid #B0D9BA;border-radius:8px;padding:10px 16px;
+  font-size:14px;color:#1E5E30;margin-top:10px;font-weight:600}
 
 .genel-aciklama-sec { margin-top: 20px; }
-.genel-aciklama-sec p.aciklama-note { font-size:14px; color:#5A6B5A; line-height:1.6; margin:0 0 12px; }
+.aciklama-note { font-size:14px; color:#5A6B5A; line-height:1.6; margin:0 0 12px; }
 .uyap-aciklama-link { display:inline-flex; align-items:center; gap:6px; padding:10px 18px;
   border:1.5px solid var(--accent,#4A6741); border-radius:8px; color:var(--accent,#4A6741);
   font-size:14px; font-weight:600; text-decoration:none; }
 .uyap-aciklama-link:hover { background:var(--accent,#4A6741); color:#fff; }
+.ihale-id-box { display:flex; align-items:center; gap:10px; background:#F5F8F4;
+  border:1px solid var(--line,#DDE5DC); border-radius:8px; padding:10px 14px; margin-top:12px; }
+.ihale-id-box code { font-family:monospace; font-size:15px; font-weight:700; color:var(--ink,#1A2E1C); flex:1; }
+.copy-btn { background:none; border:1.5px solid #C0CFC0; border-radius:6px; padding:5px 10px;
+  cursor:pointer; font-size:12px; color:#4A6741; font-weight:600; white-space:nowrap; }
+.copy-btn:hover { background:#4A6741; color:#fff; border-color:#4A6741; }
 
 </style>
 </head><body>
@@ -77,17 +81,18 @@
     <div class="taxnote">KDV, damga vergisi ve teslim masrafları alıcıya aittir. Birikmiş vergiler satış bedelinden ödenir. Taşınmaz "mevcut durumuyla" satılır; teklif öncesi şartname ve tapu kaydı incelenmelidir.</div>
   </div>
 
-  
+
   <div class="sec genel-aciklama-sec"><h3>Genel Açıklama</h3>
-    <p class="aciklama-note">Taşınmaza ait ayrıntılı açıklama, tapu bilgisi, imar durumu ve şartname bilgileri UYAP e-Satış portalında yer almaktadır.</p>
-    <a class="uyap-aciklama-link" href="https://esatis.uyap.gov.tr/pp/index.jsp#ihaleDetay/17174953785" target="_blank" rel="noopener">
-      📄 UYAP'ta Genel Açıklama ve Şartnameyi Gör →
-    </a>
+    <p class="aciklama-note">Taşınmaza ait ayrıntılı açıklama, tapu bilgisi, imar durumu ve şartname UYAP e-Satış portalında yer almaktadır. Portale giriş yaptıktan sonra aşağıdaki ihale numarasını aratın:</p>
+    <div class="ihale-id-box">
+      <code>17174953785</code>
+      <button class="copy-btn" onclick="navigator.clipboard.writeText('17174953785').then(function(){this.textContent='Kopyalandı ✓'}.bind(this))">Kopyala</button>
+    </div>
   </div>
 
 
-  <a class="uyap-btn" href="https://esatis.uyap.gov.tr/pp/index.jsp#ihaleDetay/17174953785" target="_blank" rel="noopener">
-    🏛 UYAP'ta Detay Gör ve Teklif Ver
+  <a class="uyap-btn" href="https://esatis.uyap.gov.tr/pp/index.jsp" target="_blank" rel="noopener">
+    🏛 UYAP e-Satış Portalını Aç
   </a>
 
   <div class="foot">Kaynak: UYAP e-Satış · Kayıt No: 17174953785 · Güncelleme: 16.08.2026</div>
@@ -105,6 +110,5 @@
   if(lb) lb.addEventListener('click',function(){lb.style.display='none';});
 })();
 </script>
-
 <script src="countdown.js"></script>
 </body></html>
