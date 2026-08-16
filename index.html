@@ -4,11 +4,14 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Fraunces:opsz,wght@9..144,500;9..144,600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 <style>
-.card-img-top{width:100%;height:190px;object-fit:cover;display:block;border-bottom:1px solid var(--line);background:#eee}
-.card-img-top[src=""],.card-img-top:not([src]){display:none}
-.list-section{margin-top:40px}
-.list-section h2{font-size:18px;font-weight:600;margin-bottom:6px;letter-spacing:-.01em}
-.list-section .sub{font-size:13px;color:var(--muted);margin-bottom:16px}
+.card-img-top{width:100%;height:185px;object-fit:cover;display:block;border-bottom:1px solid var(--line);background:#eee}
+.list-section{margin-top:44px}
+.list-section-head{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:14px}
+.list-section-head h2{font-size:18px;font-weight:600;letter-spacing:-.01em;margin:0}
+.list-controls{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:14px}
+.list-controls input,.list-controls select{font-family:inherit;font-size:12.5px;color:var(--ink);
+  background:#fff;border:1.5px solid var(--line);border-radius:999px;padding:7px 13px;cursor:pointer}
+.list-controls input:focus,.list-controls select:focus{outline:none;border-color:var(--konut)}
 .list-table{width:100%;border-collapse:collapse;font-size:13px}
 .list-table th{text-align:left;font-size:10px;letter-spacing:.18em;text-transform:uppercase;
   color:var(--muted);padding:8px 10px;border-bottom:2px solid var(--ink)}
@@ -20,8 +23,13 @@
 .list-baslik a:hover{color:var(--konut)}
 .list-bedel{font-weight:600;white-space:nowrap;text-align:right}
 .list-tarih{white-space:nowrap;color:var(--muted);font-size:12px}
-.list-kurum{font-size:12px;color:#61706A;max-width:180px}
-.section-divider{height:2px;background:var(--line);margin:36px 0 28px}
+.list-kurum{font-size:12px;color:#61706A;max-width:160px}
+.section-divider{height:2px;background:var(--line);margin:36px 0}
+.card-controls{display:flex;gap:8px;flex-wrap:wrap;align-items:center;padding:0 0 16px}
+.card-controls select{font-family:inherit;font-size:13px;color:var(--ink);background:#fff;
+  border:1.5px solid var(--line);border-radius:999px;padding:8px 14px;cursor:pointer}
+.card-controls select:focus{outline:none;border-color:var(--konut)}
+.uyap-count-line{font-size:12px;color:var(--muted);padding-bottom:8px}
 </style>
 </head><body>
 <div class="wrap">
@@ -34,18 +42,33 @@
     <div class="stats">
       <div class="stat"><u>UYAP İlanı</u><s>31<em> aktif</em></s></div>
       <div class="stat"><u>ilan.gov.tr</u><s>56<em> ek ilan</em></s></div>
-      <div class="stat"><u>En Yakın</u><s><b id="nearest">—</b><em id="nearest-suffix"></em></s></div>
+      <div class="stat"><u>En Yakın</u><s><b id="nearest">—</b><em id="nearest-suffix"> gün</em></s></div>
     </div>
   </div>
+
+  <!-- UYAP Kartları Filtre & Sıralama -->
   <div class="filters">
-    <button class="fbtn f-all active" data-filter="all">Tümü (31)</button>
+    <button class="fbtn f-all active" data-filter="all" data-tur="">Tümü (31)</button>
       <button class="fbtn f-arsa" data-filter="arsa" data-tur="Arsa"><i style="background:#B8862B"></i>Arsa (11)</button>
       <button class="fbtn f-konut" data-filter="konut" data-tur="Daire"><i style="background:#2F6F63"></i>Daire (10)</button>
       <button class="fbtn f-konut" data-filter="konut" data-tur="Müstakil Ev"><i style="background:#2F6F63"></i>Müstakil Ev (7)</button>
       <button class="fbtn f-ticari" data-filter="ticari" data-tur="Dükkan"><i style="background:#8A4B57"></i>Dükkan (2)</button>
       <button class="fbtn f-konut" data-filter="konut" data-tur="Apartman"><i style="background:#2F6F63"></i>Apartman (1)</button>
   </div>
-  <div class="searchbox"><input type="text" id="ilanSearch" autocomplete="off" spellcheck="false" placeholder="İlan no, tur, konum ara…"></div>
+  <div class="card-controls">
+    <select id="city-filter">
+      <option value="all">Tüm şehirler</option>
+      <option value="İzmir">İzmir</option>
+    </select>
+    <select id="card-sort">
+      <option value="tarih-asc">İhale: En yakın önce</option>
+      <option value="tarih-desc">İhale: En uzak önce</option>
+      <option value="price-desc">Fiyat: Yüksek → Düşük</option>
+      <option value="price-asc">Fiyat: Düşük → Yüksek</option>
+    </select>
+    <input type="text" id="ilanSearch" autocomplete="off" spellcheck="false" placeholder="İlan no, tur, konum ara…" style="border-radius:999px;padding:8px 14px;font-size:13px">
+  </div>
+  <div class="uyap-count-line"><span id="uyap-count">31 ilan</span></div>
   <div class="cdkey">
     <span class="lbl">Kalan süre</span>
     <span class="k"><i style="background:#A4462F"></i>bugün / 1 gün</span>
@@ -55,1071 +78,1220 @@
     <span class="k"><i style="background:#4B7355"></i>15+ gün</span>
   </div>
   <div class="grid" id="uyap-grid">
-  <a class="card t-konut" data-tip="konut" data-city="İzmir" data-method="ihale"
-       data-price="155380000" data-tur="Müstakil Ev"
-       data-search="17043685242 müstakil ev urla 155380000"
-       href="https://esatis.uyap.gov.tr/pp/index.jsp#ihaleDetay/17043685242" target="_blank" rel="noopener">
+  <a class="card t-konut" data-tip="konut" data-tur="Müstakil Ev"
+       data-city="İzmir" data-ilce="Urla" data-method="ihale"
+       data-price="155380000" data-tarih="1788248580"
+       data-search="17043685242 müstakil ev urla 155380000" href="mulk-UYP-17043685242.html">
     <img src="https://cdn.uyap.gov.tr/esatis/esatis/2025/88579867/8838511_DSCF1978.JPG" alt="Müstakil Ev Urla" loading="lazy" class="card-img-top">
     <span class="bar" style="background:#2F6F63"></span>
     <div class="card-in">
       <div class="row">
         <span><span class="eyebrow" style="color:#2F6F63">KONUT</span> <span class="src">UYP</span></span>
-        <span class="parsel">1. İhale</span>
+        <span class="parsel" style="font-size:11px">Urla</span>
       </div>
       <h2>Müstakil Ev · Urla</h2>
       <div class="alt">Urla İcra Dairesi 2025/1616</div>
       <div class="priceline">
         <span class="price">155.380.000 ₺</span>
-        <span class="chip auction cd-wrap" data-deadline="2026-09-01T10:43:00+03:00"><b class="cd">—</b></span>
+        <span class="chip auction cd-wrap" data-d1s="2026-09-01T10:43:00+03:00" data-d1e="2026-09-08T10:43:00+03:00"><b class="cd">—</b></span>
       </div>
+      <div class="kdvline" style="font-size:11.5px;margin-top:6px">İhale: 01.09.2026</div>
       
     </div>
   </a>
-  <a class="card t-arsa" data-tip="arsa" data-city="İzmir" data-method="ihale"
-       data-price="15202000" data-tur="Arsa"
-       data-search="17249689890 arsa çeşme 15202000"
-       href="https://esatis.uyap.gov.tr/pp/index.jsp#ihaleDetay/17249689890" target="_blank" rel="noopener">
+  <a class="card t-arsa" data-tip="arsa" data-tur="Arsa"
+       data-city="İzmir" data-ilce="Çeşme" data-method="ihale"
+       data-price="15202000" data-tarih="1788337200"
+       data-search="17249689890 arsa çeşme 15202000" href="mulk-UYP-17249689890.html">
     <img src="https://cdn.uyap.gov.tr/esatis/esatis/2026/85932065/8957059_DSCF2300.JPG" alt="Arsa Çeşme" loading="lazy" class="card-img-top">
     <span class="bar" style="background:#B8862B"></span>
     <div class="card-in">
       <div class="row">
         <span><span class="eyebrow" style="color:#B8862B">ARSA</span> <span class="src">UYP</span></span>
-        <span class="parsel">1. İhale</span>
+        <span class="parsel" style="font-size:11px">Çeşme</span>
       </div>
       <h2>Arsa · Çeşme</h2>
       <div class="alt">Çeşme Satış Memurluğu 2026/8</div>
       <div class="priceline">
         <span class="price">15.202.000 ₺</span>
-        <span class="chip auction cd-wrap" data-deadline="2026-09-02T11:20:00+03:00"><b class="cd">—</b></span>
+        <span class="chip auction cd-wrap" data-d1s="2026-09-02T11:20:00+03:00" data-d1e="2026-09-09T11:20:00+03:00"><b class="cd">—</b></span>
       </div>
+      <div class="kdvline" style="font-size:11.5px;margin-top:6px">İhale: 02.09.2026</div>
       
     </div>
   </a>
-  <a class="card t-arsa" data-tip="arsa" data-city="İzmir" data-method="ihale"
-       data-price="13250000" data-tur="Arsa"
-       data-search="17275934490 arsa kemalpaşa 13250000"
-       href="https://esatis.uyap.gov.tr/pp/index.jsp#ihaleDetay/17275934490" target="_blank" rel="noopener">
+  <a class="card t-arsa" data-tip="arsa" data-tur="Arsa"
+       data-city="İzmir" data-ilce="Kemalpaşa" data-method="ihale"
+       data-price="13250000" data-tarih="1788339000"
+       data-search="17275934490 arsa kemalpaşa 13250000" href="mulk-UYP-17275934490.html">
     <img src="https://cdn.uyap.gov.tr/esatis/esatis/2026/86246656/8737359_31.jpeg" alt="Arsa Kemalpaşa" loading="lazy" class="card-img-top">
     <span class="bar" style="background:#B8862B"></span>
     <div class="card-in">
       <div class="row">
         <span><span class="eyebrow" style="color:#B8862B">ARSA</span> <span class="src">UYP</span></span>
-        <span class="parsel">1. İhale</span>
+        <span class="parsel" style="font-size:11px">Kemalpaşa</span>
       </div>
       <h2>Arsa · Kemalpaşa</h2>
       <div class="alt">Kemalpaşa Satış Memurluğu 2026/12</div>
       <div class="priceline">
         <span class="price">13.250.000 ₺</span>
-        <span class="chip auction cd-wrap" data-deadline="2026-09-02T11:50:00+03:00"><b class="cd">—</b></span>
+        <span class="chip auction cd-wrap" data-d1s="2026-09-02T11:50:00+03:00" data-d1e="2026-09-09T11:50:00+03:00"><b class="cd">—</b></span>
       </div>
+      <div class="kdvline" style="font-size:11.5px;margin-top:6px">İhale: 02.09.2026</div>
       
     </div>
   </a>
-  <a class="card t-arsa" data-tip="arsa" data-city="İzmir" data-method="ihale"
-       data-price="10798700" data-tur="Arsa"
-       data-search="17249689899 arsa çeşme 10798700"
-       href="https://esatis.uyap.gov.tr/pp/index.jsp#ihaleDetay/17249689899" target="_blank" rel="noopener">
+  <a class="card t-arsa" data-tip="arsa" data-tur="Arsa"
+       data-city="İzmir" data-ilce="Çeşme" data-method="ihale"
+       data-price="10798700" data-tarih="1788346200"
+       data-search="17249689899 arsa çeşme 10798700" href="mulk-UYP-17249689899.html">
     <img src="https://cdn.uyap.gov.tr/esatis/esatis/2026/85932068/8957067_DSCF2300.JPG" alt="Arsa Çeşme" loading="lazy" class="card-img-top">
     <span class="bar" style="background:#B8862B"></span>
     <div class="card-in">
       <div class="row">
         <span><span class="eyebrow" style="color:#B8862B">ARSA</span> <span class="src">UYP</span></span>
-        <span class="parsel">1. İhale</span>
+        <span class="parsel" style="font-size:11px">Çeşme</span>
       </div>
       <h2>Arsa · Çeşme</h2>
       <div class="alt">Çeşme Satış Memurluğu 2026/8</div>
       <div class="priceline">
         <span class="price">10.798.700 ₺</span>
-        <span class="chip auction cd-wrap" data-deadline="2026-09-02T13:50:00+03:00"><b class="cd">—</b></span>
+        <span class="chip auction cd-wrap" data-d1s="2026-09-02T13:50:00+03:00" data-d1e="2026-09-09T13:50:00+03:00"><b class="cd">—</b></span>
       </div>
+      <div class="kdvline" style="font-size:11.5px;margin-top:6px">İhale: 02.09.2026</div>
       
     </div>
   </a>
-  <a class="card t-arsa" data-tip="arsa" data-city="İzmir" data-method="ihale"
-       data-price="21355000" data-tur="Arsa"
-       data-search="17251515613 arsa çeşme 21355000"
-       href="https://esatis.uyap.gov.tr/pp/index.jsp#ihaleDetay/17251515613" target="_blank" rel="noopener">
+  <a class="card t-arsa" data-tip="arsa" data-tur="Arsa"
+       data-city="İzmir" data-ilce="Çeşme" data-method="ihale"
+       data-price="21355000" data-tarih="1788349800"
+       data-search="17251515613 arsa çeşme 21355000" href="mulk-UYP-17251515613.html">
     <img src="https://cdn.uyap.gov.tr/esatis/esatis/2026/86860683/8959899_DSCF2289.JPG" alt="Arsa Çeşme" loading="lazy" class="card-img-top">
     <span class="bar" style="background:#B8862B"></span>
     <div class="card-in">
       <div class="row">
         <span><span class="eyebrow" style="color:#B8862B">ARSA</span> <span class="src">UYP</span></span>
-        <span class="parsel">1. İhale</span>
+        <span class="parsel" style="font-size:11px">Çeşme</span>
       </div>
       <h2>Arsa · Çeşme</h2>
       <div class="alt">Çeşme Satış Memurluğu 2026/12</div>
       <div class="priceline">
         <span class="price">21.355.000 ₺</span>
-        <span class="chip auction cd-wrap" data-deadline="2026-09-02T14:50:00+03:00"><b class="cd">—</b></span>
+        <span class="chip auction cd-wrap" data-d1s="2026-09-02T14:50:00+03:00" data-d1e="2026-09-09T14:50:00+03:00"><b class="cd">—</b></span>
       </div>
+      <div class="kdvline" style="font-size:11.5px;margin-top:6px">İhale: 02.09.2026</div>
       
     </div>
   </a>
-  <a class="card t-konut" data-tip="konut" data-city="İzmir" data-method="ihale"
-       data-price="22000000" data-tur="Daire"
-       data-search="17056696858 daire merkez 22000000"
-       href="https://esatis.uyap.gov.tr/pp/index.jsp#ihaleDetay/17056696858" target="_blank" rel="noopener">
+  <a class="card t-konut" data-tip="konut" data-tur="Daire"
+       data-city="İzmir" data-ilce="Merkez" data-method="ihale"
+       data-price="22000000" data-tarih="1788350340"
+       data-search="17056696858 daire merkez 22000000" href="mulk-UYP-17056696858.html">
     <img src="https://cdn.uyap.gov.tr/esatis/esatis/2025/86319756/8596239_1.jpg" alt="Daire Merkez" loading="lazy" class="card-img-top">
     <span class="bar" style="background:#2F6F63"></span>
     <div class="card-in">
       <div class="row">
         <span><span class="eyebrow" style="color:#2F6F63">KONUT</span> <span class="src">UYP</span></span>
-        <span class="parsel">1. İhale</span>
+        <span class="parsel" style="font-size:11px">Merkez</span>
       </div>
       <h2>Daire · Merkez</h2>
       <div class="alt">İzmir Gayrimenkul Satış İcra Dairesi 2025/90</div>
       <div class="priceline">
         <span class="price">22.000.000 ₺</span>
-        <span class="chip auction cd-wrap" data-deadline="2026-09-02T14:59:00+03:00"><b class="cd">—</b></span>
+        <span class="chip auction cd-wrap" data-d1s="2026-09-02T14:59:00+03:00" data-d1e="2026-09-09T14:59:00+03:00"><b class="cd">—</b></span>
       </div>
+      <div class="kdvline" style="font-size:11.5px;margin-top:6px">İhale: 02.09.2026</div>
       
     </div>
   </a>
-  <a class="card t-konut" data-tip="konut" data-city="İzmir" data-method="ihale"
-       data-price="13000000" data-tur="Daire"
-       data-search="17188352379 daire karşiyaka 13000000"
-       href="https://esatis.uyap.gov.tr/pp/index.jsp#ihaleDetay/17188352379" target="_blank" rel="noopener">
+  <a class="card t-konut" data-tip="konut" data-tur="Daire"
+       data-city="İzmir" data-ilce="Karşiyaka" data-method="ihale"
+       data-price="13000000" data-tarih="1788505740"
+       data-search="17188352379 daire karşiyaka 13000000" href="mulk-UYP-17188352379.html">
     <img src="https://cdn.uyap.gov.tr/esatis/esatis/2025/89364830/8927543_1157.png" alt="Daire Karşiyaka" loading="lazy" class="card-img-top">
     <span class="bar" style="background:#2F6F63"></span>
     <div class="card-in">
       <div class="row">
         <span><span class="eyebrow" style="color:#2F6F63">KONUT</span> <span class="src">UYP</span></span>
-        <span class="parsel">1. İhale</span>
+        <span class="parsel" style="font-size:11px">Karşiyaka</span>
       </div>
       <h2>Daire · Karşiyaka</h2>
       <div class="alt">Karşıyaka 2. İcra Dairesi 2025/1157</div>
       <div class="priceline">
         <span class="price">13.000.000 ₺</span>
-        <span class="chip auction cd-wrap" data-deadline="2026-09-04T10:09:00+03:00"><b class="cd">—</b></span>
+        <span class="chip auction cd-wrap" data-d1s="2026-09-04T10:09:00+03:00" data-d1e="2026-09-11T10:09:00+03:00"><b class="cd">—</b></span>
       </div>
+      <div class="kdvline" style="font-size:11.5px;margin-top:6px">İhale: 04.09.2026</div>
       
     </div>
   </a>
-  <a class="card t-arsa" data-tip="arsa" data-city="İzmir" data-method="ihale"
-       data-price="24665186" data-tur="Arsa"
-       data-search="17093167043 arsa selçuk 24665186"
-       href="https://esatis.uyap.gov.tr/pp/index.jsp#ihaleDetay/17093167043" target="_blank" rel="noopener">
+  <a class="card t-arsa" data-tip="arsa" data-tur="Arsa"
+       data-city="İzmir" data-ilce="Selçuk" data-method="ihale"
+       data-price="24665186" data-tarih="1788777600"
+       data-search="17093167043 arsa selçuk 24665186" href="mulk-UYP-17093167043.html">
     <img src="https://cdn.uyap.gov.tr/esatis/esatis/2025/88661576/8846809_3066-8_(12).jpg" alt="Arsa Selçuk" loading="lazy" class="card-img-top">
     <span class="bar" style="background:#B8862B"></span>
     <div class="card-in">
       <div class="row">
         <span><span class="eyebrow" style="color:#B8862B">ARSA</span> <span class="src">UYP</span></span>
-        <span class="parsel">1. İhale</span>
+        <span class="parsel" style="font-size:11px">Selçuk</span>
       </div>
       <h2>Arsa · Selçuk</h2>
       <div class="alt">Selçuk Satış Memurluğu 2025/7</div>
       <div class="priceline">
         <span class="price">24.665.186 ₺</span>
-        <span class="chip auction cd-wrap" data-deadline="2026-09-07T13:40:00+03:00"><b class="cd">—</b></span>
+        <span class="chip auction cd-wrap" data-d1s="2026-09-07T13:40:00+03:00" data-d1e="2026-09-14T13:40:00+03:00"><b class="cd">—</b></span>
       </div>
+      <div class="kdvline" style="font-size:11.5px;margin-top:6px">İhale: 07.09.2026</div>
       
     </div>
   </a>
-  <a class="card t-konut" data-tip="konut" data-city="İzmir" data-method="ihale"
-       data-price="11000000" data-tur="Daire"
-       data-search="17202344726 daire menemen 11000000"
-       href="https://esatis.uyap.gov.tr/pp/index.jsp#ihaleDetay/17202344726" target="_blank" rel="noopener">
+  <a class="card t-konut" data-tip="konut" data-tur="Daire"
+       data-city="İzmir" data-ilce="Menemen" data-method="ihale"
+       data-price="11000000" data-tarih="1788777840"
+       data-search="17202344726 daire menemen 11000000" href="mulk-UYP-17202344726.html">
     <img src="https://cdn.uyap.gov.tr/esatis/esatis/2025/78104923/8884245_1.tif" alt="Daire Menemen" loading="lazy" class="card-img-top">
     <span class="bar" style="background:#2F6F63"></span>
     <div class="card-in">
       <div class="row">
         <span><span class="eyebrow" style="color:#2F6F63">KONUT</span> <span class="src">UYP</span></span>
-        <span class="parsel">1. İhale</span>
+        <span class="parsel" style="font-size:11px">Menemen</span>
       </div>
       <h2>Daire · Menemen</h2>
       <div class="alt">Menemen İcra Dairesi 2025/1351</div>
       <div class="priceline">
         <span class="price">11.000.000 ₺</span>
-        <span class="chip auction cd-wrap" data-deadline="2026-09-07T13:44:00+03:00"><b class="cd">—</b></span>
+        <span class="chip auction cd-wrap" data-d1s="2026-09-07T13:44:00+03:00" data-d1e="2026-09-14T13:44:00+03:00"><b class="cd">—</b></span>
       </div>
+      <div class="kdvline" style="font-size:11.5px;margin-top:6px">İhale: 07.09.2026</div>
       
     </div>
   </a>
-  <a class="card t-konut" data-tip="konut" data-city="İzmir" data-method="ihale"
-       data-price="18000000" data-tur="Müstakil Ev"
-       data-search="17190506931 müstakil ev merkez 18000000"
-       href="https://esatis.uyap.gov.tr/pp/index.jsp#ihaleDetay/17190506931" target="_blank" rel="noopener">
+  <a class="card t-konut" data-tip="konut" data-tur="Müstakil Ev"
+       data-city="İzmir" data-ilce="Merkez" data-method="ihale"
+       data-price="18000000" data-tarih="1788852780"
+       data-search="17190506931 müstakil ev merkez 18000000" href="mulk-UYP-17190506931.html">
     <img src="https://cdn.uyap.gov.tr/esatis/esatis/2026/86377871/8927829_5.jpeg" alt="Müstakil Ev Merkez" loading="lazy" class="card-img-top">
     <span class="bar" style="background:#2F6F63"></span>
     <div class="card-in">
       <div class="row">
         <span><span class="eyebrow" style="color:#2F6F63">KONUT</span> <span class="src">UYP</span></span>
-        <span class="parsel">1. İhale</span>
+        <span class="parsel" style="font-size:11px">Merkez</span>
       </div>
       <h2>Müstakil Ev · Merkez</h2>
       <div class="alt">İzmir 19. Satış Memurluğu 2026/6</div>
       <div class="priceline">
         <span class="price">18.000.000 ₺</span>
-        <span class="chip auction cd-wrap" data-deadline="2026-09-08T10:33:00+03:00"><b class="cd">—</b></span>
+        <span class="chip auction cd-wrap" data-d1s="2026-09-08T10:33:00+03:00" data-d1e="2026-09-15T10:33:00+03:00"><b class="cd">—</b></span>
       </div>
+      <div class="kdvline" style="font-size:11.5px;margin-top:6px">İhale: 08.09.2026</div>
       
     </div>
   </a>
-  <a class="card t-ticari" data-tip="ticari" data-city="İzmir" data-method="ihale"
-       data-price="12500000" data-tur="Dükkan"
-       data-search="17174953785 dükkan merkez 12500000"
-       href="https://esatis.uyap.gov.tr/pp/index.jsp#ihaleDetay/17174953785" target="_blank" rel="noopener">
+  <a class="card t-ticari" data-tip="ticari" data-tur="Dükkan"
+       data-city="İzmir" data-ilce="Merkez" data-method="ihale"
+       data-price="12500000" data-tarih="1788853200"
+       data-search="17174953785 dükkan merkez 12500000" href="mulk-UYP-17174953785.html">
     <img src="https://cdn.uyap.gov.tr/esatis/esatis/2026/85005326/8913701_1.jpg" alt="Dükkan Merkez" loading="lazy" class="card-img-top">
     <span class="bar" style="background:#8A4B57"></span>
     <div class="card-in">
       <div class="row">
         <span><span class="eyebrow" style="color:#8A4B57">TİCARİ</span> <span class="src">UYP</span></span>
-        <span class="parsel">1. İhale</span>
+        <span class="parsel" style="font-size:11px">Merkez</span>
       </div>
       <h2>Dükkan · Merkez</h2>
       <div class="alt">İzmir 17. Satış Memurluğu 2026/3</div>
       <div class="priceline">
         <span class="price">12.500.000 ₺</span>
-        <span class="chip auction cd-wrap" data-deadline="2026-09-08T10:40:00+03:00"><b class="cd">—</b></span>
+        <span class="chip auction cd-wrap" data-d1s="2026-09-08T10:40:00+03:00" data-d1e="2026-09-15T10:40:00+03:00"><b class="cd">—</b></span>
       </div>
+      <div class="kdvline" style="font-size:11.5px;margin-top:6px">İhale: 08.09.2026</div>
       
     </div>
   </a>
-  <a class="card t-konut" data-tip="konut" data-city="İzmir" data-method="ihale"
-       data-price="30000000" data-tur="Müstakil Ev"
-       data-search="17282209683 müstakil ev merkez 30000000"
-       href="https://esatis.uyap.gov.tr/pp/index.jsp#ihaleDetay/17282209683" target="_blank" rel="noopener">
+  <a class="card t-konut" data-tip="konut" data-tur="Müstakil Ev"
+       data-city="İzmir" data-ilce="Merkez" data-method="ihale"
+       data-price="30000000" data-tarih="1788939780"
+       data-search="17282209683 müstakil ev merkez 30000000" href="mulk-UYP-17282209683.html">
     <img src="https://cdn.uyap.gov.tr/esatis/esatis/2026/86516927/8929349_4.jpg" alt="Müstakil Ev Merkez" loading="lazy" class="card-img-top">
     <span class="bar" style="background:#2F6F63"></span>
     <div class="card-in">
       <div class="row">
         <span><span class="eyebrow" style="color:#2F6F63">KONUT</span> <span class="src">UYP</span></span>
-        <span class="parsel">1. İhale</span>
+        <span class="parsel" style="font-size:11px">Merkez</span>
       </div>
       <h2>Müstakil Ev · Merkez</h2>
       <div class="alt">İzmir 19. Satış Memurluğu 2026/7</div>
       <div class="priceline">
         <span class="price">30.000.000 ₺</span>
-        <span class="chip auction cd-wrap" data-deadline="2026-09-09T10:43:00+03:00"><b class="cd">—</b></span>
+        <span class="chip auction cd-wrap" data-d1s="2026-09-09T10:43:00+03:00" data-d1e="2026-09-16T10:43:00+03:00"><b class="cd">—</b></span>
       </div>
+      <div class="kdvline" style="font-size:11.5px;margin-top:6px">İhale: 09.09.2026</div>
       
     </div>
   </a>
-  <a class="card t-arsa" data-tip="arsa" data-city="İzmir" data-method="ihale"
-       data-price="20269345" data-tur="Arsa"
-       data-search="17316488249 arsa çeşme 20269345"
-       href="https://esatis.uyap.gov.tr/pp/index.jsp#ihaleDetay/17316488249" target="_blank" rel="noopener">
+  <a class="card t-arsa" data-tip="arsa" data-tur="Arsa"
+       data-city="İzmir" data-ilce="Çeşme" data-method="ihale"
+       data-price="20269345" data-tarih="1788942300"
+       data-search="17316488249 arsa çeşme 20269345" href="mulk-UYP-17316488249.html">
     <img src="https://cdn.uyap.gov.tr/esatis/esatis/2023/65588834/6593461_DSCF7960.JPG" alt="Arsa Çeşme" loading="lazy" class="card-img-top">
     <span class="bar" style="background:#B8862B"></span>
     <div class="card-in">
       <div class="row">
         <span><span class="eyebrow" style="color:#B8862B">ARSA</span> <span class="src">UYP</span></span>
-        <span class="parsel">1. İhale</span>
+        <span class="parsel" style="font-size:11px">Çeşme</span>
       </div>
       <h2>Arsa · Çeşme</h2>
       <div class="alt">Çeşme Satış Memurluğu 2023/49</div>
       <div class="priceline">
         <span class="price">20.269.345 ₺</span>
-        <span class="chip auction cd-wrap" data-deadline="2026-09-09T11:25:00+03:00"><b class="cd">—</b></span>
+        <span class="chip auction cd-wrap" data-d1s="2026-09-09T11:25:00+03:00" data-d1e="2026-09-16T11:25:00+03:00"><b class="cd">—</b></span>
       </div>
+      <div class="kdvline" style="font-size:11.5px;margin-top:6px">İhale: 09.09.2026</div>
       
     </div>
   </a>
-  <a class="card t-konut" data-tip="konut" data-city="İzmir" data-method="ihale"
-       data-price="21600000" data-tur="Daire"
-       data-search="17066922479 daire ali̇ağa 21600000"
-       href="https://esatis.uyap.gov.tr/pp/index.jsp#ihaleDetay/17066922479" target="_blank" rel="noopener">
+  <a class="card t-konut" data-tip="konut" data-tur="Daire"
+       data-city="İzmir" data-ilce="Ali̇ağa" data-method="ihale"
+       data-price="21600000" data-tarih="1789024020"
+       data-search="17066922479 daire ali̇ağa 21600000" href="mulk-UYP-17066922479.html">
     <img src="https://cdn.uyap.gov.tr/esatis/esatis/2025/83547653/8852079_1_nolu_bagimsiz_bolum_resim_1.png" alt="Daire Ali̇ağa" loading="lazy" class="card-img-top">
     <span class="bar" style="background:#2F6F63"></span>
     <div class="card-in">
       <div class="row">
         <span><span class="eyebrow" style="color:#2F6F63">KONUT</span> <span class="src">UYP</span></span>
-        <span class="parsel">1. İhale</span>
+        <span class="parsel" style="font-size:11px">Ali̇ağa</span>
       </div>
       <h2>Daire · Ali̇ağa</h2>
       <div class="alt">Aliağa Satış Memurluğu 2025/34</div>
       <div class="priceline">
         <span class="price">21.600.000 ₺</span>
-        <span class="chip auction cd-wrap" data-deadline="2026-09-10T10:07:00+03:00"><b class="cd">—</b></span>
+        <span class="chip auction cd-wrap" data-d1s="2026-09-10T10:07:00+03:00" data-d1e="2026-09-17T10:07:00+03:00"><b class="cd">—</b></span>
       </div>
+      <div class="kdvline" style="font-size:11.5px;margin-top:6px">İhale: 10.09.2026</div>
       
     </div>
   </a>
-  <a class="card t-konut" data-tip="konut" data-city="İzmir" data-method="ihale"
-       data-price="14500000" data-tur="Daire"
-       data-search="17236150656 daire karşiyaka 14500000"
-       href="https://esatis.uyap.gov.tr/pp/index.jsp#ihaleDetay/17236150656" target="_blank" rel="noopener">
+  <a class="card t-konut" data-tip="konut" data-tur="Daire"
+       data-city="İzmir" data-ilce="Karşiyaka" data-method="ihale"
+       data-price="14500000" data-tarih="1789026000"
+       data-search="17236150656 daire karşiyaka 14500000" href="mulk-UYP-17236150656.html">
     <img src="https://cdn.uyap.gov.tr/esatis/esatis/2026/89537828/8939703_tasinmazsatis.jpg" alt="Daire Karşiyaka" loading="lazy" class="card-img-top">
     <span class="bar" style="background:#2F6F63"></span>
     <div class="card-in">
       <div class="row">
         <span><span class="eyebrow" style="color:#2F6F63">KONUT</span> <span class="src">UYP</span></span>
-        <span class="parsel">1. İhale</span>
+        <span class="parsel" style="font-size:11px">Karşiyaka</span>
       </div>
       <h2>Daire · Karşiyaka</h2>
       <div class="alt">Karşıyaka 4. İcra Dairesi 2026/495</div>
       <div class="priceline">
         <span class="price">14.500.000 ₺</span>
-        <span class="chip auction cd-wrap" data-deadline="2026-09-10T10:40:00+03:00"><b class="cd">—</b></span>
+        <span class="chip auction cd-wrap" data-d1s="2026-09-10T10:40:00+03:00" data-d1e="2026-09-17T10:40:00+03:00"><b class="cd">—</b></span>
       </div>
+      <div class="kdvline" style="font-size:11.5px;margin-top:6px">İhale: 10.09.2026</div>
       
     </div>
   </a>
-  <a class="card t-konut" data-tip="konut" data-city="İzmir" data-method="ihale"
-       data-price="24000000" data-tur="Daire"
-       data-search="17066922493 daire ali̇ağa 24000000"
-       href="https://esatis.uyap.gov.tr/pp/index.jsp#ihaleDetay/17066922493" target="_blank" rel="noopener">
+  <a class="card t-konut" data-tip="konut" data-tur="Daire"
+       data-city="İzmir" data-ilce="Ali̇ağa" data-method="ihale"
+       data-price="24000000" data-tarih="1789027800"
+       data-search="17066922493 daire ali̇ağa 24000000" href="mulk-UYP-17066922493.html">
     <img src="https://cdn.uyap.gov.tr/esatis/esatis/2025/83547654/8852083_2_nolu_bagimsiz_bolum_resim_1.png" alt="Daire Ali̇ağa" loading="lazy" class="card-img-top">
     <span class="bar" style="background:#2F6F63"></span>
     <div class="card-in">
       <div class="row">
         <span><span class="eyebrow" style="color:#2F6F63">KONUT</span> <span class="src">UYP</span></span>
-        <span class="parsel">1. İhale</span>
+        <span class="parsel" style="font-size:11px">Ali̇ağa</span>
       </div>
       <h2>Daire · Ali̇ağa</h2>
       <div class="alt">Aliağa Satış Memurluğu 2025/34</div>
       <div class="priceline">
         <span class="price">24.000.000 ₺</span>
-        <span class="chip auction cd-wrap" data-deadline="2026-09-10T11:10:00+03:00"><b class="cd">—</b></span>
+        <span class="chip auction cd-wrap" data-d1s="2026-09-10T11:10:00+03:00" data-d1e="2026-09-17T11:10:00+03:00"><b class="cd">—</b></span>
       </div>
+      <div class="kdvline" style="font-size:11.5px;margin-top:6px">İhale: 10.09.2026</div>
       
     </div>
   </a>
-  <a class="card t-konut" data-tip="konut" data-city="İzmir" data-method="ihale"
-       data-price="20400000" data-tur="Daire"
-       data-search="17066941099 daire ali̇ağa 20400000"
-       href="https://esatis.uyap.gov.tr/pp/index.jsp#ihaleDetay/17066941099" target="_blank" rel="noopener">
+  <a class="card t-konut" data-tip="konut" data-tur="Daire"
+       data-city="İzmir" data-ilce="Ali̇ağa" data-method="ihale"
+       data-price="20400000" data-tarih="1789031700"
+       data-search="17066941099 daire ali̇ağa 20400000" href="mulk-UYP-17066941099.html">
     <img src="https://cdn.uyap.gov.tr/esatis/esatis/2025/83547655/8852087_3_nolu_bagimsiz_bolum_resim_1.png" alt="Daire Ali̇ağa" loading="lazy" class="card-img-top">
     <span class="bar" style="background:#2F6F63"></span>
     <div class="card-in">
       <div class="row">
         <span><span class="eyebrow" style="color:#2F6F63">KONUT</span> <span class="src">UYP</span></span>
-        <span class="parsel">1. İhale</span>
+        <span class="parsel" style="font-size:11px">Ali̇ağa</span>
       </div>
       <h2>Daire · Ali̇ağa</h2>
       <div class="alt">Aliağa Satış Memurluğu 2025/34</div>
       <div class="priceline">
         <span class="price">20.400.000 ₺</span>
-        <span class="chip auction cd-wrap" data-deadline="2026-09-10T12:15:00+03:00"><b class="cd">—</b></span>
+        <span class="chip auction cd-wrap" data-d1s="2026-09-10T12:15:00+03:00" data-d1e="2026-09-17T12:15:00+03:00"><b class="cd">—</b></span>
       </div>
+      <div class="kdvline" style="font-size:11.5px;margin-top:6px">İhale: 10.09.2026</div>
       
     </div>
   </a>
-  <a class="card t-arsa" data-tip="arsa" data-city="İzmir" data-method="ihale"
-       data-price="15000000" data-tur="Arsa"
-       data-search="17288273364 arsa merkez 15000000"
-       href="https://esatis.uyap.gov.tr/pp/index.jsp#ihaleDetay/17288273364" target="_blank" rel="noopener">
+  <a class="card t-arsa" data-tip="arsa" data-tur="Arsa"
+       data-city="İzmir" data-ilce="Merkez" data-method="ihale"
+       data-price="15000000" data-tarih="1789383540"
+       data-search="17288273364 arsa merkez 15000000" href="mulk-UYP-17288273364.html">
     <img src="https://cdn.uyap.gov.tr/esatis/esatis/2026/86860632/8978305_Adsiz.jpg" alt="Arsa Merkez" loading="lazy" class="card-img-top">
     <span class="bar" style="background:#B8862B"></span>
     <div class="card-in">
       <div class="row">
         <span><span class="eyebrow" style="color:#B8862B">ARSA</span> <span class="src">UYP</span></span>
-        <span class="parsel">1. İhale</span>
+        <span class="parsel" style="font-size:11px">Merkez</span>
       </div>
       <h2>Arsa · Merkez</h2>
       <div class="alt">İzmir 20. Satış Memurluğu 2026/6</div>
       <div class="priceline">
         <span class="price">15.000.000 ₺</span>
-        <span class="chip auction cd-wrap" data-deadline="2026-09-14T13:59:00+03:00"><b class="cd">—</b></span>
+        <span class="chip auction cd-wrap" data-d1s="2026-09-14T13:59:00+03:00" data-d1e="2026-09-21T13:59:00+03:00"><b class="cd">—</b></span>
       </div>
+      <div class="kdvline" style="font-size:11.5px;margin-top:6px">İhale: 14.09.2026</div>
       
     </div>
   </a>
-  <a class="card t-konut" data-tip="konut" data-city="İzmir" data-method="ihale"
-       data-price="172058000" data-tur="Müstakil Ev"
-       data-search="17178814107 müstakil ev merkez 172058000"
-       href="https://esatis.uyap.gov.tr/pp/index.jsp#ihaleDetay/17178814107" target="_blank" rel="noopener">
+  <a class="card t-konut" data-tip="konut" data-tur="Müstakil Ev"
+       data-city="İzmir" data-ilce="Merkez" data-method="ihale"
+       data-price="172058000" data-tarih="1789384500"
+       data-search="17178814107 müstakil ev merkez 172058000" href="mulk-UYP-17178814107.html">
     <img src="https://cdn.uyap.gov.tr/esatis/esatis/2024/78861510/7867651_1111.png" alt="Müstakil Ev Merkez" loading="lazy" class="card-img-top">
     <span class="bar" style="background:#2F6F63"></span>
     <div class="card-in">
       <div class="row">
         <span><span class="eyebrow" style="color:#2F6F63">KONUT</span> <span class="src">UYP</span></span>
-        <span class="parsel">1. İhale</span>
+        <span class="parsel" style="font-size:11px">Merkez</span>
       </div>
       <h2>Müstakil Ev · Merkez</h2>
       <div class="alt">İzmir Gayrimenkul Satış İcra Dairesi 2024/322</div>
       <div class="priceline">
         <span class="price">172.058.000 ₺</span>
-        <span class="chip auction cd-wrap" data-deadline="2026-09-14T14:15:00+03:00"><b class="cd">—</b></span>
+        <span class="chip auction cd-wrap" data-d1s="2026-09-14T14:15:00+03:00" data-d1e="2026-09-21T14:15:00+03:00"><b class="cd">—</b></span>
       </div>
+      <div class="kdvline" style="font-size:11.5px;margin-top:6px">İhale: 14.09.2026</div>
       
     </div>
   </a>
-  <a class="card t-konut" data-tip="konut" data-city="İzmir" data-method="ihale"
-       data-price="50000000" data-tur="Daire"
-       data-search="17171199835 daire merkez 50000000"
-       href="https://esatis.uyap.gov.tr/pp/index.jsp#ihaleDetay/17171199835" target="_blank" rel="noopener">
+  <a class="card t-konut" data-tip="konut" data-tur="Daire"
+       data-city="İzmir" data-ilce="Merkez" data-method="ihale"
+       data-price="50000000" data-tarih="1789387140"
+       data-search="17171199835 daire merkez 50000000" href="mulk-UYP-17171199835.html">
     <img src="https://cdn.uyap.gov.tr/esatis/esatis/2025/89110555/8915061_3.jpg" alt="Daire Merkez" loading="lazy" class="card-img-top">
     <span class="bar" style="background:#2F6F63"></span>
     <div class="card-in">
       <div class="row">
         <span><span class="eyebrow" style="color:#2F6F63">KONUT</span> <span class="src">UYP</span></span>
-        <span class="parsel">1. İhale</span>
+        <span class="parsel" style="font-size:11px">Merkez</span>
       </div>
       <h2>Daire · Merkez</h2>
       <div class="alt">İzmir Gayrimenkul Satış İcra Dairesi 2025/239</div>
       <div class="priceline">
         <span class="price">50.000.000 ₺</span>
-        <span class="chip auction cd-wrap" data-deadline="2026-09-14T14:59:00+03:00"><b class="cd">—</b></span>
+        <span class="chip auction cd-wrap" data-d1s="2026-09-14T14:59:00+03:00" data-d1e="2026-09-21T14:59:00+03:00"><b class="cd">—</b></span>
       </div>
+      <div class="kdvline" style="font-size:11.5px;margin-top:6px">İhale: 14.09.2026</div>
       
     </div>
   </a>
-  <a class="card t-arsa" data-tip="arsa" data-city="İzmir" data-method="ihale"
-       data-price="40000000" data-tur="Arsa"
-       data-search="16812339480 arsa merkez 40000000"
-       href="https://esatis.uyap.gov.tr/pp/index.jsp#ihaleDetay/16812339480" target="_blank" rel="noopener">
+  <a class="card t-arsa" data-tip="arsa" data-tur="Arsa"
+       data-city="İzmir" data-ilce="Merkez" data-method="ihale"
+       data-price="40000000" data-tarih="1789456200"
+       data-search="16812339480 arsa merkez 40000000" href="mulk-UYP-16812339480.html">
     <img src="https://cdn.uyap.gov.tr/esatis/esatis/2025/74611600/8709497_2025-_4_FOTO.jpg" alt="Arsa Merkez" loading="lazy" class="card-img-top">
     <span class="bar" style="background:#B8862B"></span>
     <div class="card-in">
       <div class="row">
         <span><span class="eyebrow" style="color:#B8862B">ARSA</span> <span class="src">UYP</span></span>
-        <span class="parsel">1. İhale</span>
+        <span class="parsel" style="font-size:11px">Merkez</span>
       </div>
       <h2>Arsa · Merkez</h2>
       <div class="alt">İzmir 10. Satış Memurluğu 2025/4</div>
       <div class="priceline">
         <span class="price">40.000.000 ₺</span>
-        <span class="chip auction cd-wrap" data-deadline="2026-09-15T10:10:00+03:00"><b class="cd">—</b></span>
+        <span class="chip auction cd-wrap" data-d1s="2026-09-15T10:10:00+03:00" data-d1e="2026-09-22T10:10:00+03:00"><b class="cd">—</b></span>
       </div>
+      <div class="kdvline" style="font-size:11.5px;margin-top:6px">İhale: 15.09.2026</div>
       
     </div>
   </a>
-  <a class="card t-konut" data-tip="konut" data-city="İzmir" data-method="ihale"
-       data-price="70000000" data-tur="Apartman"
-       data-search="17223204237 apartman merkez 70000000"
-       href="https://esatis.uyap.gov.tr/pp/index.jsp#ihaleDetay/17223204237" target="_blank" rel="noopener">
+  <a class="card t-konut" data-tip="konut" data-tur="Apartman"
+       data-city="İzmir" data-ilce="Merkez" data-method="ihale"
+       data-price="70000000" data-tarih="1789460340"
+       data-search="17223204237 apartman merkez 70000000" href="mulk-UYP-17223204237.html">
     <img src="https://cdn.uyap.gov.tr/esatis/esatis/2025/78428155/8945753_2-.jpg" alt="Apartman Merkez" loading="lazy" class="card-img-top">
     <span class="bar" style="background:#2F6F63"></span>
     <div class="card-in">
       <div class="row">
         <span><span class="eyebrow" style="color:#2F6F63">KONUT</span> <span class="src">UYP</span></span>
-        <span class="parsel">1. İhale</span>
+        <span class="parsel" style="font-size:11px">Merkez</span>
       </div>
       <h2>Apartman · Merkez</h2>
       <div class="alt">İzmir 7. Satış Memurluğu 2025/29</div>
       <div class="priceline">
         <span class="price">70.000.000 ₺</span>
-        <span class="chip auction cd-wrap" data-deadline="2026-09-15T11:19:00+03:00"><b class="cd">—</b></span>
+        <span class="chip auction cd-wrap" data-d1s="2026-09-15T11:19:00+03:00" data-d1e="2026-09-22T11:19:00+03:00"><b class="cd">—</b></span>
       </div>
+      <div class="kdvline" style="font-size:11.5px;margin-top:6px">İhale: 15.09.2026</div>
       
     </div>
   </a>
-  <a class="card t-konut" data-tip="konut" data-city="İzmir" data-method="ihale"
-       data-price="13000000" data-tur="Müstakil Ev"
-       data-search="17334900548 müstakil ev seferi̇hi̇sar 13000000"
-       href="https://esatis.uyap.gov.tr/pp/index.jsp#ihaleDetay/17334900548" target="_blank" rel="noopener">
+  <a class="card t-konut" data-tip="konut" data-tur="Müstakil Ev"
+       data-city="İzmir" data-ilce="Seferi̇hi̇sar" data-method="ihale"
+       data-price="13000000" data-tarih="1789461960"
+       data-search="17334900548 müstakil ev seferi̇hi̇sar 13000000" href="mulk-UYP-17334900548.html">
     <img src="https://cdn.uyap.gov.tr/esatis/esatis/2026/84079381/9006777_2.JPG" alt="Müstakil Ev Seferi̇hi̇sar" loading="lazy" class="card-img-top">
     <span class="bar" style="background:#2F6F63"></span>
     <div class="card-in">
       <div class="row">
         <span><span class="eyebrow" style="color:#2F6F63">KONUT</span> <span class="src">UYP</span></span>
-        <span class="parsel">1. İhale</span>
+        <span class="parsel" style="font-size:11px">Seferi̇hi̇sar</span>
       </div>
       <h2>Müstakil Ev · Seferi̇hi̇sar</h2>
       <div class="alt">Seferihisar Satış Memurluğu 2026/1</div>
       <div class="priceline">
         <span class="price">13.000.000 ₺</span>
-        <span class="chip auction cd-wrap" data-deadline="2026-09-15T11:46:00+03:00"><b class="cd">—</b></span>
+        <span class="chip auction cd-wrap" data-d1s="2026-09-15T11:46:00+03:00" data-d1e="2026-09-22T11:46:00+03:00"><b class="cd">—</b></span>
       </div>
+      <div class="kdvline" style="font-size:11.5px;margin-top:6px">İhale: 15.09.2026</div>
       
     </div>
   </a>
-  <a class="card t-konut" data-tip="konut" data-city="İzmir" data-method="ihale"
-       data-price="13000000" data-tur="Müstakil Ev"
-       data-search="17334900562 müstakil ev seferi̇hi̇sar 13000000"
-       href="https://esatis.uyap.gov.tr/pp/index.jsp#ihaleDetay/17334900562" target="_blank" rel="noopener">
+  <a class="card t-konut" data-tip="konut" data-tur="Müstakil Ev"
+       data-city="İzmir" data-ilce="Seferi̇hi̇sar" data-method="ihale"
+       data-price="13000000" data-tarih="1789469820"
+       data-search="17334900562 müstakil ev seferi̇hi̇sar 13000000" href="mulk-UYP-17334900562.html">
     <img src="https://cdn.uyap.gov.tr/esatis/esatis/2026/84079382/9006785_1.JPG" alt="Müstakil Ev Seferi̇hi̇sar" loading="lazy" class="card-img-top">
     <span class="bar" style="background:#2F6F63"></span>
     <div class="card-in">
       <div class="row">
         <span><span class="eyebrow" style="color:#2F6F63">KONUT</span> <span class="src">UYP</span></span>
-        <span class="parsel">1. İhale</span>
+        <span class="parsel" style="font-size:11px">Seferi̇hi̇sar</span>
       </div>
       <h2>Müstakil Ev · Seferi̇hi̇sar</h2>
       <div class="alt">Seferihisar Satış Memurluğu 2026/1</div>
       <div class="priceline">
         <span class="price">13.000.000 ₺</span>
-        <span class="chip auction cd-wrap" data-deadline="2026-09-15T13:57:00+03:00"><b class="cd">—</b></span>
+        <span class="chip auction cd-wrap" data-d1s="2026-09-15T13:57:00+03:00" data-d1e="2026-09-22T13:57:00+03:00"><b class="cd">—</b></span>
       </div>
+      <div class="kdvline" style="font-size:11.5px;margin-top:6px">İhale: 15.09.2026</div>
       
     </div>
   </a>
-  <a class="card t-arsa" data-tip="arsa" data-city="İzmir" data-method="ihale"
-       data-price="20000000" data-tur="Arsa"
-       data-search="17368854068 arsa ali̇ağa 20000000"
-       href="https://esatis.uyap.gov.tr/pp/index.jsp#ihaleDetay/17368854068" target="_blank" rel="noopener">
+  <a class="card t-arsa" data-tip="arsa" data-tur="Arsa"
+       data-city="İzmir" data-ilce="Ali̇ağa" data-method="ihale"
+       data-price="20000000" data-tarih="1789470720"
+       data-search="17368854068 arsa ali̇ağa 20000000" href="mulk-UYP-17368854068.html">
     <img src="https://cdn.uyap.gov.tr/esatis/esatis/2026/89940998/8973569_1.tif" alt="Arsa Ali̇ağa" loading="lazy" class="card-img-top">
     <span class="bar" style="background:#B8862B"></span>
     <div class="card-in">
       <div class="row">
         <span><span class="eyebrow" style="color:#B8862B">ARSA</span> <span class="src">UYP</span></span>
-        <span class="parsel">1. İhale</span>
+        <span class="parsel" style="font-size:11px">Ali̇ağa</span>
       </div>
       <h2>Arsa · Ali̇ağa</h2>
       <div class="alt">Aliağa İcra Dairesi 2026/249</div>
       <div class="priceline">
         <span class="price">20.000.000 ₺</span>
-        <span class="chip auction cd-wrap" data-deadline="2026-09-15T14:12:00+03:00"><b class="cd">—</b></span>
+        <span class="chip auction cd-wrap" data-d1s="2026-09-15T14:12:00+03:00" data-d1e="2026-09-22T14:12:00+03:00"><b class="cd">—</b></span>
       </div>
+      <div class="kdvline" style="font-size:11.5px;margin-top:6px">İhale: 15.09.2026</div>
       
     </div>
   </a>
-  <a class="card t-ticari" data-tip="ticari" data-city="İzmir" data-method="ihale"
-       data-price="40000000" data-tur="Dükkan"
-       data-search="17049489968 dükkan merkez 40000000"
-       href="https://esatis.uyap.gov.tr/pp/index.jsp#ihaleDetay/17049489968" target="_blank" rel="noopener">
+  <a class="card t-ticari" data-tip="ticari" data-tur="Dükkan"
+       data-city="İzmir" data-ilce="Merkez" data-method="ihale"
+       data-price="40000000" data-tarih="1786964400"
+       data-search="17049489968 dükkan merkez 40000000" href="mulk-UYP-17049489968.html">
     <img src="https://cdn.uyap.gov.tr/esatis/esatis/2026/86465291/8840367_adsfg.jpg" alt="Dükkan Merkez" loading="lazy" class="card-img-top">
     <span class="bar" style="background:#8A4B57"></span>
     <div class="card-in">
       <div class="row">
         <span><span class="eyebrow" style="color:#8A4B57">TİCARİ</span> <span class="src">UYP</span></span>
-        <span class="parsel">1. İhale</span>
+        <span class="parsel" style="font-size:11px">Merkez</span>
       </div>
       <h2>Dükkan · Merkez</h2>
       <div class="alt">İzmir Gayrimenkul Satış İcra Dairesi 2026/11</div>
       <div class="priceline">
         <span class="price">40.000.000 ₺</span>
-        <span class="chip auction cd-wrap" data-deadline="2026-08-17T14:00:00+03:00"><b class="cd">—</b></span>
+        <span class="chip auction cd-wrap" data-d1s="2026-08-17T14:00:00+03:00" data-d1e="2026-08-24T14:00:00+03:00"><b class="cd">—</b></span>
       </div>
-      <div class="bidline">1 kez teklif verildi</div>
+      <div class="kdvline" style="font-size:11.5px;margin-top:6px">İhale: 17.08.2026</div>
+      <div class="bidline">1 teklif mevcut</div>
     </div>
   </a>
-  <a class="card t-konut" data-tip="konut" data-city="İzmir" data-method="ihale"
-       data-price="30000000" data-tur="Daire"
-       data-search="16926362076 daire merkez 30000000"
-       href="https://esatis.uyap.gov.tr/pp/index.jsp#ihaleDetay/16926362076" target="_blank" rel="noopener">
+  <a class="card t-konut" data-tip="konut" data-tur="Daire"
+       data-city="İzmir" data-ilce="Merkez" data-method="ihale"
+       data-price="30000000" data-tarih="1787036880"
+       data-search="16926362076 daire merkez 30000000" href="mulk-UYP-16926362076.html">
     <img src="https://cdn.uyap.gov.tr/esatis/esatis/2025/87960819/8774849_758.jpg" alt="Daire Merkez" loading="lazy" class="card-img-top">
     <span class="bar" style="background:#2F6F63"></span>
     <div class="card-in">
       <div class="row">
         <span><span class="eyebrow" style="color:#2F6F63">KONUT</span> <span class="src">UYP</span></span>
-        <span class="parsel">1. İhale</span>
+        <span class="parsel" style="font-size:11px">Merkez</span>
       </div>
       <h2>Daire · Merkez</h2>
       <div class="alt">İzmir 3. İcra Dairesi 2025/10758</div>
       <div class="priceline">
         <span class="price">30.000.000 ₺</span>
-        <span class="chip auction cd-wrap" data-deadline="2026-08-18T10:08:00+03:00"><b class="cd">—</b></span>
+        <span class="chip auction cd-wrap" data-d1s="2026-08-18T10:08:00+03:00" data-d1e="2026-08-25T10:08:00+03:00"><b class="cd">—</b></span>
       </div>
-      <div class="bidline">2 kez teklif verildi</div>
+      <div class="kdvline" style="font-size:11.5px;margin-top:6px">İhale: 18.08.2026</div>
+      <div class="bidline">2 teklif mevcut</div>
     </div>
   </a>
-  <a class="card t-konut" data-tip="konut" data-city="İzmir" data-method="ihale"
-       data-price="13000000" data-tur="Daire"
-       data-search="17174190963 daire merkez 13000000"
-       href="https://esatis.uyap.gov.tr/pp/index.jsp#ihaleDetay/17174190963" target="_blank" rel="noopener">
+  <a class="card t-konut" data-tip="konut" data-tur="Daire"
+       data-city="İzmir" data-ilce="Merkez" data-method="ihale"
+       data-price="13000000" data-tarih="1787570700"
+       data-search="17174190963 daire merkez 13000000" href="mulk-UYP-17174190963.html">
     <img src="https://cdn.uyap.gov.tr/esatis/esatis/2025/80756507/8264445_61.png" alt="Daire Merkez" loading="lazy" class="card-img-top">
     <span class="bar" style="background:#2F6F63"></span>
     <div class="card-in">
       <div class="row">
         <span><span class="eyebrow" style="color:#2F6F63">KONUT</span> <span class="src">UYP</span></span>
-        <span class="parsel">1. İhale</span>
+        <span class="parsel" style="font-size:11px">Merkez</span>
       </div>
       <h2>Daire · Merkez</h2>
       <div class="alt">İzmir 12. Satış Memurluğu 2025/6</div>
       <div class="priceline">
         <span class="price">13.000.000 ₺</span>
-        <span class="chip auction cd-wrap" data-deadline="2026-08-24T14:25:00+03:00"><b class="cd">—</b></span>
+        <span class="chip auction cd-wrap" data-d1s="2026-08-24T14:25:00+03:00" data-d1e="2026-08-31T14:25:00+03:00"><b class="cd">—</b></span>
       </div>
+      <div class="kdvline" style="font-size:11.5px;margin-top:6px">İhale: 24.08.2026</div>
       
     </div>
   </a>
-  <a class="card t-arsa" data-tip="arsa" data-city="İzmir" data-method="ihale"
-       data-price="12000000" data-tur="Arsa"
-       data-search="17102782555 arsa merkez 12000000"
-       href="https://esatis.uyap.gov.tr/pp/index.jsp#ihaleDetay/17102782555" target="_blank" rel="noopener">
+  <a class="card t-arsa" data-tip="arsa" data-tur="Arsa"
+       data-city="İzmir" data-ilce="Merkez" data-method="ihale"
+       data-price="12000000" data-tarih="1787642760"
+       data-search="17102782555 arsa merkez 12000000" href="mulk-UYP-17102782555.html">
     <img src="https://cdn.uyap.gov.tr/esatis/esatis/2026/85933539/8878183_1.jpg" alt="Arsa Merkez" loading="lazy" class="card-img-top">
     <span class="bar" style="background:#B8862B"></span>
     <div class="card-in">
       <div class="row">
         <span><span class="eyebrow" style="color:#B8862B">ARSA</span> <span class="src">UYP</span></span>
-        <span class="parsel">1. İhale</span>
+        <span class="parsel" style="font-size:11px">Merkez</span>
       </div>
       <h2>Arsa · Merkez</h2>
       <div class="alt">İzmir 7. Satış Memurluğu 2026/5</div>
       <div class="priceline">
         <span class="price">12.000.000 ₺</span>
-        <span class="chip auction cd-wrap" data-deadline="2026-08-25T10:26:00+03:00"><b class="cd">—</b></span>
+        <span class="chip auction cd-wrap" data-d1s="2026-08-25T10:26:00+03:00" data-d1e="2026-09-01T10:26:00+03:00"><b class="cd">—</b></span>
       </div>
+      <div class="kdvline" style="font-size:11.5px;margin-top:6px">İhale: 25.08.2026</div>
       
     </div>
   </a>
-  <a class="card t-konut" data-tip="konut" data-city="İzmir" data-method="ihale"
-       data-price="83161500" data-tur="Müstakil Ev"
-       data-search="17078553308 müstakil ev çeşme 83161500"
-       href="https://esatis.uyap.gov.tr/pp/index.jsp#ihaleDetay/17078553308" target="_blank" rel="noopener">
+  <a class="card t-konut" data-tip="konut" data-tur="Müstakil Ev"
+       data-city="İzmir" data-ilce="Çeşme" data-method="ihale"
+       data-price="83161500" data-tarih="1787732400"
+       data-search="17078553308 müstakil ev çeşme 83161500" href="mulk-UYP-17078553308.html">
     <img src="https://cdn.uyap.gov.tr/esatis/esatis/2025/78105981/8564299_DSCF1290.JPG" alt="Müstakil Ev Çeşme" loading="lazy" class="card-img-top">
     <span class="bar" style="background:#2F6F63"></span>
     <div class="card-in">
       <div class="row">
         <span><span class="eyebrow" style="color:#2F6F63">KONUT</span> <span class="src">UYP</span></span>
-        <span class="parsel">2. İhale</span>
+        <span class="parsel" style="font-size:11px">Çeşme</span>
       </div>
       <h2>Müstakil Ev · Çeşme</h2>
       <div class="alt">Çeşme (Sulh Hukuk Mah.) Satış Memurluğu 2025/26</div>
       <div class="priceline">
         <span class="price">83.161.500 ₺</span>
-        <span class="chip auction cd-wrap" data-deadline="2026-08-26T11:20:00+03:00"><b class="cd">—</b></span>
+        <span class="chip auction cd-wrap" data-d1s="2026-08-26T11:20:00+03:00" data-d1e="2026-09-02T11:20:00+03:00"><b class="cd">—</b></span>
       </div>
+      <div class="kdvline" style="font-size:11.5px;margin-top:6px">İhale: 26.08.2026</div>
       
     </div>
   </a>
-  <a class="card t-arsa" data-tip="arsa" data-city="İzmir" data-method="ihale"
-       data-price="33866000" data-tur="Arsa"
-       data-search="17126410351 arsa merkez 33866000"
-       href="https://esatis.uyap.gov.tr/pp/index.jsp#ihaleDetay/17126410351" target="_blank" rel="noopener">
+  <a class="card t-arsa" data-tip="arsa" data-tur="Arsa"
+       data-city="İzmir" data-ilce="Merkez" data-method="ihale"
+       data-price="33866000" data-tarih="1788172800"
+       data-search="17126410351 arsa merkez 33866000" href="mulk-UYP-17126410351.html">
     <img src="https://cdn.uyap.gov.tr/esatis/esatis/2025/77768186/8892695_6.png" alt="Arsa Merkez" loading="lazy" class="card-img-top">
     <span class="bar" style="background:#B8862B"></span>
     <div class="card-in">
       <div class="row">
         <span><span class="eyebrow" style="color:#B8862B">ARSA</span> <span class="src">UYP</span></span>
-        <span class="parsel">1. İhale</span>
+        <span class="parsel" style="font-size:11px">Merkez</span>
       </div>
       <h2>Arsa · Merkez</h2>
       <div class="alt">İzmir 2. Satış Memurluğu 2025/6</div>
       <div class="priceline">
         <span class="price">33.866.000 ₺</span>
-        <span class="chip auction cd-wrap" data-deadline="2026-08-31T13:40:00+03:00"><b class="cd">—</b></span>
+        <span class="chip auction cd-wrap" data-d1s="2026-08-31T13:40:00+03:00" data-d1e="2026-09-07T13:40:00+03:00"><b class="cd">—</b></span>
       </div>
+      <div class="kdvline" style="font-size:11.5px;margin-top:6px">İhale: 31.08.2026</div>
       
     </div>
   </a>
   </div>
-  <div id="empty" class="empty">Eşleşen ilan bulunamadı.</div>
+  <div id="empty" class="empty" style="display:none">Eşleşen ilan bulunamadı.</div>
 
+  <!-- ilan.gov.tr Listesi -->
   <div class="section-divider"></div>
   <div class="list-section">
-    <h2>ilan.gov.tr · Fotoğrafsız İlanlar <span class="src">İLAN</span></h2>
-    <div class="sub">UYAP e-Satış portalında yer almayan, ilan.gov.tr'den derlenen 56 icra ilanı · En yüksek bedelden sıralı</div>
+    <div class="list-section-head">
+      <h2>ilan.gov.tr · Ek İlanlar <span class="src">İLAN</span></h2>
+      <span id="gm-count" style="font-size:12px;color:var(--muted)">56 ilan</span>
+    </div>
+    <div style="font-size:13px;color:var(--muted);margin-bottom:12px">UYAP e-Satış portalında yer almayan icra ilanları · Fotoğraf mevcut değil</div>
+    <div class="list-controls">
+      <input type="text" id="gm-search" placeholder="Başlık veya kurum ara…">
+      <input type="text" id="gm-min" placeholder="Min. fiyat (M ₺)" style="width:140px">
+      <input type="text" id="gm-max" placeholder="Max. fiyat (M ₺)" style="width:140px">
+      <select id="gm-sort">
+        <option value="bedel-desc">Fiyat: Yüksek → Düşük</option>
+        <option value="bedel-asc">Fiyat: Düşük → Yüksek</option>
+        <option value="tarih-asc">Tarih: En yakın önce</option>
+        <option value="tarih-desc">Tarih: En uzak önce</option>
+      </select>
+    </div>
     <table class="list-table">
       <thead><tr>
-        <th>İlan No</th>
-        <th>Kurum</th>
-        <th>Başlık</th>
-        <th style="text-align:right">Bedel</th>
-        <th>İhale Tarihi</th>
+        <th>İlan No</th><th>Kurum</th><th>Başlık</th>
+        <th style="text-align:right">Bedel</th><th>Tarih</th>
       </tr></thead>
-      <tbody>
-    <tr>
-      <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2150807/" target="_blank" rel="noopener">2150807</a></td>
-      <td class="list-kurum">İZMİR 3. İCRA DAİRESİ MÜDÜRLÜĞÜ</td>
-      <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2150807/" target="_blank" rel="noopener">İzmir 3. İcra Dairesi Müdürlüğünden Düzeltme İlanı (2022/2467 TLMT.)</a></td>
-      <td class="list-bedel">680.000.000 ₺</td>
-      <td class="list-tarih">22.10.2026</td>
-    </tr>
-    <tr>
-      <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2150741/" target="_blank" rel="noopener">2150741</a></td>
-      <td class="list-kurum">İZMİR 3. İCRA DAİRESİ MÜDÜRLÜĞÜ</td>
-      <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2150741/" target="_blank" rel="noopener">İzmir Bornova'da 8.241 m² arsa icradan satılıktır (çoklu satış)</a></td>
-      <td class="list-bedel">680.000.000 ₺</td>
-      <td class="list-tarih">22.10.2026</td>
-    </tr>
-    <tr>
-      <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2185441/" target="_blank" rel="noopener">2185441</a></td>
-      <td class="list-kurum">SEFERİHİSAR SULH HUKUK MAHKEMESİ</td>
-      <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2185441/" target="_blank" rel="noopener">İzmir Seferihisar'da 2 adet taşınmaz mahkemeden satılıktır</a></td>
-      <td class="list-bedel">305.639.650 ₺</td>
-      <td class="list-tarih">24.11.2026</td>
-    </tr>
-    <tr>
-      <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2170211/" target="_blank" rel="noopener">2170211</a></td>
-      <td class="list-kurum">ÇEŞME SULH HUKUK MAHKEMESİ</td>
-      <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2170211/" target="_blank" rel="noopener">İzmir Çeşme'de mahkemeden satılık tarla</a></td>
-      <td class="list-bedel">147.610.000 ₺</td>
-      <td class="list-tarih">03.09.2026</td>
-    </tr>
-    <tr>
-      <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2177990/" target="_blank" rel="noopener">2177990</a></td>
-      <td class="list-kurum">URLA İCRA DAİRESİ MÜDÜRLÜĞÜ</td>
-      <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2177990/" target="_blank" rel="noopener">İzmir Urla'da içerisinde çiçekçilik işletmesi ve atölye binası olan taşınmaz icradan satılıktır</a></td>
-      <td class="list-bedel">140.622.710 ₺</td>
-      <td class="list-tarih">28.09.2026</td>
-    </tr>
-    <tr>
-      <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2195612/" target="_blank" rel="noopener">2195612</a></td>
-      <td class="list-kurum">MENEMEN İCRA DAİRESİ MÜDÜRLÜĞÜ</td>
-      <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2195612/" target="_blank" rel="noopener">İzmir Menemen'de fabrika binası icradan satılıktır</a></td>
-      <td class="list-bedel">122.818.350 ₺</td>
-      <td class="list-tarih">14.10.2026</td>
-    </tr>
-    <tr>
-      <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2159935/" target="_blank" rel="noopener">2159935</a></td>
-      <td class="list-kurum">İZMİR 5. SULH HUKUK MAHKEMESİ</td>
-      <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2159935/" target="_blank" rel="noopener">İzmir Bayraklı'da imarlı arsa mahkemeden satılıktır</a></td>
-      <td class="list-bedel">95.000.000 ₺</td>
-      <td class="list-tarih">16.09.2026</td>
-    </tr>
-    <tr>
-      <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2175539/" target="_blank" rel="noopener">2175539</a></td>
-      <td class="list-kurum">MENDERES 1. (SULH HUKUK MAH.) SATIŞ MEMURLUĞU</td>
-      <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2175539/" target="_blank" rel="noopener">İzmir Menderes'te 13.298 m² tarla mahkemeden satılıktır</a></td>
-      <td class="list-bedel">66.609.000 ₺</td>
-      <td class="list-tarih">14.09.2026</td>
-    </tr>
-    <tr>
-      <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2119308/" target="_blank" rel="noopener">2119308</a></td>
-      <td class="list-kurum">İZMİR GAYRİMENKUL SATIŞ İCRA DAİRESİ MÜDÜRLÜĞÜ</td>
-      <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2119308/" target="_blank" rel="noopener">İzmir Konak'ta icradan satılık dükkan</a></td>
-      <td class="list-bedel">60.000.000 ₺</td>
-      <td class="list-tarih">01.09.2026</td>
-    </tr>
-    <tr>
-      <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2116876/" target="_blank" rel="noopener">2116876</a></td>
-      <td class="list-kurum">İZMİR 11. SULH HUKUK MAHKEMESİ</td>
-      <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2116876/" target="_blank" rel="noopener">İzmir Gaziemir'de 1 adet taşınmaz mahkemeden satılıktır</a></td>
-      <td class="list-bedel">59.869.680 ₺</td>
-      <td class="list-tarih">01.09.2026</td>
-    </tr>
-    <tr>
-      <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2125320/" target="_blank" rel="noopener">2125320</a></td>
-      <td class="list-kurum">DİKİLİ İCRA DAİRESİ</td>
-      <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2125320/" target="_blank" rel="noopener">İzmir Dikili'de 14.814 m² tarla ve içerisindeki yapılar icradan satılıktır</a></td>
-      <td class="list-bedel">53.712.058 ₺</td>
-      <td class="list-tarih">02.09.2026</td>
-    </tr>
-    <tr>
-      <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2183439/" target="_blank" rel="noopener">2183439</a></td>
-      <td class="list-kurum">İZMİR 19. (SULH HUKUK MAH.) SATIŞ MEMURLUĞU</td>
-      <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2183439/" target="_blank" rel="noopener">İzmir Güzelbahçe'de 3.435 m² tarla mahkemeden satılıktır</a></td>
-      <td class="list-bedel">51.526.950 ₺</td>
-      <td class="list-tarih">24.09.2026</td>
-    </tr>
-    <tr>
-      <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2170683/" target="_blank" rel="noopener">2170683</a></td>
-      <td class="list-kurum">ÇEŞME SULH HUKUK MAHKEMESİ</td>
-      <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2170683/" target="_blank" rel="noopener">İzmir Çeşme'de 3.161 m² tarla mahkemeden satılıktır (çoklu satış)</a></td>
-      <td class="list-bedel">50.591.360 ₺</td>
-      <td class="list-tarih">02.09.2026</td>
-    </tr>
-    <tr>
-      <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2082060/" target="_blank" rel="noopener">2082060</a></td>
-      <td class="list-kurum">TORBALI 1. (SULH HUKUK MAH.) SATIŞ MEMURLUĞU</td>
-      <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2082060/" target="_blank" rel="noopener">İzmir Torbalı'da 30.504 m² tarla mahkemeden satılıktır</a></td>
-      <td class="list-bedel">49.061.508 ₺</td>
-      <td class="list-tarih">15.12.2026</td>
-    </tr>
-    <tr>
-      <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2154376/" target="_blank" rel="noopener">2154376</a></td>
-      <td class="list-kurum">İZMİR 3. İCRA DAİRESİ MÜDÜRLÜĞÜ</td>
-      <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2154376/" target="_blank" rel="noopener">İzmir Karabağlar'da dükkan icradan satılıktır</a></td>
-      <td class="list-bedel">47.000.000 ₺</td>
-      <td class="list-tarih">29.09.2026</td>
-    </tr>
-    <tr>
-      <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2133994/" target="_blank" rel="noopener">2133994</a></td>
-      <td class="list-kurum">MENDERES 1. (SULH HUKUK MAH.) SATIŞ MEMURLUĞU</td>
-      <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2133994/" target="_blank" rel="noopener">İzmir Menderes'te 8.688 m² tarla mahkemeden satılıktır</a></td>
-      <td class="list-bedel">43.658.000 ₺</td>
-      <td class="list-tarih">24.08.2026</td>
-    </tr>
-    <tr>
-      <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2159881/" target="_blank" rel="noopener">2159881</a></td>
-      <td class="list-kurum">İZMİR 5. SULH HUKUK MAHKEMESİ</td>
-      <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2159881/" target="_blank" rel="noopener">İzmir Gaziemir'de 1.519 m² arsa mahkemeden satılıktır</a></td>
-      <td class="list-bedel">42.500.000 ₺</td>
-      <td class="list-tarih">17.02.2027</td>
-    </tr>
-    <tr>
-      <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2190258/" target="_blank" rel="noopener">2190258</a></td>
-      <td class="list-kurum">MENDERES İCRA DAİRESİ MÜDÜRLÜĞÜ</td>
-      <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2190258/" target="_blank" rel="noopener">İzmir Menderes'te 19.971 m² tarla icradan satılıktır</a></td>
-      <td class="list-bedel">40.193.340 ₺</td>
-      <td class="list-tarih">01.10.2026</td>
-    </tr>
-    <tr>
-      <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2126721/" target="_blank" rel="noopener">2126721</a></td>
-      <td class="list-kurum">İZMİR KARŞIYAKA 1. SULH HUKUK MAHKEMESİ</td>
-      <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2126721/" target="_blank" rel="noopener">İzmir Karşıyaka'da 624 m² arsa ve üzerindeki yapılar mahkemeden satılıktır</a></td>
-      <td class="list-bedel">38.437.780 ₺</td>
-      <td class="list-tarih">15.01.2027</td>
-    </tr>
-    <tr>
-      <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2151705/" target="_blank" rel="noopener">2151705</a></td>
-      <td class="list-kurum">İZMİR GAYRİMENKUL SATIŞ İCRA DAİRESİ MÜDÜRLÜĞÜ</td>
-      <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2151705/" target="_blank" rel="noopener">İzmir Narlıdere'de 156,59 m² arsa icradan satılıktır</a></td>
-      <td class="list-bedel">37.000.000 ₺</td>
-      <td class="list-tarih">19.10.2026</td>
-    </tr>
-    <tr>
-      <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2179078/" target="_blank" rel="noopener">2179078</a></td>
-      <td class="list-kurum">URLA 1. (SULH HUKUK MAH.) SATIŞ MEMURLUĞU</td>
-      <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2179078/" target="_blank" rel="noopener">İzmir Urla'da 5.650 m² tarla mahkemeden satılıktır (çoklu satış)</a></td>
-      <td class="list-bedel">36.827.550 ₺</td>
-      <td class="list-tarih">15.09.2026</td>
-    </tr>
-    <tr>
-      <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2174083/" target="_blank" rel="noopener">2174083</a></td>
-      <td class="list-kurum">İZMİR KARŞIYAKA 2. SULH HUKUK MAHKEMESİ</td>
-      <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2174083/" target="_blank" rel="noopener">İzmir Çiğli'de 940 m² arsa ve üzerindeki binalar mahkemeden satılıktır</a></td>
-      <td class="list-bedel">35.643.701 ₺</td>
-      <td class="list-tarih">14.10.2026</td>
-    </tr>
-    <tr>
-      <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2165977/" target="_blank" rel="noopener">2165977</a></td>
-      <td class="list-kurum">ÇEŞME İCRA DAİRESİ</td>
-      <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2165977/" target="_blank" rel="noopener">İzmir Çeşme'de 4.915 m² zeytinlik ve üzerindeki yapılar icradan satılıktır</a></td>
-      <td class="list-bedel">34.405.000 ₺</td>
-      <td class="list-tarih">30.10.2026</td>
-    </tr>
-    <tr>
-      <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2156740/" target="_blank" rel="noopener">2156740</a></td>
-      <td class="list-kurum">URLA 1. (SULH HUKUK MAH.) SATIŞ MEMURLUĞU</td>
-      <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2156740/" target="_blank" rel="noopener">İzmir Urla'da 6.728 m² taşınmaz mahkemeden satılıktır</a></td>
-      <td class="list-bedel">28.765.765 ₺</td>
-      <td class="list-tarih">18.08.2026</td>
-    </tr>
-    <tr>
-      <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2170242/" target="_blank" rel="noopener">2170242</a></td>
-      <td class="list-kurum">ÖDEMİŞ SULH HUKUK MAHKEMESİ SATIŞ MEMURLUĞU</td>
-      <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2170242/" target="_blank" rel="noopener">İzmir Ödemiş'te 23.041 m² tarla ve içerisindeki yapılar mahkemeden satılıktır</a></td>
-      <td class="list-bedel">27.446.150 ₺</td>
-      <td class="list-tarih">20.10.2026</td>
-    </tr>
-    <tr>
-      <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2179030/" target="_blank" rel="noopener">2179030</a></td>
-      <td class="list-kurum">URLA 1. (SULH HUKUK MAH.) SATIŞ MEMURLUĞU</td>
-      <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2179030/" target="_blank" rel="noopener">İzmir Urla'da 5.401 m² tarla mahkemeden satılıktır (çoklu satış)</a></td>
-      <td class="list-bedel">27.306.100 ₺</td>
-      <td class="list-tarih">22.09.2026</td>
-    </tr>
-    <tr>
-      <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2159114/" target="_blank" rel="noopener">2159114</a></td>
-      <td class="list-kurum">ÖDEMİŞ İCRA DAİRESİ MÜDÜRLÜĞÜ</td>
-      <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2159114/" target="_blank" rel="noopener">İzmir Ödemiş'te 9.100 m² tarla ve incirlik icradan satılıktır</a></td>
-      <td class="list-bedel">26.765.000 ₺</td>
-      <td class="list-tarih">27.08.2026</td>
-    </tr>
-    <tr>
-      <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2139629/" target="_blank" rel="noopener">2139629</a></td>
-      <td class="list-kurum">İZMİR GAYRİMENKUL SATIŞ İCRA DAİRESİ MÜDÜRLÜĞÜ</td>
-      <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2139629/" target="_blank" rel="noopener">İzmir Güzelbahçe'de villa icradan satılıktır</a></td>
-      <td class="list-bedel">26.500.000 ₺</td>
-      <td class="list-tarih">15.09.2026</td>
-    </tr>
-    <tr>
-      <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2150191/" target="_blank" rel="noopener">2150191</a></td>
-      <td class="list-kurum">İZMİR GAYRİMENKUL SATIŞ İCRA DAİRESİ MÜDÜRLÜĞÜ</td>
-      <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2150191/" target="_blank" rel="noopener">İzmir Güzelbahçe'de 1 adet taşınmaz icradan satılıktır</a></td>
-      <td class="list-bedel">26.000.000 ₺</td>
-      <td class="list-tarih">09.10.2026</td>
-    </tr>
-    <tr>
-      <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2188576/" target="_blank" rel="noopener">2188576</a></td>
-      <td class="list-kurum">İZMİR GAYRİMENKUL SATIŞ İCRA DAİRESİ MÜDÜRLÜĞÜ</td>
-      <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2188576/" target="_blank" rel="noopener">İzmir Konak'ta daire icradan satılıktır (çoklu satış)</a></td>
-      <td class="list-bedel">25.000.000 ₺</td>
-      <td class="list-tarih">05.10.2026</td>
-    </tr>
-    <tr>
-      <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2181575/" target="_blank" rel="noopener">2181575</a></td>
-      <td class="list-kurum">ALİAĞA SULH HUKUK MAHKEMESİ SATIŞ MEMURLUĞU</td>
-      <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2181575/" target="_blank" rel="noopener">İzmir Aliağa'da içinde yapılar olan taşınmaz mahkemeden satılıktır</a></td>
-      <td class="list-bedel">24.893.819 ₺</td>
-      <td class="list-tarih">20.10.2026</td>
-    </tr>
-    <tr>
-      <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2191961/" target="_blank" rel="noopener">2191961</a></td>
-      <td class="list-kurum">MENDERES İCRA DAİRESİ MÜDÜRLÜĞÜ</td>
-      <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2191961/" target="_blank" rel="noopener">İzmir Menderes'te 2.589 m² tarla ve depolu ev icradan satılıktır</a></td>
-      <td class="list-bedel">24.449.844 ₺</td>
-      <td class="list-tarih">08.10.2026</td>
-    </tr>
-    <tr>
-      <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2129850/" target="_blank" rel="noopener">2129850</a></td>
-      <td class="list-kurum">URLA İCRA DAİRESİ MÜDÜRLÜĞÜ</td>
-      <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2129850/" target="_blank" rel="noopener">İzmir Urla'da dubleks mesken icradan satılıktır</a></td>
-      <td class="list-bedel">22.056.350 ₺</td>
-      <td class="list-tarih">31.08.2026</td>
-    </tr>
-    <tr>
-      <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2139056/" target="_blank" rel="noopener">2139056</a></td>
-      <td class="list-kurum">ALİAĞA SULH HUKUK MAHKEMESİ SATIŞ MEMURLUĞU</td>
-      <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2139056/" target="_blank" rel="noopener">İzmir Aliağa'da 3 adet taşınmaz mahkemeden satılıktır</a></td>
-      <td class="list-bedel">21.624.606 ₺</td>
-      <td class="list-tarih">22.09.2026</td>
-    </tr>
-    <tr>
-      <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2163855/" target="_blank" rel="noopener">2163855</a></td>
-      <td class="list-kurum">ALİAĞA SULH HUKUK MAHKEMESİ SATIŞ MEMURLUĞU</td>
-      <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2163855/" target="_blank" rel="noopener">İzmir Aliağa'da 588 m² arsa mahkemeden satılıktır (çoklu satış)</a></td>
-      <td class="list-bedel">20.580.000 ₺</td>
-      <td class="list-tarih">24.09.2026</td>
-    </tr>
-    <tr>
-      <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2130333/" target="_blank" rel="noopener">2130333</a></td>
-      <td class="list-kurum">ALİAĞA SULH HUKUK MAHKEMESİ SATIŞ MEMURLUĞU</td>
-      <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2130333/" target="_blank" rel="noopener">İzmir Aliağa'da 10.004 m² tarla mahkemeden satılıktır</a></td>
-      <td class="list-bedel">20.008.000 ₺</td>
-      <td class="list-tarih">09.09.2026</td>
-    </tr>
-    <tr>
-      <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2152361/" target="_blank" rel="noopener">2152361</a></td>
-      <td class="list-kurum">FOÇA (SULH HUKUK MAH.) SATIŞ MEMURLUĞU</td>
-      <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2152361/" target="_blank" rel="noopener">İzmir Foça'da 6.533 m² tarla mahkemeden satılıktır (çoklu satış)</a></td>
-      <td class="list-bedel">19.599.000 ₺</td>
-      <td class="list-tarih">01.09.2026</td>
-    </tr>
-    <tr>
-      <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2168563/" target="_blank" rel="noopener">2168563</a></td>
-      <td class="list-kurum">BERGAMA SULH HUKUK MAHKEMESİ SATIŞ MEMURLUĞU</td>
-      <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2168563/" target="_blank" rel="noopener">İzmir Bergama'da çam fıstığı arazisi mahkemeden satılıktır</a></td>
-      <td class="list-bedel">19.138.667 ₺</td>
-      <td class="list-tarih">01.10.2026</td>
-    </tr>
-    <tr>
-      <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2134712/" target="_blank" rel="noopener">2134712</a></td>
-      <td class="list-kurum">TİRE İCRA DAİRESİ MÜDÜRLÜĞÜ</td>
-      <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2134712/" target="_blank" rel="noopener">İzmir Tire'de tarım arazisi icradan satılıktır</a></td>
-      <td class="list-bedel">19.000.000 ₺</td>
-      <td class="list-tarih">26.08.2026</td>
-    </tr>
-    <tr>
-      <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2184858/" target="_blank" rel="noopener">2184858</a></td>
-      <td class="list-kurum">URLA 1. (SULH HUKUK MAH.) SATIŞ MEMURLUĞU</td>
-      <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2184858/" target="_blank" rel="noopener">İzmir Urla'da 539 m² arsa mahkemeden satılıktır</a></td>
-      <td class="list-bedel">18.869.550 ₺</td>
-      <td class="list-tarih">22.09.2026</td>
-    </tr>
-    <tr>
-      <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2165587/" target="_blank" rel="noopener">2165587</a></td>
-      <td class="list-kurum">ÇEŞME İCRA DAİRESİ</td>
-      <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2165587/" target="_blank" rel="noopener">İzmir Çeşme'de 2.712 m² tarla ve üzerindeki yapılar icradan satılıktır</a></td>
-      <td class="list-bedel">17.633.785 ₺</td>
-      <td class="list-tarih">22.10.2026</td>
-    </tr>
-    <tr>
-      <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2181531/" target="_blank" rel="noopener">2181531</a></td>
-      <td class="list-kurum">TORBALI 1. (SULH HUKUK MAH.) SATIŞ MEMURLUĞU</td>
-      <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2181531/" target="_blank" rel="noopener">İzmir Torbalı'da 31.000 m² tarla mahkemeden satılıktır</a></td>
-      <td class="list-bedel">17.050.000 ₺</td>
-      <td class="list-tarih">17.09.2026</td>
-    </tr>
-    <tr>
-      <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2150753/" target="_blank" rel="noopener">2150753</a></td>
-      <td class="list-kurum">İZMİR GAYRİMENKUL SATIŞ İCRA DAİRESİ MÜDÜRLÜĞÜ</td>
-      <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2150753/" target="_blank" rel="noopener">İzmir Narlıdere'de icradan satılık villa</a></td>
-      <td class="list-bedel">17.000.000 ₺</td>
-      <td class="list-tarih">01.09.2026</td>
-    </tr>
-    <tr>
-      <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2183556/" target="_blank" rel="noopener">2183556</a></td>
-      <td class="list-kurum">İZMİR GAYRİMENKUL SATIŞ İCRA DAİRESİ MÜDÜRLÜĞÜ</td>
-      <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2183556/" target="_blank" rel="noopener">İzmir Güzelbahçe'de dubleks mesken icradan satılıktır</a></td>
-      <td class="list-bedel">16.500.000 ₺</td>
-      <td class="list-tarih">16.11.2026</td>
-    </tr>
-    <tr>
-      <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2178057/" target="_blank" rel="noopener">2178057</a></td>
-      <td class="list-kurum">İZMİR GAYRİMENKUL SATIŞ İCRA DAİRESİ MÜDÜRLÜĞÜ</td>
-      <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2178057/" target="_blank" rel="noopener">İzmir Güzelbahçe'de dubleks mesken icradan satılıktır</a></td>
-      <td class="list-bedel">16.000.000 ₺</td>
-      <td class="list-tarih">05.10.2026</td>
-    </tr>
-    <tr>
-      <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2183561/" target="_blank" rel="noopener">2183561</a></td>
-      <td class="list-kurum">BERGAMA SULH HUKUK MAHKEMESİ SATIŞ MEMURLUĞU</td>
-      <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2183561/" target="_blank" rel="noopener">İzmir Bergama'da mahkemeden satılık tarla</a></td>
-      <td class="list-bedel">15.774.000 ₺</td>
-      <td class="list-tarih">27.10.2026</td>
-    </tr>
-    <tr>
-      <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2163411/" target="_blank" rel="noopener">2163411</a></td>
-      <td class="list-kurum">KİRAZ İCRA MÜDÜRLÜĞÜ</td>
-      <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2163411/" target="_blank" rel="noopener">İzmir Kiraz'da tek katlı depo icradan satılıktır</a></td>
-      <td class="list-bedel">15.428.000 ₺</td>
-      <td class="list-tarih">23.09.2026</td>
-    </tr>
-    <tr>
-      <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2137094/" target="_blank" rel="noopener">2137094</a></td>
-      <td class="list-kurum">BERGAMA SULH HUKUK MAHKEMESİ SATIŞ MEMURLUĞU</td>
-      <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2137094/" target="_blank" rel="noopener">İzmir Bergama'da tarım alanı mahkemeden satılıktır</a></td>
-      <td class="list-bedel">14.541.000 ₺</td>
-      <td class="list-tarih">29.09.2026</td>
-    </tr>
-    <tr>
-      <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2180042/" target="_blank" rel="noopener">2180042</a></td>
-      <td class="list-kurum">İZMİR 6. SULH HUKUK MAHKEMESİ</td>
-      <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2180042/" target="_blank" rel="noopener">İzmir Konak'ta 2+1 daire mahkemeden satılıktır</a></td>
-      <td class="list-bedel">14.250.000 ₺</td>
-      <td class="list-tarih">16.09.2026</td>
-    </tr>
-    <tr>
-      <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2167985/" target="_blank" rel="noopener">2167985</a></td>
-      <td class="list-kurum">İZMİR 6. SULH HUKUK MAHKEMESİ</td>
-      <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2167985/" target="_blank" rel="noopener">İzmir Konak'ta bina mahkemeden satılıktır</a></td>
-      <td class="list-bedel">14.000.000 ₺</td>
-      <td class="list-tarih">17.09.2026</td>
-    </tr>
-    <tr>
-      <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2132132/" target="_blank" rel="noopener">2132132</a></td>
-      <td class="list-kurum">BAYINDIR SULH HUKUK MAHKEMESİ SATIŞ MEMURLUĞU</td>
-      <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2132132/" target="_blank" rel="noopener">İzmir Bayındır'da mahkemeden satılık tarla</a></td>
-      <td class="list-bedel">11.732.150 ₺</td>
-      <td class="list-tarih">01.09.2026</td>
-    </tr>
-    <tr>
-      <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2161632/" target="_blank" rel="noopener">2161632</a></td>
-      <td class="list-kurum">TİRE İCRA DAİRESİ MÜDÜRLÜĞÜ</td>
-      <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2161632/" target="_blank" rel="noopener">İzmir Tire'de 4.589 m² tarım arazisi ve içerisindeki yapılar icradan satılıktır</a></td>
-      <td class="list-bedel">11.183.047 ₺</td>
-      <td class="list-tarih">08.09.2026</td>
-    </tr>
-    <tr>
-      <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2192457/" target="_blank" rel="noopener">2192457</a></td>
-      <td class="list-kurum">ÖDEMİŞ İCRA DAİRESİ MÜDÜRLÜĞÜ</td>
-      <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2192457/" target="_blank" rel="noopener">İzmir Ödemiş'te 24.625 m² tarla icradan satılıktır</a></td>
-      <td class="list-bedel">10.883.600 ₺</td>
-      <td class="list-tarih">08.10.2026</td>
-    </tr>
-    <tr>
-      <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2186016/" target="_blank" rel="noopener">2186016</a></td>
-      <td class="list-kurum">İZMİR 5. SULH HUKUK MAHKEMESİ</td>
-      <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2186016/" target="_blank" rel="noopener">İzmir Bornova'da bahçeli kerpiç ev mahkemeden satılıktır</a></td>
-      <td class="list-bedel">10.500.000 ₺</td>
-      <td class="list-tarih">29.09.2026</td>
-    </tr>
-    <tr>
-      <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2160349/" target="_blank" rel="noopener">2160349</a></td>
-      <td class="list-kurum">MENEMEN İCRA DAİRESİ MÜDÜRLÜĞÜ</td>
-      <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2160349/" target="_blank" rel="noopener">İzmir Menemen'de tarım arazisi icradan satılıktır</a></td>
-      <td class="list-bedel">10.351.600 ₺</td>
-      <td class="list-tarih">09.09.2026</td>
-    </tr>
-    <tr>
-      <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2181246/" target="_blank" rel="noopener">2181246</a></td>
-      <td class="list-kurum">İZMİR 3. İCRA DAİRESİ MÜDÜRLÜĞÜ</td>
-      <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2181246/" target="_blank" rel="noopener">İzmir Bornova'da ofis icradan satılıktır (çoklu satış)</a></td>
-      <td class="list-bedel">10.000.000 ₺</td>
-      <td class="list-tarih">03.11.2026</td>
-    </tr>
+      <tbody id="gm-tbody">
+      <tr data-bedel="680000000" data-tarih="1792616400"
+          data-search="i̇zmir 3. i̇cra dairesi müdürlüğünden düzeltme i̇lanı (2022/2467 tlmt.) i̇zmi̇r 3. i̇cra dai̇resi̇ müdürlüğü">
+        <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2150807/" target="_blank" rel="noopener">2150807</a></td>
+        <td class="list-kurum">İZMİR 3. İCRA DAİRESİ MÜDÜRLÜĞÜ</td>
+        <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2150807/" target="_blank" rel="noopener">İzmir 3. İcra Dairesi Müdürlüğünden Düzeltme İlanı (2022/2467 TLMT.)</a></td>
+        <td class="list-bedel">680.000.000 ₺</td>
+        <td class="list-tarih">22.10.2026</td>
+      </tr>
+      <tr data-bedel="680000000" data-tarih="1792616400"
+          data-search="i̇zmir bornova'da 8.241 m² arsa icradan satılıktır (çoklu satış) i̇zmi̇r 3. i̇cra dai̇resi̇ müdürlüğü">
+        <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2150741/" target="_blank" rel="noopener">2150741</a></td>
+        <td class="list-kurum">İZMİR 3. İCRA DAİRESİ MÜDÜRLÜĞÜ</td>
+        <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2150741/" target="_blank" rel="noopener">İzmir Bornova'da 8.241 m² arsa icradan satılıktır (çoklu satış)</a></td>
+        <td class="list-bedel">680.000.000 ₺</td>
+        <td class="list-tarih">22.10.2026</td>
+      </tr>
+      <tr data-bedel="305639650" data-tarih="1795467600"
+          data-search="i̇zmir seferihisar'da 2 adet taşınmaz mahkemeden satılıktır seferi̇hi̇sar sulh hukuk mahkemesi̇">
+        <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2185441/" target="_blank" rel="noopener">2185441</a></td>
+        <td class="list-kurum">SEFERİHİSAR SULH HUKUK MAHKEMESİ</td>
+        <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2185441/" target="_blank" rel="noopener">İzmir Seferihisar'da 2 adet taşınmaz mahkemeden satılıktır</a></td>
+        <td class="list-bedel">305.639.650 ₺</td>
+        <td class="list-tarih">24.11.2026</td>
+      </tr>
+      <tr data-bedel="147610000" data-tarih="1788382800"
+          data-search="i̇zmir çeşme'de mahkemeden satılık tarla çeşme sulh hukuk mahkemesi̇">
+        <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2170211/" target="_blank" rel="noopener">2170211</a></td>
+        <td class="list-kurum">ÇEŞME SULH HUKUK MAHKEMESİ</td>
+        <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2170211/" target="_blank" rel="noopener">İzmir Çeşme'de mahkemeden satılık tarla</a></td>
+        <td class="list-bedel">147.610.000 ₺</td>
+        <td class="list-tarih">03.09.2026</td>
+      </tr>
+      <tr data-bedel="140622710" data-tarih="1790542800"
+          data-search="i̇zmir urla'da içerisinde çiçekçilik işletmesi ve atölye binası olan taşınmaz icradan satılıktır urla i̇cra dai̇resi̇ müdürlüğü">
+        <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2177990/" target="_blank" rel="noopener">2177990</a></td>
+        <td class="list-kurum">URLA İCRA DAİRESİ MÜDÜRLÜĞÜ</td>
+        <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2177990/" target="_blank" rel="noopener">İzmir Urla'da içerisinde çiçekçilik işletmesi ve atölye binası olan taşınmaz icradan satılıktır</a></td>
+        <td class="list-bedel">140.622.710 ₺</td>
+        <td class="list-tarih">28.09.2026</td>
+      </tr>
+      <tr data-bedel="122818350" data-tarih="1791925200"
+          data-search="i̇zmir menemen'de fabrika binası icradan satılıktır menemen i̇cra dai̇resi̇ müdürlüğü">
+        <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2195612/" target="_blank" rel="noopener">2195612</a></td>
+        <td class="list-kurum">MENEMEN İCRA DAİRESİ MÜDÜRLÜĞÜ</td>
+        <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2195612/" target="_blank" rel="noopener">İzmir Menemen'de fabrika binası icradan satılıktır</a></td>
+        <td class="list-bedel">122.818.350 ₺</td>
+        <td class="list-tarih">14.10.2026</td>
+      </tr>
+      <tr data-bedel="95000000" data-tarih="1789506000"
+          data-search="i̇zmir bayraklı'da imarlı arsa mahkemeden satılıktır i̇zmi̇r 5. sulh hukuk mahkemesi̇">
+        <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2159935/" target="_blank" rel="noopener">2159935</a></td>
+        <td class="list-kurum">İZMİR 5. SULH HUKUK MAHKEMESİ</td>
+        <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2159935/" target="_blank" rel="noopener">İzmir Bayraklı'da imarlı arsa mahkemeden satılıktır</a></td>
+        <td class="list-bedel">95.000.000 ₺</td>
+        <td class="list-tarih">16.09.2026</td>
+      </tr>
+      <tr data-bedel="66609000" data-tarih="1789333200"
+          data-search="i̇zmir menderes'te 13.298 m² tarla mahkemeden satılıktır menderes 1. (sulh hukuk mah.) satiş memurluğu">
+        <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2175539/" target="_blank" rel="noopener">2175539</a></td>
+        <td class="list-kurum">MENDERES 1. (SULH HUKUK MAH.) SATIŞ MEMURLUĞU</td>
+        <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2175539/" target="_blank" rel="noopener">İzmir Menderes'te 13.298 m² tarla mahkemeden satılıktır</a></td>
+        <td class="list-bedel">66.609.000 ₺</td>
+        <td class="list-tarih">14.09.2026</td>
+      </tr>
+      <tr data-bedel="60000000" data-tarih="1788210000"
+          data-search="i̇zmir konak'ta icradan satılık dükkan i̇zmi̇r gayri̇menkul satiş i̇cra dai̇resi̇ müdürlüğü">
+        <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2119308/" target="_blank" rel="noopener">2119308</a></td>
+        <td class="list-kurum">İZMİR GAYRİMENKUL SATIŞ İCRA DAİRESİ MÜDÜRLÜĞÜ</td>
+        <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2119308/" target="_blank" rel="noopener">İzmir Konak'ta icradan satılık dükkan</a></td>
+        <td class="list-bedel">60.000.000 ₺</td>
+        <td class="list-tarih">01.09.2026</td>
+      </tr>
+      <tr data-bedel="59869680" data-tarih="1788210000"
+          data-search="i̇zmir gaziemir'de 1 adet taşınmaz mahkemeden satılıktır i̇zmi̇r 11. sulh hukuk mahkemesi̇">
+        <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2116876/" target="_blank" rel="noopener">2116876</a></td>
+        <td class="list-kurum">İZMİR 11. SULH HUKUK MAHKEMESİ</td>
+        <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2116876/" target="_blank" rel="noopener">İzmir Gaziemir'de 1 adet taşınmaz mahkemeden satılıktır</a></td>
+        <td class="list-bedel">59.869.680 ₺</td>
+        <td class="list-tarih">01.09.2026</td>
+      </tr>
+      <tr data-bedel="53712058" data-tarih="1788296400"
+          data-search="i̇zmir dikili'de 14.814 m² tarla ve içerisindeki yapılar icradan satılıktır di̇ki̇li̇ i̇cra dai̇resi̇">
+        <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2125320/" target="_blank" rel="noopener">2125320</a></td>
+        <td class="list-kurum">DİKİLİ İCRA DAİRESİ</td>
+        <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2125320/" target="_blank" rel="noopener">İzmir Dikili'de 14.814 m² tarla ve içerisindeki yapılar icradan satılıktır</a></td>
+        <td class="list-bedel">53.712.058 ₺</td>
+        <td class="list-tarih">02.09.2026</td>
+      </tr>
+      <tr data-bedel="51526950" data-tarih="1790197200"
+          data-search="i̇zmir güzelbahçe'de 3.435 m² tarla mahkemeden satılıktır i̇zmi̇r 19. (sulh hukuk mah.) satiş memurluğu">
+        <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2183439/" target="_blank" rel="noopener">2183439</a></td>
+        <td class="list-kurum">İZMİR 19. (SULH HUKUK MAH.) SATIŞ MEMURLUĞU</td>
+        <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2183439/" target="_blank" rel="noopener">İzmir Güzelbahçe'de 3.435 m² tarla mahkemeden satılıktır</a></td>
+        <td class="list-bedel">51.526.950 ₺</td>
+        <td class="list-tarih">24.09.2026</td>
+      </tr>
+      <tr data-bedel="50591360" data-tarih="1788296400"
+          data-search="i̇zmir çeşme'de 3.161 m² tarla mahkemeden satılıktır (çoklu satış) çeşme sulh hukuk mahkemesi̇">
+        <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2170683/" target="_blank" rel="noopener">2170683</a></td>
+        <td class="list-kurum">ÇEŞME SULH HUKUK MAHKEMESİ</td>
+        <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2170683/" target="_blank" rel="noopener">İzmir Çeşme'de 3.161 m² tarla mahkemeden satılıktır (çoklu satış)</a></td>
+        <td class="list-bedel">50.591.360 ₺</td>
+        <td class="list-tarih">02.09.2026</td>
+      </tr>
+      <tr data-bedel="49061508" data-tarih="1797282000"
+          data-search="i̇zmir torbalı'da 30.504 m² tarla mahkemeden satılıktır torbali 1. (sulh hukuk mah.) satiş memurluğu">
+        <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2082060/" target="_blank" rel="noopener">2082060</a></td>
+        <td class="list-kurum">TORBALI 1. (SULH HUKUK MAH.) SATIŞ MEMURLUĞU</td>
+        <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2082060/" target="_blank" rel="noopener">İzmir Torbalı'da 30.504 m² tarla mahkemeden satılıktır</a></td>
+        <td class="list-bedel">49.061.508 ₺</td>
+        <td class="list-tarih">15.12.2026</td>
+      </tr>
+      <tr data-bedel="47000000" data-tarih="1790629200"
+          data-search="i̇zmir karabağlar'da dükkan icradan satılıktır i̇zmi̇r 3. i̇cra dai̇resi̇ müdürlüğü">
+        <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2154376/" target="_blank" rel="noopener">2154376</a></td>
+        <td class="list-kurum">İZMİR 3. İCRA DAİRESİ MÜDÜRLÜĞÜ</td>
+        <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2154376/" target="_blank" rel="noopener">İzmir Karabağlar'da dükkan icradan satılıktır</a></td>
+        <td class="list-bedel">47.000.000 ₺</td>
+        <td class="list-tarih">29.09.2026</td>
+      </tr>
+      <tr data-bedel="43658000" data-tarih="1787518800"
+          data-search="i̇zmir menderes'te 8.688 m² tarla mahkemeden satılıktır menderes 1. (sulh hukuk mah.) satiş memurluğu">
+        <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2133994/" target="_blank" rel="noopener">2133994</a></td>
+        <td class="list-kurum">MENDERES 1. (SULH HUKUK MAH.) SATIŞ MEMURLUĞU</td>
+        <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2133994/" target="_blank" rel="noopener">İzmir Menderes'te 8.688 m² tarla mahkemeden satılıktır</a></td>
+        <td class="list-bedel">43.658.000 ₺</td>
+        <td class="list-tarih">24.08.2026</td>
+      </tr>
+      <tr data-bedel="42500000" data-tarih="1802811600"
+          data-search="i̇zmir gaziemir'de 1.519 m² arsa mahkemeden satılıktır i̇zmi̇r 5. sulh hukuk mahkemesi̇">
+        <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2159881/" target="_blank" rel="noopener">2159881</a></td>
+        <td class="list-kurum">İZMİR 5. SULH HUKUK MAHKEMESİ</td>
+        <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2159881/" target="_blank" rel="noopener">İzmir Gaziemir'de 1.519 m² arsa mahkemeden satılıktır</a></td>
+        <td class="list-bedel">42.500.000 ₺</td>
+        <td class="list-tarih">17.02.2027</td>
+      </tr>
+      <tr data-bedel="40193340" data-tarih="1790802000"
+          data-search="i̇zmir menderes'te 19.971 m² tarla icradan satılıktır menderes i̇cra dai̇resi̇ müdürlüğü">
+        <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2190258/" target="_blank" rel="noopener">2190258</a></td>
+        <td class="list-kurum">MENDERES İCRA DAİRESİ MÜDÜRLÜĞÜ</td>
+        <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2190258/" target="_blank" rel="noopener">İzmir Menderes'te 19.971 m² tarla icradan satılıktır</a></td>
+        <td class="list-bedel">40.193.340 ₺</td>
+        <td class="list-tarih">01.10.2026</td>
+      </tr>
+      <tr data-bedel="38437780" data-tarih="1799960400"
+          data-search="i̇zmir karşıyaka'da 624 m² arsa ve üzerindeki yapılar mahkemeden satılıktır i̇zmi̇r karşiyaka 1. sulh hukuk mahkemesi̇">
+        <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2126721/" target="_blank" rel="noopener">2126721</a></td>
+        <td class="list-kurum">İZMİR KARŞIYAKA 1. SULH HUKUK MAHKEMESİ</td>
+        <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2126721/" target="_blank" rel="noopener">İzmir Karşıyaka'da 624 m² arsa ve üzerindeki yapılar mahkemeden satılıktır</a></td>
+        <td class="list-bedel">38.437.780 ₺</td>
+        <td class="list-tarih">15.01.2027</td>
+      </tr>
+      <tr data-bedel="37000000" data-tarih="1792357200"
+          data-search="i̇zmir narlıdere'de 156,59 m² arsa icradan satılıktır i̇zmi̇r gayri̇menkul satiş i̇cra dai̇resi̇ müdürlüğü">
+        <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2151705/" target="_blank" rel="noopener">2151705</a></td>
+        <td class="list-kurum">İZMİR GAYRİMENKUL SATIŞ İCRA DAİRESİ MÜDÜRLÜĞÜ</td>
+        <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2151705/" target="_blank" rel="noopener">İzmir Narlıdere'de 156,59 m² arsa icradan satılıktır</a></td>
+        <td class="list-bedel">37.000.000 ₺</td>
+        <td class="list-tarih">19.10.2026</td>
+      </tr>
+      <tr data-bedel="36827550" data-tarih="1789419600"
+          data-search="i̇zmir urla'da 5.650 m² tarla mahkemeden satılıktır (çoklu satış) urla 1. (sulh hukuk mah.) satiş memurluğu">
+        <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2179078/" target="_blank" rel="noopener">2179078</a></td>
+        <td class="list-kurum">URLA 1. (SULH HUKUK MAH.) SATIŞ MEMURLUĞU</td>
+        <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2179078/" target="_blank" rel="noopener">İzmir Urla'da 5.650 m² tarla mahkemeden satılıktır (çoklu satış)</a></td>
+        <td class="list-bedel">36.827.550 ₺</td>
+        <td class="list-tarih">15.09.2026</td>
+      </tr>
+      <tr data-bedel="35643701" data-tarih="1791925200"
+          data-search="i̇zmir çiğli'de 940 m² arsa ve üzerindeki binalar mahkemeden satılıktır i̇zmi̇r karşiyaka 2. sulh hukuk mahkemesi̇">
+        <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2174083/" target="_blank" rel="noopener">2174083</a></td>
+        <td class="list-kurum">İZMİR KARŞIYAKA 2. SULH HUKUK MAHKEMESİ</td>
+        <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2174083/" target="_blank" rel="noopener">İzmir Çiğli'de 940 m² arsa ve üzerindeki binalar mahkemeden satılıktır</a></td>
+        <td class="list-bedel">35.643.701 ₺</td>
+        <td class="list-tarih">14.10.2026</td>
+      </tr>
+      <tr data-bedel="34405000" data-tarih="1793307600"
+          data-search="i̇zmir çeşme'de 4.915 m² zeytinlik ve üzerindeki yapılar icradan satılıktır çeşme i̇cra dai̇resi̇">
+        <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2165977/" target="_blank" rel="noopener">2165977</a></td>
+        <td class="list-kurum">ÇEŞME İCRA DAİRESİ</td>
+        <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2165977/" target="_blank" rel="noopener">İzmir Çeşme'de 4.915 m² zeytinlik ve üzerindeki yapılar icradan satılıktır</a></td>
+        <td class="list-bedel">34.405.000 ₺</td>
+        <td class="list-tarih">30.10.2026</td>
+      </tr>
+      <tr data-bedel="28765765" data-tarih="1787000400"
+          data-search="i̇zmir urla'da 6.728 m² taşınmaz mahkemeden satılıktır urla 1. (sulh hukuk mah.) satiş memurluğu">
+        <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2156740/" target="_blank" rel="noopener">2156740</a></td>
+        <td class="list-kurum">URLA 1. (SULH HUKUK MAH.) SATIŞ MEMURLUĞU</td>
+        <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2156740/" target="_blank" rel="noopener">İzmir Urla'da 6.728 m² taşınmaz mahkemeden satılıktır</a></td>
+        <td class="list-bedel">28.765.765 ₺</td>
+        <td class="list-tarih">18.08.2026</td>
+      </tr>
+      <tr data-bedel="27446150" data-tarih="1792443600"
+          data-search="i̇zmir ödemiş'te 23.041 m² tarla ve içerisindeki yapılar mahkemeden satılıktır ödemi̇ş sulh hukuk mahkemesi̇ satiş memurluğu">
+        <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2170242/" target="_blank" rel="noopener">2170242</a></td>
+        <td class="list-kurum">ÖDEMİŞ SULH HUKUK MAHKEMESİ SATIŞ MEMURLUĞU</td>
+        <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2170242/" target="_blank" rel="noopener">İzmir Ödemiş'te 23.041 m² tarla ve içerisindeki yapılar mahkemeden satılıktır</a></td>
+        <td class="list-bedel">27.446.150 ₺</td>
+        <td class="list-tarih">20.10.2026</td>
+      </tr>
+      <tr data-bedel="27306100" data-tarih="1790024400"
+          data-search="i̇zmir urla'da 5.401 m² tarla mahkemeden satılıktır (çoklu satış) urla 1. (sulh hukuk mah.) satiş memurluğu">
+        <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2179030/" target="_blank" rel="noopener">2179030</a></td>
+        <td class="list-kurum">URLA 1. (SULH HUKUK MAH.) SATIŞ MEMURLUĞU</td>
+        <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2179030/" target="_blank" rel="noopener">İzmir Urla'da 5.401 m² tarla mahkemeden satılıktır (çoklu satış)</a></td>
+        <td class="list-bedel">27.306.100 ₺</td>
+        <td class="list-tarih">22.09.2026</td>
+      </tr>
+      <tr data-bedel="26765000" data-tarih="1787778000"
+          data-search="i̇zmir ödemiş'te 9.100 m² tarla ve incirlik icradan satılıktır ödemi̇ş i̇cra dai̇resi̇ müdürlüğü">
+        <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2159114/" target="_blank" rel="noopener">2159114</a></td>
+        <td class="list-kurum">ÖDEMİŞ İCRA DAİRESİ MÜDÜRLÜĞÜ</td>
+        <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2159114/" target="_blank" rel="noopener">İzmir Ödemiş'te 9.100 m² tarla ve incirlik icradan satılıktır</a></td>
+        <td class="list-bedel">26.765.000 ₺</td>
+        <td class="list-tarih">27.08.2026</td>
+      </tr>
+      <tr data-bedel="26500000" data-tarih="1789419600"
+          data-search="i̇zmir güzelbahçe'de villa icradan satılıktır i̇zmi̇r gayri̇menkul satiş i̇cra dai̇resi̇ müdürlüğü">
+        <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2139629/" target="_blank" rel="noopener">2139629</a></td>
+        <td class="list-kurum">İZMİR GAYRİMENKUL SATIŞ İCRA DAİRESİ MÜDÜRLÜĞÜ</td>
+        <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2139629/" target="_blank" rel="noopener">İzmir Güzelbahçe'de villa icradan satılıktır</a></td>
+        <td class="list-bedel">26.500.000 ₺</td>
+        <td class="list-tarih">15.09.2026</td>
+      </tr>
+      <tr data-bedel="26000000" data-tarih="1791493200"
+          data-search="i̇zmir güzelbahçe'de 1 adet taşınmaz icradan satılıktır i̇zmi̇r gayri̇menkul satiş i̇cra dai̇resi̇ müdürlüğü">
+        <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2150191/" target="_blank" rel="noopener">2150191</a></td>
+        <td class="list-kurum">İZMİR GAYRİMENKUL SATIŞ İCRA DAİRESİ MÜDÜRLÜĞÜ</td>
+        <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2150191/" target="_blank" rel="noopener">İzmir Güzelbahçe'de 1 adet taşınmaz icradan satılıktır</a></td>
+        <td class="list-bedel">26.000.000 ₺</td>
+        <td class="list-tarih">09.10.2026</td>
+      </tr>
+      <tr data-bedel="25000000" data-tarih="1791147600"
+          data-search="i̇zmir konak'ta daire icradan satılıktır (çoklu satış) i̇zmi̇r gayri̇menkul satiş i̇cra dai̇resi̇ müdürlüğü">
+        <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2188576/" target="_blank" rel="noopener">2188576</a></td>
+        <td class="list-kurum">İZMİR GAYRİMENKUL SATIŞ İCRA DAİRESİ MÜDÜRLÜĞÜ</td>
+        <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2188576/" target="_blank" rel="noopener">İzmir Konak'ta daire icradan satılıktır (çoklu satış)</a></td>
+        <td class="list-bedel">25.000.000 ₺</td>
+        <td class="list-tarih">05.10.2026</td>
+      </tr>
+      <tr data-bedel="24893819" data-tarih="1792443600"
+          data-search="i̇zmir aliağa'da içinde yapılar olan taşınmaz mahkemeden satılıktır ali̇ağa sulh hukuk mahkemesi̇ satiş memurluğu">
+        <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2181575/" target="_blank" rel="noopener">2181575</a></td>
+        <td class="list-kurum">ALİAĞA SULH HUKUK MAHKEMESİ SATIŞ MEMURLUĞU</td>
+        <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2181575/" target="_blank" rel="noopener">İzmir Aliağa'da içinde yapılar olan taşınmaz mahkemeden satılıktır</a></td>
+        <td class="list-bedel">24.893.819 ₺</td>
+        <td class="list-tarih">20.10.2026</td>
+      </tr>
+      <tr data-bedel="24449844" data-tarih="1791406800"
+          data-search="i̇zmir menderes'te 2.589 m² tarla ve depolu ev icradan satılıktır menderes i̇cra dai̇resi̇ müdürlüğü">
+        <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2191961/" target="_blank" rel="noopener">2191961</a></td>
+        <td class="list-kurum">MENDERES İCRA DAİRESİ MÜDÜRLÜĞÜ</td>
+        <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2191961/" target="_blank" rel="noopener">İzmir Menderes'te 2.589 m² tarla ve depolu ev icradan satılıktır</a></td>
+        <td class="list-bedel">24.449.844 ₺</td>
+        <td class="list-tarih">08.10.2026</td>
+      </tr>
+      <tr data-bedel="22056350" data-tarih="1788123600"
+          data-search="i̇zmir urla'da dubleks mesken icradan satılıktır urla i̇cra dai̇resi̇ müdürlüğü">
+        <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2129850/" target="_blank" rel="noopener">2129850</a></td>
+        <td class="list-kurum">URLA İCRA DAİRESİ MÜDÜRLÜĞÜ</td>
+        <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2129850/" target="_blank" rel="noopener">İzmir Urla'da dubleks mesken icradan satılıktır</a></td>
+        <td class="list-bedel">22.056.350 ₺</td>
+        <td class="list-tarih">31.08.2026</td>
+      </tr>
+      <tr data-bedel="21624606" data-tarih="1790024400"
+          data-search="i̇zmir aliağa'da 3 adet taşınmaz mahkemeden satılıktır ali̇ağa sulh hukuk mahkemesi̇ satiş memurluğu">
+        <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2139056/" target="_blank" rel="noopener">2139056</a></td>
+        <td class="list-kurum">ALİAĞA SULH HUKUK MAHKEMESİ SATIŞ MEMURLUĞU</td>
+        <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2139056/" target="_blank" rel="noopener">İzmir Aliağa'da 3 adet taşınmaz mahkemeden satılıktır</a></td>
+        <td class="list-bedel">21.624.606 ₺</td>
+        <td class="list-tarih">22.09.2026</td>
+      </tr>
+      <tr data-bedel="20580000" data-tarih="1790197200"
+          data-search="i̇zmir aliağa'da 588 m² arsa mahkemeden satılıktır (çoklu satış) ali̇ağa sulh hukuk mahkemesi̇ satiş memurluğu">
+        <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2163855/" target="_blank" rel="noopener">2163855</a></td>
+        <td class="list-kurum">ALİAĞA SULH HUKUK MAHKEMESİ SATIŞ MEMURLUĞU</td>
+        <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2163855/" target="_blank" rel="noopener">İzmir Aliağa'da 588 m² arsa mahkemeden satılıktır (çoklu satış)</a></td>
+        <td class="list-bedel">20.580.000 ₺</td>
+        <td class="list-tarih">24.09.2026</td>
+      </tr>
+      <tr data-bedel="20008000" data-tarih="1788901200"
+          data-search="i̇zmir aliağa'da 10.004 m² tarla mahkemeden satılıktır ali̇ağa sulh hukuk mahkemesi̇ satiş memurluğu">
+        <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2130333/" target="_blank" rel="noopener">2130333</a></td>
+        <td class="list-kurum">ALİAĞA SULH HUKUK MAHKEMESİ SATIŞ MEMURLUĞU</td>
+        <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2130333/" target="_blank" rel="noopener">İzmir Aliağa'da 10.004 m² tarla mahkemeden satılıktır</a></td>
+        <td class="list-bedel">20.008.000 ₺</td>
+        <td class="list-tarih">09.09.2026</td>
+      </tr>
+      <tr data-bedel="19599000" data-tarih="1788210000"
+          data-search="i̇zmir foça'da 6.533 m² tarla mahkemeden satılıktır (çoklu satış) foça (sulh hukuk mah.) satiş memurluğu">
+        <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2152361/" target="_blank" rel="noopener">2152361</a></td>
+        <td class="list-kurum">FOÇA (SULH HUKUK MAH.) SATIŞ MEMURLUĞU</td>
+        <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2152361/" target="_blank" rel="noopener">İzmir Foça'da 6.533 m² tarla mahkemeden satılıktır (çoklu satış)</a></td>
+        <td class="list-bedel">19.599.000 ₺</td>
+        <td class="list-tarih">01.09.2026</td>
+      </tr>
+      <tr data-bedel="19138667" data-tarih="1790802000"
+          data-search="i̇zmir bergama'da çam fıstığı arazisi mahkemeden satılıktır bergama sulh hukuk mahkemesi̇ satiş memurluğu">
+        <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2168563/" target="_blank" rel="noopener">2168563</a></td>
+        <td class="list-kurum">BERGAMA SULH HUKUK MAHKEMESİ SATIŞ MEMURLUĞU</td>
+        <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2168563/" target="_blank" rel="noopener">İzmir Bergama'da çam fıstığı arazisi mahkemeden satılıktır</a></td>
+        <td class="list-bedel">19.138.667 ₺</td>
+        <td class="list-tarih">01.10.2026</td>
+      </tr>
+      <tr data-bedel="19000000" data-tarih="1787691600"
+          data-search="i̇zmir tire'de tarım arazisi icradan satılıktır ti̇re i̇cra dai̇resi̇ müdürlüğü">
+        <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2134712/" target="_blank" rel="noopener">2134712</a></td>
+        <td class="list-kurum">TİRE İCRA DAİRESİ MÜDÜRLÜĞÜ</td>
+        <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2134712/" target="_blank" rel="noopener">İzmir Tire'de tarım arazisi icradan satılıktır</a></td>
+        <td class="list-bedel">19.000.000 ₺</td>
+        <td class="list-tarih">26.08.2026</td>
+      </tr>
+      <tr data-bedel="18869550" data-tarih="1790024400"
+          data-search="i̇zmir urla'da 539 m² arsa mahkemeden satılıktır urla 1. (sulh hukuk mah.) satiş memurluğu">
+        <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2184858/" target="_blank" rel="noopener">2184858</a></td>
+        <td class="list-kurum">URLA 1. (SULH HUKUK MAH.) SATIŞ MEMURLUĞU</td>
+        <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2184858/" target="_blank" rel="noopener">İzmir Urla'da 539 m² arsa mahkemeden satılıktır</a></td>
+        <td class="list-bedel">18.869.550 ₺</td>
+        <td class="list-tarih">22.09.2026</td>
+      </tr>
+      <tr data-bedel="17633785" data-tarih="1792616400"
+          data-search="i̇zmir çeşme'de 2.712 m² tarla ve üzerindeki yapılar icradan satılıktır çeşme i̇cra dai̇resi̇">
+        <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2165587/" target="_blank" rel="noopener">2165587</a></td>
+        <td class="list-kurum">ÇEŞME İCRA DAİRESİ</td>
+        <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2165587/" target="_blank" rel="noopener">İzmir Çeşme'de 2.712 m² tarla ve üzerindeki yapılar icradan satılıktır</a></td>
+        <td class="list-bedel">17.633.785 ₺</td>
+        <td class="list-tarih">22.10.2026</td>
+      </tr>
+      <tr data-bedel="17050000" data-tarih="1789592400"
+          data-search="i̇zmir torbalı'da 31.000 m² tarla mahkemeden satılıktır torbali 1. (sulh hukuk mah.) satiş memurluğu">
+        <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2181531/" target="_blank" rel="noopener">2181531</a></td>
+        <td class="list-kurum">TORBALI 1. (SULH HUKUK MAH.) SATIŞ MEMURLUĞU</td>
+        <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2181531/" target="_blank" rel="noopener">İzmir Torbalı'da 31.000 m² tarla mahkemeden satılıktır</a></td>
+        <td class="list-bedel">17.050.000 ₺</td>
+        <td class="list-tarih">17.09.2026</td>
+      </tr>
+      <tr data-bedel="17000000" data-tarih="1788210000"
+          data-search="i̇zmir narlıdere'de icradan satılık villa i̇zmi̇r gayri̇menkul satiş i̇cra dai̇resi̇ müdürlüğü">
+        <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2150753/" target="_blank" rel="noopener">2150753</a></td>
+        <td class="list-kurum">İZMİR GAYRİMENKUL SATIŞ İCRA DAİRESİ MÜDÜRLÜĞÜ</td>
+        <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2150753/" target="_blank" rel="noopener">İzmir Narlıdere'de icradan satılık villa</a></td>
+        <td class="list-bedel">17.000.000 ₺</td>
+        <td class="list-tarih">01.09.2026</td>
+      </tr>
+      <tr data-bedel="16500000" data-tarih="1794776400"
+          data-search="i̇zmir güzelbahçe'de dubleks mesken icradan satılıktır i̇zmi̇r gayri̇menkul satiş i̇cra dai̇resi̇ müdürlüğü">
+        <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2183556/" target="_blank" rel="noopener">2183556</a></td>
+        <td class="list-kurum">İZMİR GAYRİMENKUL SATIŞ İCRA DAİRESİ MÜDÜRLÜĞÜ</td>
+        <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2183556/" target="_blank" rel="noopener">İzmir Güzelbahçe'de dubleks mesken icradan satılıktır</a></td>
+        <td class="list-bedel">16.500.000 ₺</td>
+        <td class="list-tarih">16.11.2026</td>
+      </tr>
+      <tr data-bedel="16000000" data-tarih="1791147600"
+          data-search="i̇zmir güzelbahçe'de dubleks mesken icradan satılıktır i̇zmi̇r gayri̇menkul satiş i̇cra dai̇resi̇ müdürlüğü">
+        <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2178057/" target="_blank" rel="noopener">2178057</a></td>
+        <td class="list-kurum">İZMİR GAYRİMENKUL SATIŞ İCRA DAİRESİ MÜDÜRLÜĞÜ</td>
+        <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2178057/" target="_blank" rel="noopener">İzmir Güzelbahçe'de dubleks mesken icradan satılıktır</a></td>
+        <td class="list-bedel">16.000.000 ₺</td>
+        <td class="list-tarih">05.10.2026</td>
+      </tr>
+      <tr data-bedel="15774000" data-tarih="1793048400"
+          data-search="i̇zmir bergama'da mahkemeden satılık tarla bergama sulh hukuk mahkemesi̇ satiş memurluğu">
+        <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2183561/" target="_blank" rel="noopener">2183561</a></td>
+        <td class="list-kurum">BERGAMA SULH HUKUK MAHKEMESİ SATIŞ MEMURLUĞU</td>
+        <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2183561/" target="_blank" rel="noopener">İzmir Bergama'da mahkemeden satılık tarla</a></td>
+        <td class="list-bedel">15.774.000 ₺</td>
+        <td class="list-tarih">27.10.2026</td>
+      </tr>
+      <tr data-bedel="15428000" data-tarih="1790110800"
+          data-search="i̇zmir kiraz'da tek katlı depo icradan satılıktır ki̇raz i̇cra müdürlüğü">
+        <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2163411/" target="_blank" rel="noopener">2163411</a></td>
+        <td class="list-kurum">KİRAZ İCRA MÜDÜRLÜĞÜ</td>
+        <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2163411/" target="_blank" rel="noopener">İzmir Kiraz'da tek katlı depo icradan satılıktır</a></td>
+        <td class="list-bedel">15.428.000 ₺</td>
+        <td class="list-tarih">23.09.2026</td>
+      </tr>
+      <tr data-bedel="14541000" data-tarih="1790629200"
+          data-search="i̇zmir bergama'da tarım alanı mahkemeden satılıktır bergama sulh hukuk mahkemesi̇ satiş memurluğu">
+        <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2137094/" target="_blank" rel="noopener">2137094</a></td>
+        <td class="list-kurum">BERGAMA SULH HUKUK MAHKEMESİ SATIŞ MEMURLUĞU</td>
+        <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2137094/" target="_blank" rel="noopener">İzmir Bergama'da tarım alanı mahkemeden satılıktır</a></td>
+        <td class="list-bedel">14.541.000 ₺</td>
+        <td class="list-tarih">29.09.2026</td>
+      </tr>
+      <tr data-bedel="14250000" data-tarih="1789506000"
+          data-search="i̇zmir konak'ta 2+1 daire mahkemeden satılıktır i̇zmi̇r 6. sulh hukuk mahkemesi̇">
+        <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2180042/" target="_blank" rel="noopener">2180042</a></td>
+        <td class="list-kurum">İZMİR 6. SULH HUKUK MAHKEMESİ</td>
+        <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2180042/" target="_blank" rel="noopener">İzmir Konak'ta 2+1 daire mahkemeden satılıktır</a></td>
+        <td class="list-bedel">14.250.000 ₺</td>
+        <td class="list-tarih">16.09.2026</td>
+      </tr>
+      <tr data-bedel="14000000" data-tarih="1789592400"
+          data-search="i̇zmir konak'ta bina mahkemeden satılıktır i̇zmi̇r 6. sulh hukuk mahkemesi̇">
+        <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2167985/" target="_blank" rel="noopener">2167985</a></td>
+        <td class="list-kurum">İZMİR 6. SULH HUKUK MAHKEMESİ</td>
+        <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2167985/" target="_blank" rel="noopener">İzmir Konak'ta bina mahkemeden satılıktır</a></td>
+        <td class="list-bedel">14.000.000 ₺</td>
+        <td class="list-tarih">17.09.2026</td>
+      </tr>
+      <tr data-bedel="11732150" data-tarih="1788210000"
+          data-search="i̇zmir bayındır'da mahkemeden satılık tarla bayindir sulh hukuk mahkemesi̇ satiş memurluğu">
+        <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2132132/" target="_blank" rel="noopener">2132132</a></td>
+        <td class="list-kurum">BAYINDIR SULH HUKUK MAHKEMESİ SATIŞ MEMURLUĞU</td>
+        <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2132132/" target="_blank" rel="noopener">İzmir Bayındır'da mahkemeden satılık tarla</a></td>
+        <td class="list-bedel">11.732.150 ₺</td>
+        <td class="list-tarih">01.09.2026</td>
+      </tr>
+      <tr data-bedel="11183047" data-tarih="1788814800"
+          data-search="i̇zmir tire'de 4.589 m² tarım arazisi ve içerisindeki yapılar icradan satılıktır ti̇re i̇cra dai̇resi̇ müdürlüğü">
+        <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2161632/" target="_blank" rel="noopener">2161632</a></td>
+        <td class="list-kurum">TİRE İCRA DAİRESİ MÜDÜRLÜĞÜ</td>
+        <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2161632/" target="_blank" rel="noopener">İzmir Tire'de 4.589 m² tarım arazisi ve içerisindeki yapılar icradan satılıktır</a></td>
+        <td class="list-bedel">11.183.047 ₺</td>
+        <td class="list-tarih">08.09.2026</td>
+      </tr>
+      <tr data-bedel="10883600" data-tarih="1791406800"
+          data-search="i̇zmir ödemiş'te 24.625 m² tarla icradan satılıktır ödemi̇ş i̇cra dai̇resi̇ müdürlüğü">
+        <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2192457/" target="_blank" rel="noopener">2192457</a></td>
+        <td class="list-kurum">ÖDEMİŞ İCRA DAİRESİ MÜDÜRLÜĞÜ</td>
+        <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2192457/" target="_blank" rel="noopener">İzmir Ödemiş'te 24.625 m² tarla icradan satılıktır</a></td>
+        <td class="list-bedel">10.883.600 ₺</td>
+        <td class="list-tarih">08.10.2026</td>
+      </tr>
+      <tr data-bedel="10500000" data-tarih="1790629200"
+          data-search="i̇zmir bornova'da bahçeli kerpiç ev mahkemeden satılıktır i̇zmi̇r 5. sulh hukuk mahkemesi̇">
+        <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2186016/" target="_blank" rel="noopener">2186016</a></td>
+        <td class="list-kurum">İZMİR 5. SULH HUKUK MAHKEMESİ</td>
+        <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2186016/" target="_blank" rel="noopener">İzmir Bornova'da bahçeli kerpiç ev mahkemeden satılıktır</a></td>
+        <td class="list-bedel">10.500.000 ₺</td>
+        <td class="list-tarih">29.09.2026</td>
+      </tr>
+      <tr data-bedel="10351600" data-tarih="1788901200"
+          data-search="i̇zmir menemen'de tarım arazisi icradan satılıktır menemen i̇cra dai̇resi̇ müdürlüğü">
+        <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2160349/" target="_blank" rel="noopener">2160349</a></td>
+        <td class="list-kurum">MENEMEN İCRA DAİRESİ MÜDÜRLÜĞÜ</td>
+        <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2160349/" target="_blank" rel="noopener">İzmir Menemen'de tarım arazisi icradan satılıktır</a></td>
+        <td class="list-bedel">10.351.600 ₺</td>
+        <td class="list-tarih">09.09.2026</td>
+      </tr>
+      <tr data-bedel="10000000" data-tarih="1793653200"
+          data-search="i̇zmir bornova'da ofis icradan satılıktır (çoklu satış) i̇zmi̇r 3. i̇cra dai̇resi̇ müdürlüğü">
+        <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2181246/" target="_blank" rel="noopener">2181246</a></td>
+        <td class="list-kurum">İZMİR 3. İCRA DAİRESİ MÜDÜRLÜĞÜ</td>
+        <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2181246/" target="_blank" rel="noopener">İzmir Bornova'da ofis icradan satılıktır (çoklu satış)</a></td>
+        <td class="list-bedel">10.000.000 ₺</td>
+        <td class="list-tarih">03.11.2026</td>
+      </tr>
       </tbody>
     </table>
   </div>
 
-  <div class="foot">Kaynak: UYAP e-Satış Portalı (esatis.uyap.gov.tr) &amp; ilan.gov.tr · Güncelleme: 16.08.2026 · Yalnızca İzmir ilanları</div>
+  <div class="foot">Kaynak: UYAP e-Satış &amp; ilan.gov.tr · Güncelleme: 16.08.2026 · Yalnızca İzmir ilanları</div>
 </div>
 <script src="countdown.js"></script>
+
 <script>
 (function(){
-  var cards=[].slice.call(document.querySelectorAll('.card'));
+  var cards=[].slice.call(document.querySelectorAll('#uyap-grid .card'));
   var empty=document.getElementById('empty');
   var tipBtns=[].slice.call(document.querySelectorAll('.fbtn'));
   var searchInput=document.getElementById('ilanSearch');
+  var sortSel=document.getElementById('card-sort');
+  var cityFilter=document.getElementById('city-filter');
   var grid=document.getElementById('uyap-grid');
   var original=cards.slice();
-  var state={tip:'all',tur:'all',search:''};
-  function apply(){
-    var k=0;
-    cards.forEach(function(c){
-      var ok=true;
-      if(state.tip!=='all' && c.getAttribute('data-tip')!==state.tip) ok=false;
-      if(ok && state.tur!=='all' && c.getAttribute('data-tur')!==state.tur) ok=false;
-      if(ok && state.search && (c.getAttribute('data-search')||'').indexOf(state.search)===-1) ok=false;
-      c.style.display=ok?'':'none'; if(ok) k++;
+  var state={tip:'all',tur:'',city:'all',search:''};
+
+  function applyCards(){
+    var arr=cards.filter(function(c){
+      if(state.tip!=='all'&&c.getAttribute('data-tip')!==state.tip) return false;
+      if(state.tur&&c.getAttribute('data-tur')!==state.tur) return false;
+      if(state.city!=='all'&&c.getAttribute('data-city')!==state.city) return false;
+      if(state.search&&(c.getAttribute('data-search')||'').indexOf(state.search)===-1) return false;
+      return true;
     });
-    if(empty) empty.style.display=k?'none':'block';
+    // sort
+    var mode=sortSel?sortSel.value:'tarih-asc';
+    if(mode==='tarih-asc') arr.sort(function(a,b){return +a.getAttribute('data-tarih')-(+b.getAttribute('data-tarih'));});
+    else if(mode==='tarih-desc') arr.sort(function(a,b){return +b.getAttribute('data-tarih')-(+a.getAttribute('data-tarih'));});
+    else if(mode==='price-desc') arr.sort(function(a,b){return +b.getAttribute('data-price')-(+a.getAttribute('data-price'));});
+    else if(mode==='price-asc') arr.sort(function(a,b){return +a.getAttribute('data-price')-(+b.getAttribute('data-price'));});
+    cards.forEach(function(c){c.style.display='none';});
+    arr.forEach(function(c){c.style.display='';grid.appendChild(c);});
+    if(empty) empty.style.display=arr.length?'none':'block';
+    var cnt=document.getElementById('uyap-count');
+    if(cnt) cnt.textContent=arr.length+' ilan';
   }
+
   tipBtns.forEach(function(b){b.addEventListener('click',function(){
     tipBtns.forEach(function(x){x.classList.remove('active')});
     b.classList.add('active');
     state.tip=b.getAttribute('data-filter');
-    state.tur=b.getAttribute('data-tur')||'all';
-    apply();
+    state.tur=b.getAttribute('data-tur')||'';
+    applyCards();
   });});
-  if(searchInput) searchInput.addEventListener('input',function(){
-    state.search=searchInput.value.trim().toLowerCase(); apply();
-  });
+  if(sortSel) sortSel.addEventListener('change',applyCards);
+  if(cityFilter) cityFilter.addEventListener('change',function(){state.city=cityFilter.value;applyCards();});
+  if(searchInput) searchInput.addEventListener('input',function(){state.search=searchInput.value.trim().toLowerCase();applyCards();});
+  applyCards();
+})();
+</script>
+
+<script>
+(function(){
+  var rows=[].slice.call(document.querySelectorAll('#gm-tbody tr'));
+  var tbody=document.getElementById('gm-tbody');
+  var searchEl=document.getElementById('gm-search');
+  var sortEl=document.getElementById('gm-sort');
+  var minEl=document.getElementById('gm-min');
+  var maxEl=document.getElementById('gm-max');
+  function applyList(){
+    var q=(searchEl?searchEl.value.trim().toLowerCase():'');
+    var min=minEl&&minEl.value?parseInt(minEl.value.replace(/\D/g,''))*1000000:0;
+    var max=maxEl&&maxEl.value?parseInt(maxEl.value.replace(/\D/g,''))*1000000:Infinity;
+    var sort=sortEl?sortEl.value:'bedel-desc';
+    var filtered=rows.filter(function(r){
+      var b=+r.getAttribute('data-bedel');
+      if(b<min||b>max) return false;
+      if(q&&(r.getAttribute('data-search')||'').indexOf(q)===-1) return false;
+      return true;
+    });
+    if(sort==='bedel-desc') filtered.sort(function(a,b){return +b.getAttribute('data-bedel')-(+a.getAttribute('data-bedel'));});
+    else if(sort==='bedel-asc') filtered.sort(function(a,b){return +a.getAttribute('data-bedel')-(+b.getAttribute('data-bedel'));});
+    else if(sort==='tarih-asc') filtered.sort(function(a,b){return +a.getAttribute('data-tarih')-(+b.getAttribute('data-tarih'));});
+    else if(sort==='tarih-desc') filtered.sort(function(a,b){return +b.getAttribute('data-tarih')-(+a.getAttribute('data-tarih'));});
+    rows.forEach(function(r){r.style.display='none';});
+    filtered.forEach(function(r){r.style.display=''; tbody.appendChild(r);});
+    var cnt=document.getElementById('gm-count');
+    if(cnt) cnt.textContent=filtered.length+' ilan';
+  }
+  if(searchEl) searchEl.addEventListener('input',applyList);
+  if(sortEl)   sortEl.addEventListener('change',applyList);
+  if(minEl)    minEl.addEventListener('input',applyList);
+  if(maxEl)    maxEl.addEventListener('input',applyList);
 })();
 </script>
 </body></html>

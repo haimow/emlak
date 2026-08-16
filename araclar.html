@@ -4,11 +4,13 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Fraunces:opsz,wght@9..144,500;9..144,600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 <style>
-.card-img-top{width:100%;height:190px;object-fit:cover;display:block;border-bottom:1px solid var(--line);background:#eee}
-.card-img-top[src=""],.card-img-top:not([src]){display:none}
-.list-section{margin-top:40px}
-.list-section h2{font-size:18px;font-weight:600;margin-bottom:6px;letter-spacing:-.01em}
-.list-section .sub{font-size:13px;color:var(--muted);margin-bottom:16px}
+.card-img-top{width:100%;height:185px;object-fit:cover;display:block;border-bottom:1px solid var(--line);background:#eee}
+.list-section{margin-top:44px}
+.list-section-head{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:14px}
+.list-section-head h2{font-size:18px;font-weight:600;letter-spacing:-.01em;margin:0}
+.list-controls{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:14px}
+.list-controls input,.list-controls select{font-family:inherit;font-size:12.5px;color:var(--ink);
+  background:#fff;border:1.5px solid var(--line);border-radius:999px;padding:7px 13px;cursor:pointer}
 .list-table{width:100%;border-collapse:collapse;font-size:13px}
 .list-table th{text-align:left;font-size:10px;letter-spacing:.18em;text-transform:uppercase;
   color:var(--muted);padding:8px 10px;border-bottom:2px solid var(--ink)}
@@ -20,8 +22,12 @@
 .list-baslik a:hover{color:var(--otomobil)}
 .list-bedel{font-weight:600;white-space:nowrap;text-align:right}
 .list-tarih{white-space:nowrap;color:var(--muted);font-size:12px}
-.list-kurum{font-size:12px;color:#61706A;max-width:180px}
-.section-divider{height:2px;background:var(--line);margin:36px 0 28px}
+.list-kurum{font-size:12px;color:#61706A;max-width:160px}
+.section-divider{height:2px;background:var(--line);margin:36px 0}
+.card-controls{display:flex;gap:8px;flex-wrap:wrap;align-items:center;padding:0 0 16px}
+.card-controls select{font-family:inherit;font-size:13px;color:var(--ink);background:#fff;
+  border:1.5px solid var(--line);border-radius:999px;padding:8px 14px;cursor:pointer}
+.uyap-count-line{font-size:12px;color:var(--muted);padding-bottom:8px}
 </style>
 </head><body>
 <div class="wrap">
@@ -34,15 +40,28 @@
     <div class="stats">
       <div class="stat"><u>UYAP İlanı</u><s>4<em> aktif</em></s></div>
       <div class="stat"><u>ilan.gov.tr</u><s>4<em> ek ilan</em></s></div>
-      <div class="stat"><u>En Yakın</u><s><b id="nearest">—</b><em id="nearest-suffix"></em></s></div>
+      <div class="stat"><u>En Yakın</u><s><b id="nearest">—</b><em id="nearest-suffix"> gün</em></s></div>
     </div>
   </div>
   <div class="filters">
-    <button class="fbtn f-all active" data-filter="all">Tümü (4)</button>
-    <button class="fbtn f-otomobil" data-filter="otomobil"><i style="background:#2C6E8F"></i>Otomobil (3)</button>
-    <button class="fbtn f-suv" data-filter="suv"><i style="background:#7A5B36"></i>SUV (1)</button>
+    <button class="fbtn f-all active" data-filter="all" data-tur="">Tümü (4)</button>
+    <button class="fbtn f-otomobil" data-filter="otomobil" data-tur=""><i style="background:#2C6E8F"></i>Otomobil (3)</button>
+    <button class="fbtn f-suv" data-filter="suv" data-tur=""><i style="background:#7A5B36"></i>SUV (1)</button>
   </div>
-  <div class="searchbox"><input type="text" id="ilanSearch" autocomplete="off" spellcheck="false" placeholder="Model, plaka, konum ara…"></div>
+  <div class="card-controls">
+    <select id="city-filter">
+      <option value="all">Tüm şehirler</option>
+      <option value="İzmir">İzmir</option>
+    </select>
+    <select id="card-sort">
+      <option value="tarih-asc">İhale: En yakın önce</option>
+      <option value="tarih-desc">İhale: En uzak önce</option>
+      <option value="price-desc">Fiyat: Yüksek → Düşük</option>
+      <option value="price-asc">Fiyat: Düşük → Yüksek</option>
+    </select>
+    <input type="text" id="ilanSearch" autocomplete="off" spellcheck="false" placeholder="Model, plaka, konum ara…" style="border-radius:999px;padding:8px 14px;font-size:13px;border:1.5px solid var(--line)">
+  </div>
+  <div class="uyap-count-line"><span id="uyap-count">4 ilan</span></div>
   <div class="cdkey">
     <span class="lbl">Kalan süre</span>
     <span class="k"><i style="background:#A4462F"></i>bugün / 1 gün</span>
@@ -52,19 +71,19 @@
     <span class="k"><i style="background:#4B7355"></i>15+ gün</span>
   </div>
   <div class="grid" id="uyap-grid">
-  <a class="card t-otomobil" data-tip="otomobil" data-city="İzmir" data-method="ihale"
-       data-price="3283000"
-       data-search="17252163831 bmw i̇x1 edrive20 2024 karşiyaka 35ec0191"
-       href="https://esatis.uyap.gov.tr/pp/index.jsp#ihaleDetay/17252163831" target="_blank" rel="noopener">
+  <a class="card t-otomobil" data-tip="otomobil"
+       data-city="İzmir" data-ilce="Karşiyaka" data-method="ihale"
+       data-price="3283000" data-tarih="1786964640"
+       data-search="17252163831 bmw i̇x1 edrive20 2024 karşiyaka 35ec0191" href="arac-UYP-17252163831.html">
     <img src="https://cdn.uyap.gov.tr/esatis/esatis/2025/89685930/8950011_1.png" alt="BMW İX1 eDrive20" loading="lazy" class="card-img-top">
     <span class="bar" style="background:#2C6E8F"></span>
     <div class="card-in">
       <div class="row">
         <span><span class="eyebrow eyebrow-otomobil" style="color:#2C6E8F">OTOMOBİL</span> <span class="src">UYP</span></span>
-        <span class="parsel">35EC0191</span>
+        <span class="parsel" style="font-size:11px">35EC0191</span>
       </div>
       <h2>BMW İX1 eDrive20</h2>
-      <div class="alt">2024 · Elektrik · Gri · Karşiyaka</div>
+      <div class="alt">2024 · Gri · Karşiyaka</div>
       <div class="metrics">
         <div class="metric"><u>Yakıt</u><b>Elektrik</b></div>
         <div class="metric"><u>Renk</u><b>Gri</b></div>
@@ -72,25 +91,25 @@
       </div>
       <div class="priceline">
         <span class="price">3.283.000 ₺</span>
-        <span class="chip auction cd-wrap" data-deadline="2026-08-17T14:04:00+03:00"><b class="cd">—</b></span>
+        <span class="chip auction cd-wrap" data-d1s="2026-08-17T14:04:00+03:00" data-d1e="2026-08-24T14:04:00+03:00"><b class="cd">—</b></span>
       </div>
-      <div class="bidline">52 kez teklif verildi</div>
-      <div class="kdvline" style="margin-top:6px;font-size:11px;color:#9AA49E">Karşıyaka 3. İcra Dairesi 2025/178 Talimat</div>
+      <div class="kdvline" style="font-size:11.5px;margin-top:6px">İhale: 17.08.2026</div>
+      <div class="bidline">52 teklif mevcut</div>
     </div>
   </a>
-  <a class="card t-otomobil" data-tip="otomobil" data-city="İzmir" data-method="ihale"
-       data-price="4750000"
-       data-search="17132994480 mercedes-benz e 212 2023 di̇ki̇li̇ 34gof215"
-       href="https://esatis.uyap.gov.tr/pp/index.jsp#ihaleDetay/17132994480" target="_blank" rel="noopener">
+  <a class="card t-otomobil" data-tip="otomobil"
+       data-city="İzmir" data-ilce="Di̇ki̇li̇" data-method="ihale"
+       data-price="4750000" data-tarih="1787300100"
+       data-search="17132994480 mercedes-benz e 212 2023 di̇ki̇li̇ 34gof215" href="arac-UYP-17132994480.html">
     <img src="https://cdn.uyap.gov.tr/esatis/esatis/2026/89018372/8892665_FO.jpeg" alt="Mercedes-Benz E 212" loading="lazy" class="card-img-top">
     <span class="bar" style="background:#2C6E8F"></span>
     <div class="card-in">
       <div class="row">
         <span><span class="eyebrow eyebrow-otomobil" style="color:#2C6E8F">OTOMOBİL</span> <span class="src">UYP</span></span>
-        <span class="parsel">34GOF215</span>
+        <span class="parsel" style="font-size:11px">34GOF215</span>
       </div>
       <h2>Mercedes-Benz E 212</h2>
-      <div class="alt">2023 · Dizel · Siyah · Di̇ki̇li̇</div>
+      <div class="alt">2023 · Siyah · Di̇ki̇li̇</div>
       <div class="metrics">
         <div class="metric"><u>Yakıt</u><b>Dizel</b></div>
         <div class="metric"><u>Renk</u><b>Siyah</b></div>
@@ -98,25 +117,25 @@
       </div>
       <div class="priceline">
         <span class="price">4.750.000 ₺</span>
-        <span class="chip auction cd-wrap" data-deadline="2026-08-21T11:15:00+03:00"><b class="cd">—</b></span>
+        <span class="chip auction cd-wrap" data-d1s="2026-08-21T11:15:00+03:00" data-d1e="2026-08-28T11:15:00+03:00"><b class="cd">—</b></span>
       </div>
-      <div class="bidline">6 kez teklif verildi</div>
-      <div class="kdvline" style="margin-top:6px;font-size:11px;color:#9AA49E">Dikili İcra Dairesi 2026/112 Talimat</div>
+      <div class="kdvline" style="font-size:11.5px;margin-top:6px">İhale: 21.08.2026</div>
+      <div class="bidline">6 teklif mevcut</div>
     </div>
   </a>
-  <a class="card t-otomobil" data-tip="otomobil" data-city="İzmir" data-method="ihale"
-       data-price="3700000"
-       data-search="16950364394 bmw 420i (g4c) 2022 merkez 35cgb201"
-       href="https://esatis.uyap.gov.tr/pp/index.jsp#ihaleDetay/16950364394" target="_blank" rel="noopener">
+  <a class="card t-otomobil" data-tip="otomobil"
+       data-city="İzmir" data-ilce="Merkez" data-method="ihale"
+       data-price="3700000" data-tarih="1787728320"
+       data-search="16950364394 bmw 420i (g4c) 2022 merkez 35cgb201" href="arac-UYP-16950364394.html">
     <img src="https://cdn.uyap.gov.tr/esatis/esatis/2026/88063586/8787585_2269.jpg" alt="BMW 420i (G4C)" loading="lazy" class="card-img-top">
     <span class="bar" style="background:#2C6E8F"></span>
     <div class="card-in">
       <div class="row">
         <span><span class="eyebrow eyebrow-otomobil" style="color:#2C6E8F">OTOMOBİL</span> <span class="src">UYP</span></span>
-        <span class="parsel">35CGB201</span>
+        <span class="parsel" style="font-size:11px">35CGB201</span>
       </div>
       <h2>BMW 420i (G4C)</h2>
-      <div class="alt">2022 · Benzin · Siyah · Merkez</div>
+      <div class="alt">2022 · Siyah · Merkez</div>
       <div class="metrics">
         <div class="metric"><u>Yakıt</u><b>Benzin</b></div>
         <div class="metric"><u>Renk</u><b>Siyah</b></div>
@@ -124,25 +143,25 @@
       </div>
       <div class="priceline">
         <span class="price">3.700.000 ₺</span>
-        <span class="chip auction cd-wrap" data-deadline="2026-08-26T10:12:00+03:00"><b class="cd">—</b></span>
+        <span class="chip auction cd-wrap" data-d1s="2026-08-26T10:12:00+03:00" data-d1e="2026-09-02T10:12:00+03:00"><b class="cd">—</b></span>
       </div>
+      <div class="kdvline" style="font-size:11.5px;margin-top:6px">İhale: 26.08.2026</div>
       
-      <div class="kdvline" style="margin-top:6px;font-size:11px;color:#9AA49E">İzmir 3. İcra Dairesi 2026/2269 Talimat</div>
     </div>
   </a>
-  <a class="card t-suv" data-tip="suv" data-city="İzmir" data-method="ihale"
-       data-price="5000000"
-       data-search="17080901397 land rover discovery 2022 çeşme 35bdv567"
-       href="https://esatis.uyap.gov.tr/pp/index.jsp#ihaleDetay/17080901397" target="_blank" rel="noopener">
+  <a class="card t-suv" data-tip="suv"
+       data-city="İzmir" data-ilce="Çeşme" data-method="ihale"
+       data-price="5000000" data-tarih="1787830560"
+       data-search="17080901397 land rover discovery 2022 çeşme 35bdv567" href="arac-UYP-17080901397.html">
     <img src="https://cdn.uyap.gov.tr/esatis/esatis/2025/88454058/8826033_fotto_1_.png" alt="Land Rover Discovery" loading="lazy" class="card-img-top">
     <span class="bar" style="background:#7A5B36"></span>
     <div class="card-in">
       <div class="row">
         <span><span class="eyebrow eyebrow-suv" style="color:#7A5B36">SUV</span> <span class="src">UYP</span></span>
-        <span class="parsel">35BDV567</span>
+        <span class="parsel" style="font-size:11px">35BDV567</span>
       </div>
       <h2>Land Rover Discovery</h2>
-      <div class="alt">2022 · Benzin · Siyah · Çeşme</div>
+      <div class="alt">2022 · Siyah · Çeşme</div>
       <div class="metrics">
         <div class="metric"><u>Yakıt</u><b>Benzin</b></div>
         <div class="metric"><u>Renk</u><b>Siyah</b></div>
@@ -150,62 +169,137 @@
       </div>
       <div class="priceline">
         <span class="price">5.000.000 ₺</span>
-        <span class="chip auction cd-wrap" data-deadline="2026-08-27T14:36:00+03:00"><b class="cd">—</b></span>
+        <span class="chip auction cd-wrap" data-d1s="2026-08-27T14:36:00+03:00" data-d1e="2026-09-03T14:36:00+03:00"><b class="cd">—</b></span>
       </div>
+      <div class="kdvline" style="font-size:11.5px;margin-top:6px">İhale: 27.08.2026</div>
       
-      <div class="kdvline" style="margin-top:6px;font-size:11px;color:#9AA49E">Çeşme İcra Dairesi 2025/645 Talimat</div>
     </div>
   </a>
   </div>
-  <div id="empty" class="empty">Eşleşen ilan bulunamadı.</div>
+  <div id="empty" class="empty" style="display:none">Eşleşen ilan bulunamadı.</div>
 
   <div class="section-divider"></div>
   <div class="list-section">
-    <h2>ilan.gov.tr · Fotoğrafsız İlanlar <span class="src">İLAN</span></h2>
-    <div class="sub">UYAP e-Satış portalında yer almayan, ilan.gov.tr'den derlenen 4 icra araç ilanı</div>
+    <div class="list-section-head">
+      <h2>ilan.gov.tr · Ek İlanlar <span class="src">İLAN</span></h2>
+    </div>
+    <div style="font-size:13px;color:var(--muted);margin-bottom:12px">UYAP e-Satış portalında yer almayan icra araç ilanları · Fotoğraf mevcut değil</div>
+    <div class="list-controls">
+      <input type="text" id="arac-search" placeholder="Araç veya kurum ara…">
+      <select id="arac-sort">
+        <option value="bedel-desc">Fiyat: Yüksek → Düşük</option>
+        <option value="bedel-asc">Fiyat: Düşük → Yüksek</option>
+      </select>
+    </div>
     <table class="list-table">
       <thead><tr>
-        <th>İlan No</th>
-        <th>Kurum</th>
-        <th>Başlık</th>
-        <th style="text-align:right">Bedel</th>
-        <th>İhale Tarihi</th>
+        <th>İlan No</th><th>Kurum</th><th>Başlık</th>
+        <th style="text-align:right">Bedel</th><th>Tarih</th>
       </tr></thead>
-      <tbody>
-    <tr>
-      <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2191196/" target="_blank" rel="noopener">2191196</a></td>
-      <td class="list-kurum">MENEMEN İCRA DAİRESİ MÜDÜRLÜĞÜ</td>
-      <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2191196/" target="_blank" rel="noopener">2025 model Mercedes marka çekici icradan satılıktır (çoklu satış)</a></td>
-      <td class="list-bedel">5.400.000 ₺</td>
-      <td class="list-tarih"></td>
-    </tr>
-    <tr>
-      <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2116294/" target="_blank" rel="noopener">2116294</a></td>
-      <td class="list-kurum">İZMİR 3. İCRA DAİRESİ MÜDÜRLÜĞÜ</td>
-      <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2116294/" target="_blank" rel="noopener">2021 model Mercedes Benz marka araç icradan satılıktır</a></td>
-      <td class="list-bedel">3.800.000 ₺</td>
-      <td class="list-tarih"></td>
-    </tr>
-    <tr>
-      <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2194039/" target="_blank" rel="noopener">2194039</a></td>
-      <td class="list-kurum">KARŞIYAKA 3. İCRA DAİRESİ MÜDÜRLÜĞÜ</td>
-      <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2194039/" target="_blank" rel="noopener">2018 Model BMW marka araç icradan satılıktır</a></td>
-      <td class="list-bedel">2.867.000 ₺</td>
-      <td class="list-tarih"></td>
-    </tr>
-    <tr>
-      <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2195660/" target="_blank" rel="noopener">2195660</a></td>
-      <td class="list-kurum">MENEMEN İCRA DAİRESİ MÜDÜRLÜĞÜ</td>
-      <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2195660/" target="_blank" rel="noopener">2017 model BMW marka araç mahkemeden satılıktır</a></td>
-      <td class="list-bedel">2.580.330 ₺</td>
-      <td class="list-tarih"></td>
-    </tr>
+      <tbody id="arac-tbody">
+      <tr data-bedel="2580330" data-search="2017 model bmw marka araç mahkemeden satılıktır menemen i̇cra dai̇resi̇ müdürlüğü">
+        <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2195660/" target="_blank" rel="noopener">2195660</a></td>
+        <td class="list-kurum">MENEMEN İCRA DAİRESİ MÜDÜRLÜĞÜ</td>
+        <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2195660/" target="_blank" rel="noopener">2017 model BMW marka araç mahkemeden satılıktır</a></td>
+        <td class="list-bedel">2.580.330 ₺</td>
+        <td class="list-tarih"></td>
+      </tr>
+      <tr data-bedel="2867000" data-search="2018 model bmw marka araç icradan satılıktır karşiyaka 3. i̇cra dai̇resi̇ müdürlüğü">
+        <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2194039/" target="_blank" rel="noopener">2194039</a></td>
+        <td class="list-kurum">KARŞIYAKA 3. İCRA DAİRESİ MÜDÜRLÜĞÜ</td>
+        <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2194039/" target="_blank" rel="noopener">2018 Model BMW marka araç icradan satılıktır</a></td>
+        <td class="list-bedel">2.867.000 ₺</td>
+        <td class="list-tarih"></td>
+      </tr>
+      <tr data-bedel="5400000" data-search="2025 model mercedes marka çekici icradan satılıktır (çoklu satış) menemen i̇cra dai̇resi̇ müdürlüğü">
+        <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2191196/" target="_blank" rel="noopener">2191196</a></td>
+        <td class="list-kurum">MENEMEN İCRA DAİRESİ MÜDÜRLÜĞÜ</td>
+        <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2191196/" target="_blank" rel="noopener">2025 model Mercedes marka çekici icradan satılıktır (çoklu satış)</a></td>
+        <td class="list-bedel">5.400.000 ₺</td>
+        <td class="list-tarih"></td>
+      </tr>
+      <tr data-bedel="3800000" data-search="2021 model mercedes benz marka araç icradan satılıktır i̇zmi̇r 3. i̇cra dai̇resi̇ müdürlüğü">
+        <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2116294/" target="_blank" rel="noopener">2116294</a></td>
+        <td class="list-kurum">İZMİR 3. İCRA DAİRESİ MÜDÜRLÜĞÜ</td>
+        <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2116294/" target="_blank" rel="noopener">2021 model Mercedes Benz marka araç icradan satılıktır</a></td>
+        <td class="list-bedel">3.800.000 ₺</td>
+        <td class="list-tarih"></td>
+      </tr>
       </tbody>
     </table>
   </div>
 
-  <div class="foot">Kaynak: UYAP e-Satış Portalı (esatis.uyap.gov.tr) &amp; ilan.gov.tr · Güncelleme: 16.08.2026 · Yalnızca İzmir ilanları</div>
+  <div class="foot">Kaynak: UYAP e-Satış &amp; ilan.gov.tr · Güncelleme: 16.08.2026 · Yalnızca İzmir ilanları</div>
 </div>
 <script src="countdown.js"></script>
-<script src="filters.js"></script>
+
+<script>
+(function(){
+  var cards=[].slice.call(document.querySelectorAll('#uyap-grid .card'));
+  var empty=document.getElementById('empty');
+  var tipBtns=[].slice.call(document.querySelectorAll('.fbtn'));
+  var searchInput=document.getElementById('ilanSearch');
+  var sortSel=document.getElementById('card-sort');
+  var cityFilter=document.getElementById('city-filter');
+  var grid=document.getElementById('uyap-grid');
+  var original=cards.slice();
+  var state={tip:'all',tur:'',city:'all',search:''};
+
+  function applyCards(){
+    var arr=cards.filter(function(c){
+      if(state.tip!=='all'&&c.getAttribute('data-tip')!==state.tip) return false;
+      if(state.tur&&c.getAttribute('data-tur')!==state.tur) return false;
+      if(state.city!=='all'&&c.getAttribute('data-city')!==state.city) return false;
+      if(state.search&&(c.getAttribute('data-search')||'').indexOf(state.search)===-1) return false;
+      return true;
+    });
+    // sort
+    var mode=sortSel?sortSel.value:'tarih-asc';
+    if(mode==='tarih-asc') arr.sort(function(a,b){return +a.getAttribute('data-tarih')-(+b.getAttribute('data-tarih'));});
+    else if(mode==='tarih-desc') arr.sort(function(a,b){return +b.getAttribute('data-tarih')-(+a.getAttribute('data-tarih'));});
+    else if(mode==='price-desc') arr.sort(function(a,b){return +b.getAttribute('data-price')-(+a.getAttribute('data-price'));});
+    else if(mode==='price-asc') arr.sort(function(a,b){return +a.getAttribute('data-price')-(+b.getAttribute('data-price'));});
+    cards.forEach(function(c){c.style.display='none';});
+    arr.forEach(function(c){c.style.display='';grid.appendChild(c);});
+    if(empty) empty.style.display=arr.length?'none':'block';
+    var cnt=document.getElementById('uyap-count');
+    if(cnt) cnt.textContent=arr.length+' ilan';
+  }
+
+  tipBtns.forEach(function(b){b.addEventListener('click',function(){
+    tipBtns.forEach(function(x){x.classList.remove('active')});
+    b.classList.add('active');
+    state.tip=b.getAttribute('data-filter');
+    state.tur=b.getAttribute('data-tur')||'';
+    applyCards();
+  });});
+  if(sortSel) sortSel.addEventListener('change',applyCards);
+  if(cityFilter) cityFilter.addEventListener('change',function(){state.city=cityFilter.value;applyCards();});
+  if(searchInput) searchInput.addEventListener('input',function(){state.search=searchInput.value.trim().toLowerCase();applyCards();});
+  applyCards();
+})();
+</script>
+
+<script>
+(function(){
+  var rows=[].slice.call(document.querySelectorAll('#arac-tbody tr'));
+  var tbody=document.getElementById('arac-tbody');
+  var searchEl=document.getElementById('arac-search');
+  var sortEl=document.getElementById('arac-sort');
+  function apply(){
+    var q=(searchEl?searchEl.value.trim().toLowerCase():'');
+    var sort=sortEl?sortEl.value:'bedel-desc';
+    var filtered=rows.filter(function(r){
+      if(q&&(r.getAttribute('data-search')||'').indexOf(q)===-1) return false;
+      return true;
+    });
+    if(sort==='bedel-desc') filtered.sort(function(a,b){return +b.getAttribute('data-bedel')-(+a.getAttribute('data-bedel'));});
+    else if(sort==='bedel-asc') filtered.sort(function(a,b){return +a.getAttribute('data-bedel')-(+b.getAttribute('data-bedel'));});
+    rows.forEach(function(r){r.style.display='none';});
+    filtered.forEach(function(r){r.style.display='';tbody.appendChild(r);});
+  }
+  if(searchEl) searchEl.addEventListener('input',apply);
+  if(sortEl)   sortEl.addEventListener('change',apply);
+})();
+</script>
 </body></html>
