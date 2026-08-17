@@ -190,6 +190,8 @@
     <div class="list-controls">
       <input type="text" id="arac-search" placeholder="Araç veya kurum ara…">
       <select id="arac-sort">
+        <option value="tarih-asc" selected>Tarih: En yakın önce</option>
+        <option value="tarih-desc">Tarih: En uzak önce</option>
         <option value="bedel-desc">Fiyat: Yüksek → Düşük</option>
         <option value="bedel-asc">Fiyat: Düşük → Yüksek</option>
       </select>
@@ -200,33 +202,33 @@
         <th style="text-align:right">Bedel</th><th>Tarih</th>
       </tr></thead>
       <tbody id="arac-tbody">
-      <tr data-bedel="2580330" data-search="2017 model bmw marka araç mahkemeden satılıktır menemen i̇cra dai̇resi̇ müdürlüğü">
+      <tr data-bedel="2580330" data-tarih="1791151440" data-search="2017 model bmw marka araç mahkemeden satılıktır menemen i̇cra dai̇resi̇ müdürlüğü">
         <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2195660/" target="_blank" rel="noopener">2195660</a></td>
         <td class="list-kurum">MENEMEN İCRA DAİRESİ MÜDÜRLÜĞÜ</td>
         <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2195660/" target="_blank" rel="noopener">2017 model BMW marka araç mahkemeden satılıktır</a></td>
         <td class="list-bedel">2.580.330 ₺</td>
-        <td class="list-tarih"></td>
+        <td class="list-tarih">05.10.2026</td>
       </tr>
-      <tr data-bedel="2867000" data-search="2018 model bmw marka araç icradan satılıktır karşiyaka 3. i̇cra dai̇resi̇ müdürlüğü">
+      <tr data-bedel="2867000" data-tarih="1790719440" data-search="2018 model bmw marka araç icradan satılıktır karşiyaka 3. i̇cra dai̇resi̇ müdürlüğü">
         <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2194039/" target="_blank" rel="noopener">2194039</a></td>
         <td class="list-kurum">KARŞIYAKA 3. İCRA DAİRESİ MÜDÜRLÜĞÜ</td>
         <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2194039/" target="_blank" rel="noopener">2018 Model BMW marka araç icradan satılıktır</a></td>
         <td class="list-bedel">2.867.000 ₺</td>
-        <td class="list-tarih"></td>
+        <td class="list-tarih">30.09.2026</td>
       </tr>
-      <tr data-bedel="5400000" data-search="2025 model mercedes marka çekici icradan satılıktır (çoklu satış) menemen i̇cra dai̇resi̇ müdürlüğü">
+      <tr data-bedel="5400000" data-tarih="1790633040" data-search="2025 model mercedes marka çekici icradan satılıktır (çoklu satış) menemen i̇cra dai̇resi̇ müdürlüğü">
         <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2191196/" target="_blank" rel="noopener">2191196</a></td>
         <td class="list-kurum">MENEMEN İCRA DAİRESİ MÜDÜRLÜĞÜ</td>
         <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2191196/" target="_blank" rel="noopener">2025 model Mercedes marka çekici icradan satılıktır (çoklu satış)</a></td>
         <td class="list-bedel">5.400.000 ₺</td>
-        <td class="list-tarih"></td>
+        <td class="list-tarih">29.09.2026</td>
       </tr>
-      <tr data-bedel="3800000" data-search="2021 model mercedes benz marka araç icradan satılıktır i̇zmi̇r 3. i̇cra dai̇resi̇ müdürlüğü">
+      <tr data-bedel="3800000" data-tarih="1787177040" data-search="2021 model mercedes benz marka araç icradan satılıktır i̇zmi̇r 3. i̇cra dai̇resi̇ müdürlüğü">
         <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2116294/" target="_blank" rel="noopener">2116294</a></td>
         <td class="list-kurum">İZMİR 3. İCRA DAİRESİ MÜDÜRLÜĞÜ</td>
         <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2116294/" target="_blank" rel="noopener">2021 model Mercedes Benz marka araç icradan satılıktır</a></td>
         <td class="list-bedel">3.800.000 ₺</td>
-        <td class="list-tarih"></td>
+        <td class="list-tarih">20.08.2026</td>
       </tr>
       </tbody>
     </table>
@@ -291,18 +293,21 @@
   var sortEl=document.getElementById('arac-sort');
   function apply(){
     var q=(searchEl?searchEl.value.trim().toLowerCase():'');
-    var sort=sortEl?sortEl.value:'bedel-desc';
+    var sort=sortEl?sortEl.value:'tarih-asc';
     var filtered=rows.filter(function(r){
       if(q&&(r.getAttribute('data-search')||'').indexOf(q)===-1) return false;
       return true;
     });
     if(sort==='bedel-desc') filtered.sort(function(a,b){return +b.getAttribute('data-bedel')-(+a.getAttribute('data-bedel'));});
     else if(sort==='bedel-asc') filtered.sort(function(a,b){return +a.getAttribute('data-bedel')-(+b.getAttribute('data-bedel'));});
+    else if(sort==='tarih-asc') filtered.sort(function(a,b){return +a.getAttribute('data-tarih')-(+b.getAttribute('data-tarih'));});
+    else if(sort==='tarih-desc') filtered.sort(function(a,b){return +b.getAttribute('data-tarih')-(+a.getAttribute('data-tarih'));});
     rows.forEach(function(r){r.style.display='none';});
     filtered.forEach(function(r){r.style.display='';tbody.appendChild(r);});
   }
   if(searchEl) searchEl.addEventListener('input',apply);
   if(sortEl)   sortEl.addEventListener('change',apply);
+  apply();
 })();
 </script>
 </body></html>
