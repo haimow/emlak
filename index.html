@@ -44,7 +44,7 @@
     <div class="stats">
       <div class="stat"><u>UYAP İlanı</u><s>31<em> aktif</em></s></div>
       <div class="stat"><u>ilan.gov.tr</u><span>105<em> ek ilan</em></span></div>
-      <div class="stat"><u>En Yakın</u><s><b id="nearest">—</b><em id="nearest-suffix"> gün</em></s></div>
+      <div class="stat stat-near"><u>En Yakın</u><s><b id="nearest">—</b><em id="nearest-suffix"> gün</em></s></div>
     </div>
   </div>
 
@@ -749,7 +749,7 @@
       <select id="gm-sort">
         <option value="bedel-desc">Fiyat: Yüksek → Düşük</option>
         <option value="bedel-asc">Fiyat: Düşük → Yüksek</option>
-        <option value="tarih-asc">Tarih: En yakın önce</option>
+        <option value="tarih-asc" selected>Tarih: En yakın önce</option>
         <option value="tarih-desc">Tarih: En uzak önce</option>
       </select>
     </div>
@@ -1686,6 +1686,7 @@
   if(sortEl)   sortEl.addEventListener('change',applyList);
   if(minEl)    minEl.addEventListener('input',applyList);
   if(maxEl)    maxEl.addEventListener('input',applyList);
+  applyList();
 })();
 </script>
 </body></html>

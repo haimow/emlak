@@ -68,8 +68,9 @@ a{color:inherit;text-decoration:none}
 .stats{display:flex;gap:26px;text-align:right}
 .stat u{display:block;text-decoration:none;font-size:10px;letter-spacing:.18em;
   text-transform:uppercase;color:var(--muted);margin-bottom:3px}
-.stat s{display:block;text-decoration:none;font-size:21px;font-weight:600}
-.stat s em{font-style:normal;font-size:12px;color:#5A6B64;font-weight:400}
+.stat s,.stat span{display:block;text-decoration:none;font-size:21px;font-weight:600}
+.stat s em,.stat span em{font-style:normal;font-size:12px;color:#5A6B64;font-weight:400}
+.stat-near s{color:#2F6F63}
 .legend{display:flex;gap:16px;flex-wrap:wrap;font-size:10.5px;letter-spacing:.14em;
   text-transform:uppercase;color:#6E7C76;padding:12px 0 22px}
 .legend i{display:inline-block;width:16px;height:3px;margin-right:6px;vertical-align:middle}
