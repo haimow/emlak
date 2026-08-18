@@ -55,6 +55,8 @@
     <select id="city-filter">
       <option value="all">Tüm şehirler</option>
       <option value="İzmir">İzmir</option>
+      <option value="Manisa">Manisa</option>
+      <option value="Aydın">Aydın</option>
     </select>
     <select id="card-sort">
       <option value="tarih-asc">İhale: En yakın önce</option>
@@ -97,7 +99,7 @@
         <span class="chip auction cd-wrap" data-d1s="2026-08-17T14:04:00+03:00" data-d1e="2026-08-24T14:04:00+03:00"><b class="cd">—</b></span>
       </div>
       <div class="kdvline" style="font-size:11.5px;margin-top:6px">İhale: 17.08.2026</div>
-      <div class="bidline bidline-active">🏆 En Yüksek Teklif: 2.849.620 ₺</div>
+      <div class="bidline">İhale tamamlandı</div>
     </div>
   </a>
   <a class="card t-otomobil" data-tip="otomobil"
@@ -123,7 +125,7 @@
         <span class="chip auction cd-wrap" data-d1s="2026-08-21T11:15:00+03:00" data-d1e="2026-08-28T11:15:00+03:00"><b class="cd">—</b></span>
       </div>
       <div class="kdvline" style="font-size:11.5px;margin-top:6px">İhale: 21.08.2026</div>
-      <div class="bidline bidline-active">🏆 En Yüksek Teklif: 3.500.000 ₺</div>
+      <div class="bidline bidline-active">🏆 En Yüksek Teklif: 3.523.750 ₺</div>
     </div>
   </a>
   <a class="card t-otomobil" data-tip="otomobil"
@@ -202,32 +204,102 @@
         <th style="text-align:right">Bedel</th><th>Tarih</th>
       </tr></thead>
       <tbody id="arac-tbody">
-      <tr data-bedel="2580330" data-tarih="1791151440" data-search="2017 model bmw marka araç mahkemeden satılıktır menemen i̇cra dai̇resi̇ müdürlüğü">
+      <tr data-bedel="2580330" data-tarih="1791151440" data-search="2017 model bmw marka araç mahkemeden satılıktır menemen i̇cra dai̇resi̇ müdürlüğü" data-il="İzmir">
         <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2195660/" target="_blank" rel="noopener">2195660</a></td>
         <td class="list-kurum">MENEMEN İCRA DAİRESİ MÜDÜRLÜĞÜ</td>
         <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2195660/" target="_blank" rel="noopener">2017 model BMW marka araç mahkemeden satılıktır</a></td>
         <td class="list-bedel">2.580.330 ₺</td>
         <td class="list-tarih">05.10.2026</td>
       </tr>
-      <tr data-bedel="2867000" data-tarih="1790719440" data-search="2018 model bmw marka araç icradan satılıktır karşiyaka 3. i̇cra dai̇resi̇ müdürlüğü">
+      <tr data-bedel="2867000" data-tarih="1790719440" data-search="2018 model bmw marka araç icradan satılıktır karşiyaka 3. i̇cra dai̇resi̇ müdürlüğü" data-il="İzmir">
         <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2194039/" target="_blank" rel="noopener">2194039</a></td>
         <td class="list-kurum">KARŞIYAKA 3. İCRA DAİRESİ MÜDÜRLÜĞÜ</td>
         <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2194039/" target="_blank" rel="noopener">2018 Model BMW marka araç icradan satılıktır</a></td>
         <td class="list-bedel">2.867.000 ₺</td>
         <td class="list-tarih">30.09.2026</td>
       </tr>
-      <tr data-bedel="3800000" data-tarih="1787177040" data-search="2021 model mercedes benz marka araç icradan satılıktır i̇zmi̇r 3. i̇cra dai̇resi̇ müdürlüğü">
+      <tr data-bedel="3800000" data-tarih="1787177040" data-search="2021 model mercedes benz marka araç icradan satılıktır i̇zmi̇r 3. i̇cra dai̇resi̇ müdürlüğü" data-il="İzmir">
         <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2116294/" target="_blank" rel="noopener">2116294</a></td>
         <td class="list-kurum">İZMİR 3. İCRA DAİRESİ MÜDÜRLÜĞÜ</td>
         <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2116294/" target="_blank" rel="noopener">2021 model Mercedes Benz marka araç icradan satılıktır</a></td>
         <td class="list-bedel">3.800.000 ₺</td>
         <td class="list-tarih">20.08.2026</td>
       </tr>
+      <tr data-bedel="2052000" data-tarih="1788220800" data-search="2021 model ford marka araç icradan satılıktır menemen icra dairesi müdürlüğü" data-il="İzmir">
+        <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2189136/" target="_blank" rel="noopener">2189136</a></td>
+        <td class="list-kurum">MENEMEN İCRA DAİRESİ MÜDÜRLÜĞÜ</td>
+        <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2189136/" target="_blank" rel="noopener">2021 model Ford marka araç icradan satılıktır</a></td>
+        <td class="list-bedel">2.052.000 ₺</td>
+        <td class="list-tarih">01.09.2026</td>
+      </tr>
+      <tr data-bedel="2400000" data-tarih="1788220800" data-search="2020 model jaguar marka araç icradan satılıktır izmir 1. icra dairesi müdürlüğü" data-il="İzmir">
+        <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2171733/" target="_blank" rel="noopener">2171733</a></td>
+        <td class="list-kurum">İZMİR 1. İCRA DAİRESİ MÜDÜRLÜĞÜ</td>
+        <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2171733/" target="_blank" rel="noopener">2020 model Jaguar marka araç icradan satılıktır</a></td>
+        <td class="list-bedel">2.400.000 ₺</td>
+        <td class="list-tarih">01.09.2026</td>
+      </tr>
+      <tr data-bedel="5000000" data-tarih="1787788800" data-search="2022 model land rover marka araç icradan satılıktır çeşme icra dairesi" data-il="İzmir">
+        <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2166831/" target="_blank" rel="noopener">2166831</a></td>
+        <td class="list-kurum">ÇEŞME İCRA DAİRESİ</td>
+        <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2166831/" target="_blank" rel="noopener">2022 model Land Rover marka araç icradan satılıktır</a></td>
+        <td class="list-bedel">5.000.000 ₺</td>
+        <td class="list-tarih">27.08.2026</td>
+      </tr>
+      <tr data-bedel="2480000" data-tarih="1787011200" data-search="2023 model kia marka araç icradan satılıktır kemalpaşa icra dairesi müdürlüğü" data-il="İzmir">
+        <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2153178/" target="_blank" rel="noopener">2153178</a></td>
+        <td class="list-kurum">KEMALPAŞA İCRA DAİRESİ MÜDÜRLÜĞÜ</td>
+        <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2153178/" target="_blank" rel="noopener">2023 model KIA marka araç icradan satılıktır</a></td>
+        <td class="list-bedel">2.480.000 ₺</td>
+        <td class="list-tarih">18.08.2026</td>
+      </tr>
+      <tr data-bedel="4750000" data-tarih="1787270400" data-search="2023 model mercedes benz marka araç icradan satılıktır dikili icra dairesi" data-il="İzmir">
+        <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2147178/" target="_blank" rel="noopener">2147178</a></td>
+        <td class="list-kurum">DİKİLİ İCRA DAİRESİ</td>
+        <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2147178/" target="_blank" rel="noopener">2023 model Mercedes Benz marka araç icradan satılıktır</a></td>
+        <td class="list-bedel">4.750.000 ₺</td>
+        <td class="list-tarih">21.08.2026</td>
+      </tr>
+      <tr data-bedel="3700000" data-tarih="1787702400" data-search="2022 model bmw marka araç icradan satılıktır izmir 3. icra dairesi müdürlüğü" data-il="İzmir">
+        <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2115468/" target="_blank" rel="noopener">2115468</a></td>
+        <td class="list-kurum">İZMİR 3. İCRA DAİRESİ MÜDÜRLÜĞÜ</td>
+        <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2115468/" target="_blank" rel="noopener">2022 model BMW marka araç icradan satılıktır</a></td>
+        <td class="list-bedel">3.700.000 ₺</td>
+        <td class="list-tarih">26.08.2026</td>
+      </tr>
+      <tr data-bedel="7300000" data-tarih="1790035200" data-search="2025 model volvo marka araç icradan satılıktır manisa icra dairesi müdürlüğü" data-il="Manisa">
+        <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2190695/" target="_blank" rel="noopener">2190695</a></td>
+        <td class="list-kurum">MANİSA İCRA DAİRESİ MÜDÜRLÜĞÜ</td>
+        <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2190695/" target="_blank" rel="noopener">2025 model Volvo marka araç icradan satılıktır</a></td>
+        <td class="list-bedel">7.300.000 ₺</td>
+        <td class="list-tarih">22.09.2026</td>
+      </tr>
+      <tr data-bedel="2100000" data-tarih="1788912000" data-search="2025 model volkswagen marka araç icradan satılıktır manisa icra dairesi müdürlüğü" data-il="Manisa">
+        <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2189685/" target="_blank" rel="noopener">2189685</a></td>
+        <td class="list-kurum">MANİSA İCRA DAİRESİ MÜDÜRLÜĞÜ</td>
+        <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2189685/" target="_blank" rel="noopener">2025 model Volkswagen marka araç icradan satılıktır</a></td>
+        <td class="list-bedel">2.100.000 ₺</td>
+        <td class="list-tarih">09.09.2026</td>
+      </tr>
+      <tr data-bedel="2000000" data-tarih="1787616000" data-search="2025 model byd marka araç icradan satılıktır alaşehir icra dairesi müdürlüğü" data-il="Manisa">
+        <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2160121/" target="_blank" rel="noopener">2160121</a></td>
+        <td class="list-kurum">ALAŞEHİR İCRA DAİRESİ MÜDÜRLÜĞÜ</td>
+        <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2160121/" target="_blank" rel="noopener">2025 model BYD marka araç icradan satılıktır</a></td>
+        <td class="list-bedel">2.000.000 ₺</td>
+        <td class="list-tarih">25.08.2026</td>
+      </tr>
+      <tr data-bedel="2400000" data-tarih="1791331200" data-search="2014 model bmw marka araç icradan satılıktır kuşadasi icra dairesi müdürlüğü" data-il="Aydın">
+        <td class="list-id"><a href="https://www.ilan.gov.tr/ilan/2196596/" target="_blank" rel="noopener">2196596</a></td>
+        <td class="list-kurum">KUŞADASI İCRA DAİRESİ MÜDÜRLÜĞÜ</td>
+        <td class="list-baslik"><a href="https://www.ilan.gov.tr/ilan/2196596/" target="_blank" rel="noopener">2014 model BMW marka araç icradan satılıktır</a></td>
+        <td class="list-bedel">2.400.000 ₺</td>
+        <td class="list-tarih">07.10.2026</td>
+      </tr>
       </tbody>
     </table>
   </div>
 
-  <div class="foot">Kaynak: UYAP e-Satış &amp; ilan.gov.tr · Güncelleme: 16.08.2026 · Yalnızca İzmir ilanları</div>
+  <div class="foot">Kaynak: UYAP e-Satış &amp; ilan.gov.tr · Güncelleme: 18.08.2026 · İzmir · Manisa · Aydın ilanları</div>
 </div>
 <script src="countdown.js"></script>
 
@@ -287,8 +359,10 @@
   function apply(){
     var q=(searchEl?searchEl.value.trim().toLowerCase():'');
     var sort=sortEl?sortEl.value:'tarih-asc';
+    var cityVal=cityFilter?cityFilter.value:'all';
     var filtered=rows.filter(function(r){
       if(q&&(r.getAttribute('data-search')||'').indexOf(q)===-1) return false;
+      if(cityVal!=='all'&&(r.getAttribute('data-il')||'İzmir')!==cityVal) return false;
       return true;
     });
     if(sort==='bedel-desc') filtered.sort(function(a,b){return +b.getAttribute('data-bedel')-(+a.getAttribute('data-bedel'));});
@@ -300,6 +374,7 @@
   }
   if(searchEl) searchEl.addEventListener('input',apply);
   if(sortEl)   sortEl.addEventListener('change',apply);
+  if(cityFilter) cityFilter.addEventListener('change',apply);
   apply();
 })();
 </script>
