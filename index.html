@@ -31,6 +31,7 @@
 .card-controls select:focus{outline:none;border-color:var(--konut)}
 .uyap-count-line{font-size:12px;color:var(--muted);padding-bottom:8px}
 .bidline{font-size:12px;color:#888;margin-top:4px}
+.bidline-sold{font-size:12.5px;color:#2F6F63;font-weight:700;background:#E8F5E9;border-radius:4px;padding:2px 6px;margin-top:4px;display:inline-block}
 .bidline-active{font-size:12.5px;color:#E65100;font-weight:700;background:#FFF3CD;border-radius:4px;padding:2px 6px;margin-top:4px;display:inline-block}
 </style>
 </head><body>
@@ -624,13 +625,13 @@
         <span class="chip auction cd-wrap" data-d1s="2026-08-17T14:00:00+03:00" data-d1e="2026-08-24T14:00:00+03:00"><b class="cd">—</b></span>
       </div>
       <div class="kdvline" style="font-size:11.5px;margin-top:6px">İhale: 18.08.2026</div>
-      <div class="bidline">Henüz teklif yok</div>
+      <div class="bidline bidline-sold">✅ Satıldı · 20.100.000 ₺</div>
     </div>
   </a>
   <a class="card t-konut" data-tip="konut" data-tur="Daire"
        data-city="İzmir" data-ilce="Konak" data-method="ihale"
        data-price="30000000" data-tarih="1787036880"
-       data-search="16926362076 daire merkez 30000000" href="mulk-UYP-16926362076.html">
+       data-search="16926362076 daire merkez 30000000 satıldı" href="mulk-UYP-16926362076.html">
     <img src="https://cdn.uyap.gov.tr/esatis/esatis/2025/87960819/8774849_758.jpg" alt="Daire Konak" loading="lazy" class="card-img-top">
     <span class="bar" style="background:#2F6F63"></span>
     <div class="card-in">
@@ -645,7 +646,7 @@
         <span class="chip auction cd-wrap" data-d1s="2026-08-18T10:08:00+03:00" data-d1e="2026-08-25T10:08:00+03:00"><b class="cd">—</b></span>
       </div>
       <div class="kdvline" style="font-size:11.5px;margin-top:6px">İhale: 18.08.2026</div>
-      <div class="bidline">Henüz teklif yok</div>
+      <div class="bidline bidline-sold">✅ Satıldı · 19.850.000 ₺</div>
     </div>
   </a>
   <a class="card t-konut" data-tip="konut" data-tur="Daire"
@@ -1673,6 +1674,7 @@
 
 <script>
 (function(){
+  var cityFilter=document.getElementById('city-filter');
   var rows=[].slice.call(document.querySelectorAll('#gm-tbody tr'));
   var tbody=document.getElementById('gm-tbody');
   var searchEl=document.getElementById('gm-search');
