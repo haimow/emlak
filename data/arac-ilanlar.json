@@ -1,32 +1,19 @@
 {
-  "updated": "2026-08-11",
-  "total": 3,
+  "updated": "2026-08-22",
+  "total": 6,
   "araclar": [
     {
-      "il": "İZMİR",
-      "ilce": "Merkez",
-      "marka": "Mercedes - Benz",
-      "model": "E",
-      "seri": "200",
-      "yil": "2023",
-      "bedel": 4750000,
-      "satis_tarihi": "21.08.2026",
-      "ilan_tarihi": "2026-06-25",
-      "url": "https://www.ilan.gov.tr/ilan/2147178/",
-      "baslik": "2023 model Mercedes Benz marka araç icradan satılıktır"
-    },
-    {
-      "il": "İZMİR",
-      "ilce": "Merkez",
-      "marka": "Mercedes - Benz",
+      "il": "MANİSA",
+      "ilce": "Alaşehir",
+      "marka": "BYD",
       "model": "",
       "seri": "",
-      "yil": "2021",
-      "bedel": 3800000,
-      "satis_tarihi": "20.08.2026",
-      "ilan_tarihi": "2026-05-20",
-      "url": "https://www.ilan.gov.tr/ilan/2116294/",
-      "baslik": "2021 model Mercedes Benz marka araç icradan satılıktır"
+      "yil": "2025",
+      "bedel": 2000000,
+      "satis_tarihi": "25.08.2026",
+      "ilan_tarihi": "2026-06-25",
+      "url": "https://www.ilan.gov.tr/ilan/2160121/",
+      "baslik": "2025 model BYD marka araç icradan satılıktır"
     },
     {
       "il": "İZMİR",
@@ -40,6 +27,58 @@
       "ilan_tarihi": "2026-05-20",
       "url": "https://www.ilan.gov.tr/ilan/2115468/",
       "baslik": "2022 model BMW marka araç icradan satılıktır"
+    },
+    {
+      "il": "İZMİR",
+      "ilce": "Çeşme",
+      "marka": "Land Rover",
+      "model": "Discovery",
+      "seri": "",
+      "yil": "2022",
+      "bedel": 5000000,
+      "satis_tarihi": "27.08.2026",
+      "ilan_tarihi": "2026-07-04",
+      "url": "https://www.ilan.gov.tr/ilan/2166831/",
+      "baslik": "2022 model Land Rover marka araç icradan satılıktır"
+    },
+    {
+      "il": "İZMİR",
+      "ilce": "Menemen",
+      "marka": "Ford",
+      "model": "",
+      "seri": "",
+      "yil": "2021",
+      "bedel": 2052000,
+      "satis_tarihi": "01.09.2026",
+      "ilan_tarihi": "2026-07-30",
+      "url": "https://www.ilan.gov.tr/ilan/2189136/",
+      "baslik": "2021 model Ford marka araç icradan satılıktır"
+    },
+    {
+      "il": "İZMİR",
+      "ilce": "Merkez",
+      "marka": "Jaguar",
+      "model": "",
+      "seri": "",
+      "yil": "2020",
+      "bedel": 2400000,
+      "satis_tarihi": "01.09.2026",
+      "ilan_tarihi": "2026-07-10",
+      "url": "https://www.ilan.gov.tr/ilan/2171733/",
+      "baslik": "2020 model Jaguar marka araç icradan satılıktır"
+    },
+    {
+      "il": "MANİSA",
+      "ilce": "Merkez",
+      "marka": "Volkswagen",
+      "model": "",
+      "seri": "",
+      "yil": "2025",
+      "bedel": 2100000,
+      "satis_tarihi": "09.09.2026",
+      "ilan_tarihi": "2026-07-31",
+      "url": "https://www.ilan.gov.tr/ilan/2189685/",
+      "baslik": "2025 model Volkswagen marka araç icradan satılıktır"
     }
   ]
 }
