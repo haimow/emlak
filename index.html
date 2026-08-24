@@ -31,7 +31,9 @@
 .card-controls select:focus{outline:none;border-color:var(--konut)}
 .uyap-count-line{font-size:12px;color:var(--muted);padding-bottom:8px}
 .bidline{font-size:12px;color:#888;margin-top:4px}
-.bidline-sold{font-size:12.5px;color:#2F6F63;font-weight:700;background:#E8F5E9;border-radius:4px;padding:2px 6px;margin-top:4px;display:inline-block}
+.bidline-sold{font-size:12px;color:#666;font-weight:600;background:#EBEBEB;border-radius:4px;padding:2px 7px;margin-top:4px;display:inline-block}
+.card-sold{opacity:.5;filter:grayscale(45%);transition:opacity .15s,filter .15s}
+.card-sold:hover{opacity:.75;filter:grayscale(15%)}
 .bidline-active{font-size:12.5px;color:#E65100;font-weight:700;background:#FFF3CD;border-radius:4px;padding:2px 6px;margin-top:4px;display:inline-block}
 </style>
 </head><body>
@@ -653,7 +655,7 @@
       <div class="bidline">İhale tamamlandı</div>
     </div>
   </a>
-  <a class="card t-konut" data-tip="konut" data-tur="Daire"
+  <a class="card t-konut card-sold" data-tip="konut" data-tur="Daire"
        data-city="İzmir" data-ilce="Konak" data-method="ihale"
        data-price="30000000" data-tarih="1787036880"
        data-search="16926362076 daire merkez 30000000 satıldı" href="mulk-UYP-16926362076.html">
@@ -671,7 +673,7 @@
         <span class="chip auction cd-wrap" data-d1s="2026-08-18T10:08:00+03:00" data-d1e="2026-08-25T10:08:00+03:00"><b class="cd">—</b></span>
       </div>
       <div class="kdvline" style="font-size:11.5px;margin-top:6px">İhale: 18.08.2026</div>
-      <div class="bidline">İhale tamamlandı</div>
+      <div class="bidline bidline-sold">✓ Satıldı · 19.850.000 ₺</div>
     </div>
   </a>
   <a class="card t-konut" data-tip="konut" data-tur="Daire"
@@ -1680,6 +1682,7 @@
     else if(mode==='tarih-desc') arr.sort(function(a,b){return +b.getAttribute('data-tarih')-(+a.getAttribute('data-tarih'));});
     else if(mode==='price-desc') arr.sort(function(a,b){return +b.getAttribute('data-price')-(+a.getAttribute('data-price'));});
     else if(mode==='price-asc') arr.sort(function(a,b){return +a.getAttribute('data-price')-(+b.getAttribute('data-price'));});
+    arr.sort(function(a,b){return (a.classList.contains('card-sold')?1:0)-(b.classList.contains('card-sold')?1:0);});
     cards.forEach(function(c){c.style.display='none';});
     arr.forEach(function(c){c.style.display='';grid.appendChild(c);});
     if(empty) empty.style.display=arr.length?'none':'block';
