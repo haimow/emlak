@@ -1951,7 +1951,7 @@
       }
 
       uploadPromise.then(function(uploadedPath){
-        return getFile().then(function(f){
+        _imgResolved=resolvedImgSrc; return getFile().then(function(f){
           var c=f.content;
           var idx=c.indexOf(kid); if(idx===-1) throw new Error('Kart bulunamadı');
           var start=c.lastIndexOf('<a class="card',idx);
@@ -1988,7 +1988,7 @@
         if(newSold) card.classList.add('card-sold'); else card.classList.remove('card-sold');
         /* Fotoğraf DOM güncelle */
         var finalSrcs2=imgState.filter(function(im){return !im.removed;}).map(function(im){return im.src;});
-        if(uploadedPath) finalSrcs2.push(uploadedPath);
+        if(_imgResolved) finalSrcs2.push(_imgResolved);
         if(newImgUrl) finalSrcs2.push(newImgUrl);
         var existingImgEls=Array.from(card.querySelectorAll('img'));
         existingImgEls.forEach(function(el){el.remove();});
