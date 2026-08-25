@@ -383,4 +383,308 @@
   apply();
 })();
 </script>
+<script>
+/* ── Admin Modu ── */
+(function () {
+  'use strict';
+  var PAT_KEY = 'emlak_admin_pat';
+  var REPO = 'haimow/emlak';
+  var API = 'https://api.github.com/repos/' + REPO + '/contents/';
+
+  /* Hangi dosya? */
+  var parts = location.pathname.split('/').filter(Boolean);
+  var filename = parts[parts.length - 1] || 'index.html';
+  if (!filename.endsWith('.html')) filename = 'index.html';
+  if (filename.startsWith('mulk-') || filename.startsWith('arac-')) return;
+  if (filename !== 'index.html' && filename !== 'araclar.html') return;
+
+  /* ── Floating button ── */
+  var fab = document.createElement('button');
+  fab.id = 'adm-fab';
+  fab.title = 'Admin Modu';
+  fab.textContent = '⚙';
+  fab.style.cssText = [
+    'position:fixed;bottom:20px;right:20px;z-index:9998',
+    'background:rgba(20,20,20,.72);backdrop-filter:blur(6px)',
+    'color:#fff;border:none;border-radius:50%',
+    'width:46px;height:46px;font-size:20px;cursor:pointer',
+    'box-shadow:0 2px 10px rgba(0,0,0,.45)',
+    'transition:background .2s'
+  ].join(';');
+  document.body.appendChild(fab);
+
+  var adminOn = false;
+  var injected = false;
+
+  fab.addEventListener('click', function () {
+    if (!localStorage.getItem(PAT_KEY)) {
+      var p = prompt('GitHub PAT girin (sadece bu tarayıcıda saklanır):');
+      if (!p) return;
+      localStorage.setItem(PAT_KEY, p.trim());
+    }
+    adminOn = !adminOn;
+    fab.style.background = adminOn ? '#c0392b' : 'rgba(20,20,20,.72)';
+    fab.textContent = adminOn ? '✕' : '⚙';
+    if (adminOn && !injected) { injectButtons(); injected = true; }
+    document.querySelectorAll('.adm-bar').forEach(function (el) {
+      el.style.display = adminOn ? 'flex' : 'none';
+    });
+    document.querySelectorAll('.adm-row-btn').forEach(function (el) {
+      el.style.display = adminOn ? 'inline-flex' : 'none';
+    });
+  });
+
+  /* ── Butonları DOM'a ekle ── */
+  function injectButtons() {
+    document.querySelectorAll('a.card').forEach(function (card) {
+      var href = card.getAttribute('href') || '';
+      var m = href.match(/(\d{10,})/);
+      if (!m) return;
+      var kid = m[1];
+
+      card.style.position = 'relative';
+      card.style.overflow = 'visible';
+
+      var bar = document.createElement('div');
+      bar.className = 'adm-bar';
+      bar.style.cssText = [
+        'position:absolute;top:6px;right:6px',
+        'display:none;gap:5px;z-index:60',
+        'flex-direction:row;align-items:center'
+      ].join(';');
+
+      var editB = mkBtn('✏', '#1a6fa8', function (e) { e.preventDefault(); e.stopPropagation(); openEdit(card, kid); });
+      var silB  = mkBtn('SİL', '#c0392b', function (e) { e.preventDefault(); e.stopPropagation(); silKart(card, kid); });
+      bar.appendChild(editB);
+      bar.appendChild(silB);
+      card.appendChild(bar);
+    });
+
+    var tbody = document.getElementById('gm-tbody') || document.querySelector('tbody');
+    if (!tbody) return;
+    tbody.querySelectorAll('tr').forEach(function (row) {
+      var a = row.querySelector('td a');
+      if (!a) return;
+      var href = a.getAttribute('href') || '';
+      var m = href.match(/\/(\d+)\/?$/);
+      if (!m) return;
+      var ilanId = m[1];
+
+      var btn = mkBtn('✕', '#c0392b', function (e) { e.stopPropagation(); silRow(row, ilanId); });
+      btn.className = 'adm-row-btn';
+      btn.style.cssText += ';display:none;margin-left:5px;font-size:9px;padding:1px 5px;border-radius:3px;vertical-align:middle';
+      a.parentNode.appendChild(btn);
+    });
+  }
+
+  function mkBtn(label, bg, onClick) {
+    var b = document.createElement('button');
+    b.textContent = label;
+    b.style.cssText = [
+      'background:' + bg, 'color:#fff', 'border:none',
+      'padding:3px 8px', 'border-radius:5px', 'cursor:pointer',
+      'font-size:11px', 'font-weight:700',
+      'box-shadow:0 1px 4px rgba(0,0,0,.35)'
+    ].join(';');
+    b.addEventListener('click', onClick);
+    return b;
+  }
+
+  /* ── GitHub API ── */
+  function getFile() {
+    var pat = localStorage.getItem(PAT_KEY);
+    return fetch(API + filename, {
+      headers: { 'Authorization': 'token ' + pat, 'Accept': 'application/vnd.github.v3+json' }
+    }).then(function (r) {
+      if (!r.ok) throw new Error('GitHub ' + r.status);
+      return r.json();
+    }).then(function (j) {
+      var b = atob(j.content.replace(/\n/g, ''));
+      var bytes = new Uint8Array(b.length);
+      for (var i = 0; i < b.length; i++) bytes[i] = b.charCodeAt(i);
+      return { sha: j.sha, content: new TextDecoder('utf-8').decode(bytes) };
+    });
+  }
+
+  function pushFile(content, sha, msg) {
+    var pat = localStorage.getItem(PAT_KEY);
+    var bytes = new TextEncoder().encode(content);
+    var bin = '';
+    for (var i = 0; i < bytes.length; i++) bin += String.fromCharCode(bytes[i]);
+    return fetch(API + filename, {
+      method: 'PUT',
+      headers: { 'Authorization': 'token ' + pat, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message: msg, content: btoa(bin), sha: sha })
+    }).then(function (r) {
+      if (!r.ok) return r.json().then(function (e) { throw new Error(e.message || 'Push hatası'); });
+    });
+  }
+
+  /* ── Toast ── */
+  function toast(msg, ok, dur) {
+    var t = document.createElement('div');
+    t.textContent = msg;
+    t.style.cssText = [
+      'position:fixed;top:18px;left:50%;transform:translateX(-50%)',
+      'background:' + (ok ? '#27ae60' : '#c0392b'),
+      'color:#fff;padding:10px 22px;border-radius:10px',
+      'z-index:10010;font-size:14px;font-weight:700',
+      'box-shadow:0 3px 14px rgba(0,0,0,.3)',
+      'pointer-events:none'
+    ].join(';');
+    document.body.appendChild(t);
+    setTimeout(function () { t.remove(); }, dur != null ? dur : (ok ? 2500 : 4500));
+    return t;
+  }
+
+  /* ── SİL — Kart ── */
+  function silKart(card, kid) {
+    if (!confirm(kid + ' numaralı kartı silmek istiyor musun?')) return;
+    var loading = toast('Siliniyor…', true, 60000);
+    getFile().then(function (f) {
+      var c = f.content;
+      var idx = c.indexOf(kid);
+      if (idx === -1) throw new Error('Kart metinde bulunamadı: ' + kid);
+      var start = c.lastIndexOf('<a class="card', idx);
+      if (start === -1) throw new Error('Kart başlangıcı bulunamadı');
+      var end = c.indexOf('</a>', idx) + 4;
+      while (c[end] === '\n' || c[end] === ' ') end++;
+      return pushFile(c.substring(0, start) + c.substring(end), f.sha, 'Admin: ' + kid + ' kaldırıldı');
+    }).then(function () {
+      loading.remove();
+      card.remove();
+      toast('✅ Kart silindi (' + kid + ')', true);
+    }).catch(function (e) {
+      loading.remove();
+      toast('❌ ' + e.message, false);
+    });
+  }
+
+  /* ── SİL — Tablo satırı ── */
+  function silRow(row, ilanId) {
+    if (!confirm(ilanId + ' nolu ilanı listeden kaldırmak istiyor musun?')) return;
+    var loading = toast('Siliniyor…', true, 60000);
+    getFile().then(function (f) {
+      var c = f.content;
+      var marker = 'ilan.gov.tr/ilan/' + ilanId + '/';
+      var idx = c.indexOf(marker);
+      if (idx === -1) throw new Error('Satır bulunamadı: ' + ilanId);
+      var start = c.lastIndexOf('<tr ', idx);
+      var end = c.indexOf('</tr>', idx) + 5;
+      if (c[end] === '\n') end++;
+      return pushFile(c.substring(0, start) + c.substring(end), f.sha, 'Admin: ilan ' + ilanId + ' kaldırıldı');
+    }).then(function () {
+      loading.remove();
+      row.remove();
+      toast('✅ İlan ' + ilanId + ' silindi', true);
+    }).catch(function (e) {
+      loading.remove();
+      toast('❌ ' + e.message, false);
+    });
+  }
+
+  /* ── EDIT Modal ── */
+  function escH(s) { return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;'); }
+
+  function openEdit(card, kid) {
+    var bidEl   = card.querySelector('.bidline');
+    var parselEl = card.querySelector('.parsel');
+    var isSold  = card.classList.contains('card-sold');
+    var curBid  = bidEl   ? bidEl.textContent.trim()   : '';
+    var curIlce = parselEl ? parselEl.textContent.trim() : '';
+
+    var ov = document.createElement('div');
+    ov.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:10005;display:flex;align-items:center;justify-content:center;padding:16px;box-sizing:border-box';
+
+    ov.innerHTML =
+      '<div style="background:#fff;border-radius:14px;padding:24px;width:390px;max-width:100%;box-shadow:0 14px 48px rgba(0,0,0,.3);font-family:sans-serif">' +
+        '<h3 style="margin:0 0 3px;font-size:15px">Kart Düzenle</h3>' +
+        '<p style="margin:0 0 16px;font-size:11px;color:#999">kayitId: ' + kid + '</p>' +
+        '<label style="font-size:12px;font-weight:700;color:#444;display:block;margin-bottom:4px">Teklif Satırı</label>' +
+        '<input id="em-bid" value="' + escH(curBid) + '" style="width:100%;padding:8px 10px;border:1.5px solid #ddd;border-radius:8px;font-size:13px;margin-bottom:8px;box-sizing:border-box">' +
+        '<div style="display:flex;gap:5px;flex-wrap:wrap;margin-bottom:14px">' +
+          '<button class="eq" data-v="Henüz teklif yok" style="font-size:11px;padding:3px 9px;border:1px solid #ccc;border-radius:5px;cursor:pointer;background:#f5f5f5">Henüz teklif yok</button>' +
+          '<button class="eq" data-v="İhale tamamlandı" style="font-size:11px;padding:3px 9px;border:1px solid #ccc;border-radius:5px;cursor:pointer;background:#f5f5f5">İhale tamamlandı</button>' +
+          '<button class="eq" data-teklif="1" style="font-size:11px;padding:3px 9px;border:1px solid #1a6fa8;border-radius:5px;cursor:pointer;background:#ebf5fb;color:#1a6fa8">🏆 Teklif tutarı…</button>' +
+        '</div>' +
+        '<label style="font-size:12px;font-weight:700;color:#444;display:block;margin-bottom:4px">İlçe</label>' +
+        '<input id="em-ilce" value="' + escH(curIlce) + '" style="width:100%;padding:8px 10px;border:1.5px solid #ddd;border-radius:8px;font-size:13px;margin-bottom:14px;box-sizing:border-box">' +
+        '<label style="display:flex;align-items:center;gap:8px;font-size:13px;cursor:pointer;margin-bottom:18px">' +
+          '<input type="checkbox" id="em-sold" ' + (isSold ? 'checked' : '') + ' style="width:15px;height:15px">Satıldı / İhale bitti (kart grileşir)' +
+        '</label>' +
+        '<div style="display:flex;gap:8px;justify-content:flex-end">' +
+          '<button id="em-cancel" style="padding:8px 18px;border:1.5px solid #ddd;border-radius:8px;cursor:pointer;background:#fff;font-size:13px">İptal</button>' +
+          '<button id="em-save" style="padding:8px 20px;border:none;border-radius:8px;background:#2F6F63;color:#fff;cursor:pointer;font-size:13px;font-weight:700">Kaydet →</button>' +
+        '</div>' +
+      '</div>';
+
+    document.body.appendChild(ov);
+
+    ov.querySelectorAll('.eq').forEach(function (b) {
+      b.addEventListener('click', function () {
+        if (b.dataset.teklif) {
+          var amt = prompt('Teklif tutarı girin (örn: 6.270.000):');
+          if (amt) document.getElementById('em-bid').value = '🏆 En Yüksek Teklif: ' + amt.trim() + ' ₺';
+        } else {
+          document.getElementById('em-bid').value = b.dataset.v;
+          if (b.dataset.v === 'İhale tamamlandı') document.getElementById('em-sold').checked = true;
+        }
+      });
+    });
+
+    document.getElementById('em-cancel').addEventListener('click', function () { ov.remove(); });
+    ov.addEventListener('click', function (e) { if (e.target === ov) ov.remove(); });
+
+    document.getElementById('em-save').addEventListener('click', function () {
+      var newBid  = document.getElementById('em-bid').value;
+      var newIlce = document.getElementById('em-ilce').value;
+      var newSold = document.getElementById('em-sold').checked;
+      ov.remove();
+
+      var loading = toast('Kaydediliyor…', true, 60000);
+      getFile().then(function (f) {
+        var c = f.content;
+        var idx = c.indexOf(kid);
+        if (idx === -1) throw new Error('Kart bulunamadı');
+        var start = c.lastIndexOf('<a class="card', idx);
+        var end   = c.indexOf('</a>', idx) + 4;
+        var cardHtml = c.substring(start, end);
+
+        var isActive = newBid.indexOf('🏆') !== -1;
+        cardHtml = cardHtml.replace(
+          /class="bidline[^"]*">([^<]*)<\/div>/,
+          'class="bidline' + (isActive ? ' bidline-active' : '') + '">' + newBid + '<\/div>'
+        );
+
+        if (newIlce !== curIlce) {
+          cardHtml = cardHtml.replace(/(<span class="parsel"[^>]*>)[^<]*(<\/span>)/, '$1' + newIlce + '$2');
+          cardHtml = cardHtml.replace(/data-ilce="[^"]*"/, 'data-ilce="' + newIlce + '"');
+        }
+
+        if (newSold && cardHtml.indexOf('card-sold') === -1) {
+          cardHtml = cardHtml.replace('class="card ', 'class="card card-sold ');
+        } else if (!newSold) {
+          cardHtml = cardHtml.replace('card-sold ', '');
+        }
+
+        return pushFile(c.substring(0, start) + cardHtml + c.substring(end), f.sha, 'Admin: ' + kid + ' güncellendi');
+      }).then(function () {
+        loading.remove();
+        if (bidEl) {
+          var isA = newBid.indexOf('🏆') !== -1;
+          bidEl.textContent = newBid;
+          bidEl.className = 'bidline' + (isA ? ' bidline-active' : '');
+        }
+        if (parselEl && newIlce !== curIlce) parselEl.textContent = newIlce;
+        if (newSold) card.classList.add('card-sold');
+        else card.classList.remove('card-sold');
+        toast('✅ Kaydedildi!', true);
+      }).catch(function (e) {
+        loading.remove();
+        toast('❌ ' + e.message, false);
+      });
+    });
+  }
+})();
+</script>
 </body></html>
