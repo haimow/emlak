@@ -384,7 +384,7 @@
 })();
 </script>
 <script>
-/* ── Admin Modu v3 ── */
+/* ── Admin Modu v4 ── */
 (function () {
   'use strict';
   var PAT_KEY = 'emlak_admin_pat';
@@ -398,65 +398,65 @@
   if (filename !== 'index.html' && filename !== 'araclar.html') return;
 
   var fab = document.createElement('button');
-  fab.id = 'adm-fab'; fab.title = 'Admin Modu'; fab.textContent = '⚙';
-  fab.style.cssText = ['position:fixed;bottom:20px;right:20px;z-index:9998','background:rgba(20,20,20,.72);backdrop-filter:blur(6px)','color:#fff;border:none;border-radius:50%','width:46px;height:46px;font-size:20px;cursor:pointer','box-shadow:0 2px 10px rgba(0,0,0,.45)','transition:background .2s'].join(';');
+  fab.id='adm-fab'; fab.title='Admin Modu'; fab.textContent='⚙';
+  fab.style.cssText=['position:fixed;bottom:20px;right:20px;z-index:9998','background:rgba(20,20,20,.72);backdrop-filter:blur(6px)','color:#fff;border:none;border-radius:50%','width:46px;height:46px;font-size:20px;cursor:pointer','box-shadow:0 2px 10px rgba(0,0,0,.45)','transition:background .2s'].join(';');
   document.body.appendChild(fab);
 
-  var adminOn = false, injected = false;
-  fab.addEventListener('click', function () {
-    if (!localStorage.getItem(PAT_KEY)) {
-      var p = prompt('GitHub PAT girin:'); if (!p) return;
-      localStorage.setItem(PAT_KEY, p.trim());
-    }
-    adminOn = !adminOn;
-    fab.style.background = adminOn ? '#c0392b' : 'rgba(20,20,20,.72)';
-    fab.textContent = adminOn ? '✕' : '⚙';
-    if (adminOn && !injected) { injectButtons(); injected = true; }
-    document.querySelectorAll('.adm-bar').forEach(function(el){ el.style.display = adminOn?'flex':'none'; });
-    document.querySelectorAll('.adm-row-btn').forEach(function(el){ el.style.display = adminOn?'inline-flex':'none'; });
+  var adminOn=false, injected=false;
+  fab.addEventListener('click', function(){
+    if(!localStorage.getItem(PAT_KEY)){var p=prompt('GitHub PAT girin:');if(!p)return;localStorage.setItem(PAT_KEY,p.trim());}
+    adminOn=!adminOn;
+    fab.style.background=adminOn?'#c0392b':'rgba(20,20,20,.72)';
+    fab.textContent=adminOn?'✕':'⚙';
+    if(adminOn&&!injected){injectButtons();injected=true;}
+    document.querySelectorAll('.adm-bar').forEach(function(el){el.style.display=adminOn?'flex':'none';});
+    document.querySelectorAll('.adm-row-btn').forEach(function(el){el.style.display=adminOn?'inline-flex':'none';});
   });
 
-  function injectButtons() {
-    document.querySelectorAll('a.card').forEach(function(card) {
-      var href = card.getAttribute('href')||''; var m = href.match(/(\d{10,})/); if (!m) return;
-      var kid = m[1]; card.style.position='relative'; card.style.overflow='visible';
-      var bar = document.createElement('div'); bar.className='adm-bar';
-      bar.style.cssText = ['position:absolute;top:6px;right:6px','display:none;gap:5px;z-index:60','flex-direction:row;align-items:center'].join(';');
+  function injectButtons(){
+    document.querySelectorAll('a.card').forEach(function(card){
+      var href=card.getAttribute('href')||'';var m=href.match(/(\d{10,})/);if(!m)return;
+      var kid=m[1];card.style.position='relative';card.style.overflow='visible';
+      var bar=document.createElement('div');bar.className='adm-bar';
+      bar.style.cssText=['position:absolute;top:6px;right:6px','display:none;gap:5px;z-index:60','flex-direction:row;align-items:center'].join(';');
       bar.appendChild(mkBtn('✏','#1a6fa8',function(e){e.preventDefault();e.stopPropagation();openEdit(card,kid);}));
       bar.appendChild(mkBtn('SİL','#c0392b',function(e){e.preventDefault();e.stopPropagation();silKart(card,kid);}));
       card.appendChild(bar);
     });
-    var tbody = document.getElementById('gm-tbody') || document.querySelector('tbody'); if (!tbody) return;
-    tbody.querySelectorAll('tr').forEach(function(row) {
-      var a = row.querySelector('td a'); if (!a) return;
-      var href = a.getAttribute('href')||''; var m = href.match(/\/(\d+)\/?$/); if (!m) return;
-      var ilanId = m[1];
-      var btn = mkBtn('✕','#c0392b',function(e){e.stopPropagation();silRow(row,ilanId);});
-      btn.className='adm-row-btn'; btn.style.cssText+=';display:none;margin-left:5px;font-size:9px;padding:1px 5px;border-radius:3px;vertical-align:middle';
+    var tbody=document.getElementById('gm-tbody')||document.querySelector('tbody');if(!tbody)return;
+    tbody.querySelectorAll('tr').forEach(function(row){
+      var a=row.querySelector('td a');if(!a)return;
+      var href=a.getAttribute('href')||'';var m=href.match(/\/(\d+)\/?$/);if(!m)return;
+      var ilanId=m[1];
+      var btn=mkBtn('✕','#c0392b',function(e){e.stopPropagation();silRow(row,ilanId);});
+      btn.className='adm-row-btn';btn.style.cssText+=';display:none;margin-left:5px;font-size:9px;padding:1px 5px;border-radius:3px;vertical-align:middle';
       a.parentNode.appendChild(btn);
     });
   }
 
   function mkBtn(label,bg,onClick){
-    var b=document.createElement('button'); b.textContent=label;
+    var b=document.createElement('button');b.textContent=label;
     b.style.cssText=['background:'+bg,'color:#fff','border:none','padding:3px 8px','border-radius:5px','cursor:pointer','font-size:11px','font-weight:700','box-shadow:0 1px 4px rgba(0,0,0,.35)'].join(';');
-    b.addEventListener('click',onClick); return b;
+    b.addEventListener('click',onClick);return b;
   }
 
-  function getFile(){
+  function ghFetch(fn){
     var pat=localStorage.getItem(PAT_KEY);
-    return fetch(API+filename,{headers:{'Authorization':'token '+pat,'Accept':'application/vnd.github.v3+json'}})
-      .then(function(r){if(!r.ok)throw new Error('GitHub '+r.status);return r.json();})
+    return fetch(API+fn,{headers:{'Authorization':'token '+pat,'Accept':'application/vnd.github.v3+json'}})
+      .then(function(r){if(!r.ok)throw new Error('GitHub '+r.status+' ('+fn+')');return r.json();})
       .then(function(j){var b=atob(j.content.replace(/\n/g,''));var bytes=new Uint8Array(b.length);for(var i=0;i<b.length;i++)bytes[i]=b.charCodeAt(i);return{sha:j.sha,content:new TextDecoder('utf-8').decode(bytes)};});
   }
 
-  function pushFile(content,sha,msg){
+  function ghPush(fn,content,sha,msg){
     var pat=localStorage.getItem(PAT_KEY);
-    var bytes=new TextEncoder().encode(content); var bin='';
-    for(var i=0;i<bytes.length;i++) bin+=String.fromCharCode(bytes[i]);
-    return fetch(API+filename,{method:'PUT',headers:{'Authorization':'token '+pat,'Content-Type':'application/json'},body:JSON.stringify({message:msg,content:btoa(bin),sha:sha})})
+    var bytes=new TextEncoder().encode(content);var bin='';
+    for(var i=0;i<bytes.length;i++)bin+=String.fromCharCode(bytes[i]);
+    return fetch(API+fn,{method:'PUT',headers:{'Authorization':'token '+pat,'Content-Type':'application/json'},body:JSON.stringify({message:msg,content:btoa(bin),sha:sha})})
       .then(function(r){if(!r.ok)return r.json().then(function(e){throw new Error(e.message||'Push hatası');});});
   }
+
+  function getFile(){return ghFetch(filename);}
+  function pushFile(content,sha,msg){return ghPush(filename,content,sha,msg);}
 
   function fileToBase64(file){
     return new Promise(function(resolve,reject){var reader=new FileReader();reader.onload=function(){resolve(reader.result.split(',')[1]);};reader.onerror=reject;reader.readAsDataURL(file);});
@@ -465,7 +465,7 @@
   function pushImage(imgPath,b64,existingSha){
     var pat=localStorage.getItem(PAT_KEY);
     var body={message:'Admin: resim ('+imgPath+')',content:b64};
-    if(existingSha) body.sha=existingSha;
+    if(existingSha)body.sha=existingSha;
     return fetch(API+imgPath,{method:'PUT',headers:{'Authorization':'token '+pat,'Content-Type':'application/json'},body:JSON.stringify(body)})
       .then(function(r){if(!r.ok)return r.json().then(function(e){throw new Error(e.message||'Resim push hatası');});return r.json();});
   }
@@ -473,36 +473,36 @@
   function getImgSha(imgPath){
     var pat=localStorage.getItem(PAT_KEY);
     return fetch(API+imgPath,{headers:{'Authorization':'token '+pat,'Accept':'application/vnd.github.v3+json'}})
-      .then(function(r){if(r.status===404)return null;if(!r.ok)return null;return r.json().then(function(j){return j.sha;});})
+      .then(function(r){if(r.status===404||!r.ok)return null;return r.json().then(function(j){return j.sha;});})
       .catch(function(){return null;});
   }
 
   function toast(msg,ok,dur){
-    var t=document.createElement('div'); t.textContent=msg;
+    var t=document.createElement('div');t.textContent=msg;
     t.style.cssText=['position:fixed;top:18px;left:50%;transform:translateX(-50%)','background:'+(ok?'#27ae60':'#c0392b'),'color:#fff;padding:10px 22px;border-radius:10px','z-index:10010;font-size:14px;font-weight:700','box-shadow:0 3px 14px rgba(0,0,0,.3)','pointer-events:none'].join(';');
-    document.body.appendChild(t); setTimeout(function(){t.remove();},dur!=null?dur:(ok?2500:4500)); return t;
+    document.body.appendChild(t);setTimeout(function(){t.remove();},dur!=null?dur:(ok?2500:4500));return t;
   }
 
   function silKart(card,kid){
-    if(!confirm(kid+' numaralı kartı silmek istiyor musun?')) return;
+    if(!confirm(kid+' numaralı kartı silmek istiyor musun?'))return;
     var loading=toast('Siliniyor…',true,60000);
     getFile().then(function(f){
-      var c=f.content; var idx=c.indexOf(kid); if(idx===-1) throw new Error('Kart bulunamadı: '+kid);
-      var start=c.lastIndexOf('<a class="card',idx); if(start===-1) throw new Error('Kart başlangıcı bulunamadı');
-      var end=c.indexOf('</a>',idx)+4; while(c[end]==='\n'||c[end]===' ') end++;
+      var c=f.content;var idx=c.indexOf(kid);if(idx===-1)throw new Error('Kart bulunamadı: '+kid);
+      var start=c.lastIndexOf('<a class="card',idx);if(start===-1)throw new Error('Kart başlangıcı bulunamadı');
+      var end=c.indexOf('</a>',idx)+4;while(c[end]==='\n'||c[end]===' ')end++;
       return pushFile(c.substring(0,start)+c.substring(end),f.sha,'Admin: '+kid+' kaldırıldı');
     }).then(function(){loading.remove();card.remove();toast('✅ Kart silindi ('+kid+')',true);})
       .catch(function(e){loading.remove();toast('❌ '+e.message,false);});
   }
 
   function silRow(row,ilanId){
-    if(!confirm(ilanId+' nolu ilanı kaldırmak istiyor musun?')) return;
+    if(!confirm(ilanId+' nolu ilanı kaldırmak istiyor musun?'))return;
     var loading=toast('Siliniyor…',true,60000);
     getFile().then(function(f){
-      var c=f.content; var marker='ilan.gov.tr/ilan/'+ilanId+'/'; var idx=c.indexOf(marker);
-      if(idx===-1) throw new Error('Satır bulunamadı: '+ilanId);
-      var start=c.lastIndexOf('<tr ',idx); var end=c.indexOf('</tr>',idx)+5;
-      if(c[end]==='\n') end++;
+      var c=f.content;var marker='ilan.gov.tr/ilan/'+ilanId+'/';var idx=c.indexOf(marker);
+      if(idx===-1)throw new Error('Satır bulunamadı: '+ilanId);
+      var start=c.lastIndexOf('<tr ',idx);var end=c.indexOf('</tr>',idx)+5;
+      if(c[end]==='\n')end++;
       return pushFile(c.substring(0,start)+c.substring(end),f.sha,'Admin: ilan '+ilanId+' kaldırıldı');
     }).then(function(){loading.remove();row.remove();toast('✅ İlan '+ilanId+' silindi',true);})
       .catch(function(e){loading.remove();toast('❌ '+e.message,false);});
@@ -510,49 +510,45 @@
 
   function escH(s){return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;');}
 
-  /* Kart HTML'inden tüm img src'lerini çıkar */
-  function extractImgSrcs(html){
-    var srcs=[]; var re=/<img\b[^>]*\bsrc="([^"]*)"[^>]*>/gi; var m;
-    while((m=re.exec(html))!==null) srcs.push(m[1]);
-    return srcs;
-  }
-
-  /* Kart HTML'indeki tüm <img> taglarını yeni src listesiyle değiştir */
-  function rebuildImgs(cardHtml, finalSrcs){
-    var cleaned=cardHtml.replace(/<img\b[^>]*\/?>/gi,'');
-    var insertAt=cleaned.indexOf('>')+1;
-    var newImgs=finalSrcs.map(function(src){return '<img src="'+src+'" alt="" loading="lazy">';}).join('');
-    return cleaned.substring(0,insertAt)+newImgs+cleaned.substring(insertAt);
+  /* Detay sayfasına fotoğraf ekle */
+  function addPhotosToDetail(kid, newSrcs){
+    if(!newSrcs||newSrcs.length===0) return Promise.resolve();
+    var detailFile='mulk-UYP-'+kid+'.html';
+    return ghFetch(detailFile).then(function(f){
+      var c=f.content;
+      /* Son <img> tagından sonra yeni resimleri ekle; yoksa </body> den önce */
+      var lastImgIdx=c.lastIndexOf('<img');
+      var insertAt;
+      if(lastImgIdx!==-1){
+        var closeIdx=c.indexOf('>',lastImgIdx);
+        insertAt=closeIdx+1;
+      } else {
+        insertAt=c.indexOf('</body>');
+      }
+      var newImgTags=newSrcs.map(function(src){return '\n<img src="'+src+'" alt="" loading="lazy" style="max-width:100%;margin:8px 0;display:block">';}).join('');
+      var newContent=c.substring(0,insertAt)+newImgTags+c.substring(insertAt);
+      return ghPush(detailFile,newContent,f.sha,'Admin: '+kid+' galeri güncellendi');
+    });
   }
 
   function openEdit(card,kid){
     var bidEl=card.querySelector('.bidline');
     var parselEl=card.querySelector('.parsel');
+    var coverImgEl=card.querySelector('img');
     var isSold=card.classList.contains('card-sold');
     var curBid=bidEl?bidEl.textContent.trim():'';
     var curIlce=parselEl?parselEl.textContent.trim():'';
-
-    /* Mevcut fotoğrafları DOM'dan al */
-    var imgState=Array.from(card.querySelectorAll('img')).map(function(img){
-      return {src:img.getAttribute('src')||'', removed:false};
-    });
+    var curCoverSrc=coverImgEl?(coverImgEl.getAttribute('src')||'')':'';
 
     var ov=document.createElement('div');
     ov.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:10005;display:flex;align-items:center;justify-content:center;padding:16px;box-sizing:border-box;overflow-y:auto';
 
-    function buildImgListHtml(){
-      if(imgState.length===0) return '<p style="font-size:12px;color:#aaa;margin:0 0 8px">Henüz fotoğraf yok</p>';
-      return imgState.map(function(img,i){
-        return '<div id="em-imgrow-'+i+'" style="display:flex;align-items:center;gap:8px;margin-bottom:6px;'+(img.removed?'opacity:.3':'')+'">'+
-          '<img src="'+escH(img.src)+'" style="width:80px;height:56px;object-fit:cover;border-radius:4px;border:1px solid #eee">'+
-          '<div style="font-size:10px;color:#666;flex:1;overflow:hidden;word-break:break-all">'+escH(img.src.split('/').pop())+'</div>'+
-          '<button class="em-tog-img" data-i="'+i+'" style="background:'+(img.removed?'#27ae60':'#c0392b')+';color:#fff;border:none;border-radius:4px;padding:3px 9px;cursor:pointer;font-size:11px;font-weight:700;white-space:nowrap">'+(img.removed?'↩ Geri al':'✕ Sil')+'</button>'+
-        '</div>';
-      }).join('');
-    }
+    var coverPreviewHtml=curCoverSrc
+      ?'<img src="'+escH(curCoverSrc)+'" style="width:100%;max-height:100px;object-fit:cover;border-radius:6px;margin-bottom:6px;display:block">'
+      :'<div style="height:50px;background:#f0f0f0;border-radius:6px;display:flex;align-items:center;justify-content:center;color:#aaa;font-size:12px;margin-bottom:6px">Kapak yok</div>';
 
     ov.innerHTML=
-      '<div id="em-modal" style="background:#fff;border-radius:14px;padding:24px;width:440px;max-width:100%;box-shadow:0 14px 48px rgba(0,0,0,.3);font-family:sans-serif">'+
+      '<div style="background:#fff;border-radius:14px;padding:24px;width:440px;max-width:100%;box-shadow:0 14px 48px rgba(0,0,0,.3);font-family:sans-serif">'+
         '<h3 style="margin:0 0 3px;font-size:15px">Kart Düzenle</h3>'+
         '<p style="margin:0 0 16px;font-size:11px;color:#999">kayitId: '+kid+'</p>'+
 
@@ -567,17 +563,18 @@
         '<label style="font-size:12px;font-weight:700;color:#444;display:block;margin-bottom:4px">İlçe</label>'+
         '<input id="em-ilce" value="'+escH(curIlce)+'" style="width:100%;padding:8px 10px;border:1.5px solid #ddd;border-radius:8px;font-size:13px;margin-bottom:14px;box-sizing:border-box">'+
 
-        '<label style="font-size:12px;font-weight:700;color:#444;display:block;margin-bottom:6px">Fotoğraflar</label>'+
-        '<div id="em-img-list">'+buildImgListHtml()+'</div>'+
-
-        '<div style="background:#f8f8f8;border:1.5px dashed #ddd;border-radius:8px;padding:10px;margin-bottom:14px">'+
-          '<div style="font-size:11px;color:#888;margin-bottom:6px;font-weight:700">➕ Yeni fotoğraf ekle</div>'+
-          '<input id="em-img-url" placeholder="URL gir…" style="width:100%;padding:7px 10px;border:1.5px solid #ddd;border-radius:6px;font-size:12px;margin-bottom:6px;box-sizing:border-box">'+
-          '<div id="em-url-preview" style="margin-bottom:6px"></div>'+
-          '<div style="display:flex;align-items:center;gap:8px">'+
-            '<span style="font-size:11px;color:#888">ya da</span>'+
-            '<label style="font-size:11px;padding:4px 12px;background:#fff;border:1px solid #ccc;border-radius:5px;cursor:pointer;font-weight:700">📁 Dosyadan yükle<input type="file" id="em-img-file" accept="image/*" style="display:none"></label>'+
-            '<span id="em-file-name" style="font-size:11px;color:#555"></span>'+
+        '<div style="display:flex;gap:10px;margin-bottom:14px">'+
+          '<div style="flex:1;border:1.5px solid #ddd;border-radius:8px;padding:10px">'+
+            '<div style="font-size:11px;font-weight:700;color:#444;margin-bottom:6px">🖼 Kapak (kart)</div>'+
+            '<div id="em-cover-preview">'+coverPreviewHtml+'</div>'+
+            '<input id="em-cover-url" value="'+escH(curCoverSrc)+'" placeholder="URL…" style="width:100%;padding:6px 8px;border:1.5px solid #ddd;border-radius:6px;font-size:11px;box-sizing:border-box">'+
+          '</div>'+
+          '<div style="flex:1;border:1.5px dashed #ddd;border-radius:8px;padding:10px">'+
+            '<div style="font-size:11px;font-weight:700;color:#444;margin-bottom:6px">📸 Detay sayfasına ekle</div>'+
+            '<input id="em-gallery-url" placeholder="URL…" style="width:100%;padding:6px 8px;border:1.5px solid #ddd;border-radius:6px;font-size:11px;margin-bottom:6px;box-sizing:border-box">'+
+            '<div id="em-gallery-preview" style="margin-bottom:6px"></div>'+
+            '<label style="font-size:10px;padding:3px 10px;background:#f0f0f0;border:1px solid #ccc;border-radius:4px;cursor:pointer;font-weight:700;display:inline-block">📁 Dosya<input type="file" id="em-gallery-file" accept="image/*" style="display:none"></label>'+
+            '<span id="em-gallery-fname" style="font-size:10px;color:#555;margin-left:5px"></span>'+
           '</div>'+
         '</div>'+
 
@@ -593,84 +590,77 @@
 
     document.body.appendChild(ov);
 
-    /* Mevcut fotoğraf sil/geri al */
-    function rewireImgList(){
-      ov.querySelectorAll('.em-tog-img').forEach(function(btn){
-        btn.addEventListener('click', function(){
-          var i=parseInt(btn.dataset.i);
-          imgState[i].removed=!imgState[i].removed;
-          document.getElementById('em-img-list').innerHTML=buildImgListHtml();
-          rewireImgList();
-        });
-      });
-    }
-    rewireImgList();
-
-    /* Bid quick buttons */
+    /* Bid buttons */
     ov.querySelectorAll('.eq').forEach(function(b){
       b.addEventListener('click',function(){
-        if(b.dataset.teklif){var amt=prompt('Teklif tutarı girin:');if(amt) document.getElementById('em-bid').value='🏆 En Yüksek Teklif: '+amt.trim()+' ₺';}
-        else{document.getElementById('em-bid').value=b.dataset.v;if(b.dataset.v==='İhale tamamlandı') document.getElementById('em-sold').checked=true;}
+        if(b.dataset.teklif){var amt=prompt('Teklif tutarı:');if(amt)document.getElementById('em-bid').value='🏆 En Yüksek Teklif: '+amt.trim()+' ₺';}
+        else{document.getElementById('em-bid').value=b.dataset.v;if(b.dataset.v==='İhale tamamlandı')document.getElementById('em-sold').checked=true;}
       });
     });
 
-    /* URL preview */
-    document.getElementById('em-img-url').addEventListener('input',function(){
+    /* Kapak URL preview */
+    document.getElementById('em-cover-url').addEventListener('input',function(){
       var v=this.value.trim();
-      document.getElementById('em-url-preview').innerHTML=v
-        ?'<img src="'+escH(v)+'" style="width:100%;max-height:100px;object-fit:cover;border-radius:4px">':'';
+      document.getElementById('em-cover-preview').innerHTML=v
+        ?'<img src="'+escH(v)+'" style="width:100%;max-height:100px;object-fit:cover;border-radius:6px;margin-bottom:6px;display:block">'
+        :'<div style="height:50px;background:#f0f0f0;border-radius:6px;display:flex;align-items:center;justify-content:center;color:#aaa;font-size:12px;margin-bottom:6px">Kapak yok</div>';
     });
 
-    /* Dosya seçimi */
-    var selectedFile=null;
-    document.getElementById('em-img-file').addEventListener('change',function(){
-      if(!this.files[0]) return; selectedFile=this.files[0];
-      document.getElementById('em-file-name').textContent=selectedFile.name;
+    /* Galeri URL preview */
+    document.getElementById('em-gallery-url').addEventListener('input',function(){
+      var v=this.value.trim();
+      document.getElementById('em-gallery-preview').innerHTML=v?'<img src="'+escH(v)+'" style="width:100%;max-height:70px;object-fit:cover;border-radius:4px">':'';
+    });
+
+    /* Galeri dosya */
+    var galleryFile=null;
+    document.getElementById('em-gallery-file').addEventListener('change',function(){
+      if(!this.files[0])return;galleryFile=this.files[0];
+      document.getElementById('em-gallery-fname').textContent=galleryFile.name;
       var reader=new FileReader();
       reader.onload=function(ev){
-        document.getElementById('em-url-preview').innerHTML='<img src="'+ev.target.result+'" style="width:100%;max-height:100px;object-fit:cover;border-radius:4px">';
-        document.getElementById('em-img-url').value='';
+        document.getElementById('em-gallery-preview').innerHTML='<img src="'+ev.target.result+'" style="width:100%;max-height:70px;object-fit:cover;border-radius:4px">';
+        document.getElementById('em-gallery-url').value='';
       };
-      reader.readAsDataURL(selectedFile);
+      reader.readAsDataURL(galleryFile);
     });
 
     document.getElementById('em-cancel').addEventListener('click',function(){ov.remove();});
-    ov.addEventListener('click',function(e){if(e.target===ov) ov.remove();});
+    ov.addEventListener('click',function(e){if(e.target===ov)ov.remove();});
 
     document.getElementById('em-save').addEventListener('click',function(){
       var newBid=document.getElementById('em-bid').value;
       var newIlce=document.getElementById('em-ilce').value;
       var newSold=document.getElementById('em-sold').checked;
-      var newImgUrl=document.getElementById('em-img-url').value.trim();
+      var newCoverUrl=document.getElementById('em-cover-url').value.trim();
+      var newGalleryUrl=document.getElementById('em-gallery-url').value.trim();
       ov.remove();
 
       var loading=toast('Kaydediliyor…',true,60000);
 
-      /* Yeni dosya yükleme (varsa) */
-      var uploadPromise;
-      if(selectedFile){
-        var ext=selectedFile.name.split('.').pop().toLowerCase()||'jpg';
-        var imgPath='img/'+kid+'.'+ext;
-        uploadPromise=fileToBase64(selectedFile).then(function(b64){
+      /* Galeri dosyası varsa önce yükle */
+      var galleryUploadPromise;
+      if(galleryFile){
+        var ext=galleryFile.name.split('.').pop().toLowerCase()||'jpg';
+        var ts=new Date().getTime();
+        var imgPath='img/'+kid+'_'+ts+'.'+ext;
+        galleryUploadPromise=fileToBase64(galleryFile).then(function(b64){
           return getImgSha(imgPath).then(function(sha){return pushImage(imgPath,b64,sha);});
         }).then(function(){return imgPath;});
+      } else if(newGalleryUrl){
+        galleryUploadPromise=Promise.resolve(newGalleryUrl);
       } else {
-        uploadPromise=Promise.resolve(null);
+        galleryUploadPromise=Promise.resolve(null);
       }
 
-      uploadPromise.then(function(uploadedPath){
-        _imgResolved=resolvedImgSrc; return getFile().then(function(f){
+      galleryUploadPromise.then(function(gallerySrc){
+        /* Ana sayfada kart güncellemesi */
+        return getFile().then(function(f){
           var c=f.content;
-          var idx=c.indexOf(kid); if(idx===-1) throw new Error('Kart bulunamadı');
+          var idx=c.indexOf(kid);if(idx===-1)throw new Error('Kart bulunamadı');
           var start=c.lastIndexOf('<a class="card',idx);
           var end=c.indexOf('</a>',idx)+4;
           var cardHtml=c.substring(start,end);
-
-          /* Nihai img src listesi */
-          var finalSrcs=imgState.filter(function(im){return !im.removed;}).map(function(im){return im.src;});
-          if(uploadedPath) finalSrcs.push(uploadedPath);
-          if(newImgUrl) finalSrcs.push(newImgUrl);
-          cardHtml=rebuildImgs(cardHtml,finalSrcs);
 
           /* bidline */
           var isActive=newBid.indexOf('🏆')!==-1;
@@ -686,25 +676,24 @@
           if(newSold&&cardHtml.indexOf('card-sold')===-1) cardHtml=cardHtml.replace('class="card ','class="card card-sold ');
           else if(!newSold) cardHtml=cardHtml.replace('card-sold ','');
 
-          return pushFile(c.substring(0,start)+cardHtml+c.substring(end),f.sha,'Admin: '+kid+' güncellendi');
+          /* kapak fotoğrafı (sadece replace, ek yok) */
+          if(newCoverUrl&&newCoverUrl!==curCoverSrc){
+            cardHtml=cardHtml.replace(/(<img\b[^>]*\bsrc=")[^"]*(")/i,'$1'+newCoverUrl+'$2');
+          }
+
+          return pushFile(c.substring(0,start)+cardHtml+c.substring(end),f.sha,'Admin: '+kid+' güncellendi')
+            .then(function(){return gallerySrc;});
         });
+      }).then(function(gallerySrc){
+        /* Detay sayfası güncelle (galeri) */
+        if(gallerySrc) return addPhotosToDetail(kid,[gallerySrc]);
       }).then(function(){
         loading.remove();
         /* DOM güncelle */
         if(bidEl){var isA=newBid.indexOf('🏆')!==-1;bidEl.textContent=newBid;bidEl.className='bidline'+(isA?' bidline-active':'');}
-        if(parselEl&&newIlce!==curIlce) parselEl.textContent=newIlce;
-        if(newSold) card.classList.add('card-sold'); else card.classList.remove('card-sold');
-        /* Fotoğraf DOM güncelle */
-        var finalSrcs2=imgState.filter(function(im){return !im.removed;}).map(function(im){return im.src;});
-        if(_imgResolved) finalSrcs2.push(_imgResolved);
-        if(newImgUrl) finalSrcs2.push(newImgUrl);
-        var existingImgEls=Array.from(card.querySelectorAll('img'));
-        existingImgEls.forEach(function(el){el.remove();});
-        var afterA=card;
-        finalSrcs2.forEach(function(src){
-          var img=document.createElement('img'); img.src=src; img.alt=''; img.loading='lazy';
-          afterA.insertBefore(img,afterA.firstChild);
-        });
+        if(parselEl&&newIlce!==curIlce)parselEl.textContent=newIlce;
+        if(newSold)card.classList.add('card-sold');else card.classList.remove('card-sold');
+        if(coverImgEl&&newCoverUrl&&newCoverUrl!==curCoverSrc)coverImgEl.src=newCoverUrl;
         toast('✅ Kaydedildi!',true);
       }).catch(function(e){loading.remove();toast('❌ '+e.message,false);});
     });
