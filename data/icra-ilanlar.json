@@ -1,6 +1,6 @@
 {
-  "updated": "2026-08-22",
-  "toplamIlan": 190,
+  "updated": "2026-08-26",
+  "toplamIlan": 194,
   "ilanlar": [
     {
       "il": "MUĞLA",
@@ -2867,6 +2867,51 @@
       "ilan_tarihi": "2026-08-19",
       "url": "https://www.ilan.gov.tr/ilan/2199052/",
       "baslik": "İzmir/Konak/Kültür Mah. 1207 Ada 38 Parsel Apartman Dairesi icradan satılıktır"
+    },
+    {
+      "il": "İZMİR",
+      "ilce": "Menderes",
+      "mahalle": "KEMALPAŞA MAH. / MENDERES",
+      "ada": "",
+      "parsel": "",
+      "bedel": 11060000,
+      "kdv": "20%",
+      "tip": "Arsa",
+      "alan": 316,
+      "ihale_tarihi": "01.10.2026",
+      "url": "https://www.ilan.gov.tr/ilan/2203108/",
+      "parselUrl": "",
+      "baslik": "İzmir Menderes'te 316 m² arsa mahkemeden satılıktır"
+    },
+    {
+      "il": "İZMİR",
+      "ilce": "Karaburun",
+      "mahalle": "",
+      "ada": "",
+      "parsel": "",
+      "bedel": 24219680,
+      "kdv": "20%",
+      "tip": "Arsa",
+      "alan": null,
+      "ihale_tarihi": "30.09.2026",
+      "url": "https://www.ilan.gov.tr/ilan/2199590/",
+      "parselUrl": "",
+      "baslik": "İzmir Karaburun'da 1 adet taşınmaz mahkemeden satılıktır"
+    },
+    {
+      "il": "İZMİR",
+      "ilce": "Urla",
+      "mahalle": "İÇMELER MAH. / URLA",
+      "ada": "",
+      "parsel": "",
+      "bedel": 71222000,
+      "kdv": "1%",
+      "tip": "Konut",
+      "alan": null,
+      "ihale_tarihi": "16.11.2026",
+      "url": "https://www.ilan.gov.tr/ilan/2197395/",
+      "parselUrl": "",
+      "baslik": "İzmir Urla'da bodrumlu dubleks mesken icradan satılıktır"
     }
   ],
   "total": 191
