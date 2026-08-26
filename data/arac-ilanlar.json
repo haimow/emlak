@@ -1,33 +1,7 @@
 {
-  "updated": "2026-08-22",
-  "total": 6,
+  "updated": "2026-08-26",
+  "total": 4,
   "araclar": [
-    {
-      "il": "MANİSA",
-      "ilce": "Alaşehir",
-      "marka": "BYD",
-      "model": "",
-      "seri": "",
-      "yil": "2025",
-      "bedel": 2000000,
-      "satis_tarihi": "25.08.2026",
-      "ilan_tarihi": "2026-06-25",
-      "url": "https://www.ilan.gov.tr/ilan/2160121/",
-      "baslik": "2025 model BYD marka araç icradan satılıktır"
-    },
-    {
-      "il": "İZMİR",
-      "ilce": "Merkez",
-      "marka": "BMW",
-      "model": "",
-      "seri": "",
-      "yil": "2022",
-      "bedel": 3700000,
-      "satis_tarihi": "26.08.2026",
-      "ilan_tarihi": "2026-05-20",
-      "url": "https://www.ilan.gov.tr/ilan/2115468/",
-      "baslik": "2022 model BMW marka araç icradan satılıktır"
-    },
     {
       "il": "İZMİR",
       "ilce": "Çeşme",
