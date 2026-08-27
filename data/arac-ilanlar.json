@@ -1,10 +1,10 @@
 {
-  "updated": "2026-08-26",
-  "total": 4,
+  "updated": "2026-08-27",
+  "total": 5,
   "araclar": [
     {
-      "il": "İZMİR",
-      "ilce": "Çeşme",
+      "il": "Ä°ZMÄ°R",
+      "ilce": "ÃeÅme",
       "marka": "Land Rover",
       "model": "Discovery",
       "seri": "",
@@ -13,10 +13,10 @@
       "satis_tarihi": "27.08.2026",
       "ilan_tarihi": "2026-07-04",
       "url": "https://www.ilan.gov.tr/ilan/2166831/",
-      "baslik": "2022 model Land Rover marka araç icradan satılıktır"
+      "baslik": "2022 model Land Rover marka araÃ§ icradan satÄ±lÄ±ktÄ±r"
     },
     {
-      "il": "İZMİR",
+      "il": "Ä°ZMÄ°R",
       "ilce": "Menemen",
       "marka": "Ford",
       "model": "",
@@ -26,10 +26,10 @@
       "satis_tarihi": "01.09.2026",
       "ilan_tarihi": "2026-07-30",
       "url": "https://www.ilan.gov.tr/ilan/2189136/",
-      "baslik": "2021 model Ford marka araç icradan satılıktır"
+      "baslik": "2021 model Ford marka araÃ§ icradan satÄ±lÄ±ktÄ±r"
     },
     {
-      "il": "İZMİR",
+      "il": "Ä°ZMÄ°R",
       "ilce": "Merkez",
       "marka": "Jaguar",
       "model": "",
@@ -39,10 +39,10 @@
       "satis_tarihi": "01.09.2026",
       "ilan_tarihi": "2026-07-10",
       "url": "https://www.ilan.gov.tr/ilan/2171733/",
-      "baslik": "2020 model Jaguar marka araç icradan satılıktır"
+      "baslik": "2020 model Jaguar marka araÃ§ icradan satÄ±lÄ±ktÄ±r"
     },
     {
-      "il": "MANİSA",
+      "il": "MANÄ°SA",
       "ilce": "Merkez",
       "marka": "Volkswagen",
       "model": "",
@@ -52,7 +52,20 @@
       "satis_tarihi": "09.09.2026",
       "ilan_tarihi": "2026-07-31",
       "url": "https://www.ilan.gov.tr/ilan/2189685/",
-      "baslik": "2025 model Volkswagen marka araç icradan satılıktır"
+      "baslik": "2025 model Volkswagen marka araÃ§ icradan satÄ±lÄ±ktÄ±r"
+    },
+    {
+      "il": "MANİSA",
+      "ilce": "Kula",
+      "marka": "BMW",
+      "model": "G7L",
+      "seri": "",
+      "yil": "2024",
+      "bedel": 15000000,
+      "satis_tarihi": "06.10.2026",
+      "ilan_tarihi": "2026-08-27",
+      "url": "https://www.ilan.gov.tr/ilan/2205510/",
+      "baslik": "2024 model BMW G7L tip otomobil icradan satılıktır"
     }
   ]
 }
