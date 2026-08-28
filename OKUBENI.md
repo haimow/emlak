@@ -38,7 +38,7 @@ Sitedeki "İcra İlanları" tablosu bu JSON dosyasından beslenir.
 **Alan adları:**
 | Alan | Açıklama |
 |---|---|
-| `il` | İl (İZMİR / MUĞLA / MANİSA) — **Aydın takip edilmez** |
+| `il` | İl (İZMİR / MANİSA) — **Aydın ve Muğla takip edilmez** |
 | `ilce` | İlçe |
 | `mahalle` | Mahalle |
 | `ada` / `parsel` | Parsel bilgisi |
@@ -60,7 +60,7 @@ Sitedeki "İcra İlanları" tablosu bu JSON dosyasından beslenir.
 | İl | Kural |
 |---|---|
 | **İzmir** | Tüm mülk ve araç tipleri takip edilir |
-| **Muğla** | Tüm mülk ve araç tipleri takip edilir |
+| **Muğla** | ❌ Takip edilmez — bu ildeki hiçbir ilan listeye eklenmez |
 | **Manisa** | Yalnızca **Fabrika** tipindeki ilanlar takip edilir |
 | **Aydın** | ❌ Takip edilmez — bu ildeki hiçbir ilan listeye eklenmez |
 
