@@ -38,7 +38,7 @@ Sitedeki "İcra İlanları" tablosu bu JSON dosyasından beslenir.
 **Alan adları:**
 | Alan | Açıklama |
 |---|---|
-| `il` | İl (İZMİR / MUĞLA / MANİSA) |
+| `il` | İl (İZMİR / MUĞLA / MANİSA) — **Aydın takip edilmez** |
 | `ilce` | İlçe |
 | `mahalle` | Mahalle |
 | `ada` / `parsel` | Parsel bilgisi |
@@ -54,6 +54,18 @@ Sitedeki "İcra İlanları" tablosu bu JSON dosyasından beslenir.
 
 **Otomatik güncelleme:**
 İcra ilanları görev dosyası (`İcra İlanları.csv`) güncellendiğinde JSON da yeniden oluşturulur ve `git push` ile bu depoya gönderilir.
+
+## Takip Kapsamı ve Kural Listesi
+
+| İl | Kural |
+|---|---|
+| **İzmir** | Tüm mülk ve araç tipleri takip edilir |
+| **Muğla** | Tüm mülk ve araç tipleri takip edilir |
+| **Manisa** | Yalnızca **Fabrika** tipindeki ilanlar takip edilir |
+| **Aydın** | ❌ Takip edilmez — bu ildeki hiçbir ilan listeye eklenmez |
+
+> Bu kurallar hem icra hem sahibinden hem de UYAP kaynaklı ilanlar için geçerlidir.
+> Yeni bir il eklenecekse bu tabloya da satır eklenir.
 
 ## İcra araç ilanları güncelleme adımları
 `araclar.html` sayfasında iki araç bölümü vardır:
